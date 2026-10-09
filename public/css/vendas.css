@@ -1,0 +1,11 @@
+/* Página de vendas: abas Promoções / Grupos / Pacotes */
+.vtabs{display:inline-flex;gap:.4rem;padding:.4rem;border-radius:99px;background:var(--soft);margin-bottom:1.2rem;max-width:100%}
+.vtabs button{border:0;background:transparent;font:800 .78rem 'Plus Jakarta Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);padding:.9rem 1.6rem;border-radius:99px;cursor:pointer;display:inline-flex;gap:.6rem;align-items:center;transition:background .35s var(--ease),color .35s,box-shadow .35s,transform .35s var(--ease)}
+.vtabs button:hover{transform:translateY(-2px)}
+.vtabs button.on{background:var(--grad);color:#fff;box-shadow:0 10px 24px rgba(29,74,159,.28)}
+.vtabs b{background:rgba(14,36,82,.1);border-radius:99px;padding:.1rem .6rem;font-size:.7rem;letter-spacing:0}
+.vtabs .on b{background:rgba(255,255,255,.28)}
+.vdesc{color:var(--muted);margin-bottom:2rem}
+#lista-promos.fade{animation:vfade .55s var(--ease)}
+@keyframes vfade{from{opacity:0;transform:translateY(16px)}}
+@media (max-width:640px){.vtabs{display:flex;width:100%}.vtabs button{flex:1;justify-content:center;padding:.85rem .5rem;letter-spacing:.05em;gap:.35rem;font-size:.7rem}}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#1d4a9f">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Mundial Viagens: pacotes nacionais e internacionais, roteiros personalizados e parcelamento em até 12x.">
+<title>Vendas | Mundial Viagens</title>
+<link rel="icon" type="image/png" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<link rel="apple-touch-icon" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/vendas.css">
+<link rel="stylesheet" href="css/motion.css">
+<script>document.documentElement.classList.add("js")</script>
+<style>.proj--photo{background-size:cover;background-position:center}.proj--photo:hover{background-size:cover}</style>
+</head>
+<body>
+
+<header class="header" id="topo">
+  <div class="wrap header__in">
+    <a class="logo" href="index.html"><img src="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png" alt=""><span>Mundial Viagens</span></a>
+    <button class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <nav class="nav" id="menu">
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#destinos">Destinos</a>
+      <a href="promocoes.html">Vendas</a>
+      <a href="index.html#como-funciona">Como funciona</a>
+      <a href="index.html#depoimentos">Depoimentos</a>
+      <a href="index.html#duvidas">Dúvidas</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap promos-page">
+    <div class="section-head">
+      <div>
+        <small>Vendas</small>
+        <h1 class="page-title">Viagens à venda</h1>
+        <p class="lead">Escolha entre promoções, saídas em grupo e pacotes. Valores por pessoa, em quarto duplo. Clique em uma viagem para ver os detalhes e pedir no WhatsApp.</p>
+      </div>
+      <a class="btn btn--outline" href="index.html#destinos">Ver continentes</a>
+    </div>
+    <div class="gallery" id="lista-promos"><p class="lead">Carregando promoções…</p></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <div class="footer__brand">
+      <a class="logo logo--big" href="index.html"><img src="img/logo-branco.png" alt=""><span>Mundial Viagens</span></a>
+      <strong>Sobre nós</strong>
+      <span>Agência de viagens com mais de 15 anos de experiência em roteiros pelo Brasil e pelo mundo.</span>
+    </div>
+    <div class="footer__col">
+      <small>Navegação</small>
+      <ul>
+        <li><a href="index.html#sobre">Sobre</a></li>
+        <li><a href="index.html#destinos">Destinos</a></li>
+        <li><a href="promocoes.html">Vendas</a></li>
+        <li><a href="index.html#como-funciona">Como funciona</a></li>
+        <li><a href="index.html#duvidas">Dúvidas</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <small>Siga-nos</small>
+      <ul>
+        <li><a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener"><i>◎</i> @mundial_viagens_ <b>→</b></a></li>
+        <li><a href="https://www.facebook.com/mundialmilhas/?locale=pt_BR" target="_blank" rel="noopener"><i>f</i> /mundialmilhas <b>→</b></a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="wrap footer__legal">© 2026 Mundial Viagens. Todos os direitos reservados. Valores sujeitos a alteração e disponibilidade.</p>
+</footer>
+
+<script>
+  const burger=document.querySelector('.burger'),nav=document.querySelector('.nav');
+  const setMenu=o=>{document.body.classList.toggle('menu-open',o);burger.setAttribute('aria-expanded',o)};
+  burger.addEventListener('click',()=>setMenu(!document.body.classList.contains('menu-open')));
+  nav.addEventListener('click',e=>{if(e.target.tagName==='A')setMenu(false)});
+</script>
+<script src="js/main.js" defer></script>
+<script type="module" src="js/promos.js"></script>
+<script type="module" src="js/motion.js"></script>
+<link rel="stylesheet" href="css/motion3.css">
+<script type="module" src="js/motion3.js"></script>
+<link rel="stylesheet" href="css/motion2.css">
+<script type="module" src="js/motion2.js"></script>
+<link rel="stylesheet" href="css/pastel.css">
+<link rel="stylesheet" href="css/luxo.css">
+<script type="module" src="js/pastel.js"></script>
+</body>
+</html>

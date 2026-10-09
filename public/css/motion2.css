@@ -1,0 +1,138 @@
+/* ============================================================
+   motion2.css — camada extra de motion design e 3D
+   Carregar DEPOIS de motion.css. Usa as propriedades individuais
+   translate / rotate / scale para não brigar com os transforms existentes.
+   ============================================================ */
+
+/* ---------- fundo 3D (three.js) ---------- */
+.bg3d{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.6s var(--ease)}
+.bg3d.on{opacity:1}
+
+/* ---------- intro: cortina de entrada com avião ---------- */
+.intro{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;color:#fff;pointer-events:none;
+  background:linear-gradient(120deg,#0e2452,#1d4a9f 55%,#5b3fd1);clip-path:inset(0);
+  animation:m2-introOut .95s var(--ease) 1.25s forwards}
+.intro__in{display:flex;flex-direction:column;align-items:center;gap:1.1rem;font:800 clamp(1.4rem,4vw,2.2rem) 'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em}
+.intro__in span{display:block;overflow:hidden}
+.intro__in span b{display:block;animation:m2-up .9s var(--ease) .15s both}
+.intro svg{width:58px;height:58px;color:var(--accent);animation:m2-introFly 1.3s var(--ease) both;filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}
+.intro__bar{width:170px;height:3px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden}
+.intro__bar i{display:block;height:100%;background:var(--accent);transform-origin:left;animation:m2-bar 1.2s var(--ease) both}
+@keyframes m2-introOut{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
+@keyframes m2-introFly{from{transform:translateX(-180px) rotate(-18deg) scale(.6);opacity:0}60%{opacity:1}to{transform:none}}
+@keyframes m2-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes m2-up{from{transform:translateY(110%)}to{transform:none}}
+
+/* ---------- cursor ---------- */
+.cur-dot,.cur-ring{position:fixed;left:0;top:0;z-index:150;pointer-events:none;border-radius:50%;opacity:0;transition:opacity .3s}
+.cur-on .cur-dot,.cur-on .cur-ring{opacity:1}
+.cur-dot{width:8px;height:8px;margin:-4px;background:var(--accent)}
+.cur-ring{width:40px;height:40px;margin:-20px;border:1.5px solid var(--accent);transition:opacity .3s,scale .35s var(--ease),background .3s,border-color .3s}
+.cur-ring.big{scale:1.8;background:rgba(242,163,58,.16);border-color:var(--violet)}
+.cur-ring.press{scale:.7}
+
+/* ---------- ripple e confete ---------- */
+.btn,.lp__cta,.vtabs button,.globo__sel button,.dest__ctrl button{position:relative;overflow:hidden}
+.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);pointer-events:none;translate:-50% -50%;scale:0;animation:m2-rip .75s var(--ease) forwards}
+@keyframes m2-rip{to{scale:1;opacity:0}}
+.cf{position:fixed;z-index:120;pointer-events:none;font-weight:800;line-height:1}
+
+/* ---------- aurora no hero + 3D que segue o mouse ---------- */
+.hero::before{content:"";position:absolute;inset:-12% -6%;z-index:-1;pointer-events:none;
+  background:
+   radial-gradient(38% 48% at 18% 28%,rgba(107,75,216,.26),transparent 70%),
+   radial-gradient(34% 44% at 82% 58%,rgba(255,122,89,.24),transparent 70%),
+   radial-gradient(40% 40% at 50% 92%,rgba(29,74,159,.22),transparent 70%);
+  filter:blur(28px);animation:m2-aurora 15s ease-in-out infinite alternate}
+@keyframes m2-aurora{to{transform:translate3d(3%,4%,0) rotate(6deg) scale(1.1)}}
+.hero__text{translate:calc(var(--hx,0)*-10px) calc(var(--hy,0)*-7px);transition:translate .6s var(--ease)}
+.globo__stage{transform-style:preserve-3d;transform:perspective(1100px) rotateX(calc(var(--hy,0)*-7deg)) rotateY(calc(var(--hx,0)*9deg));transition:transform .5s var(--ease)}
+/* anéis orbitais em 3D ao redor do globo */
+.globo__stage::before,.globo__stage::after{content:"";position:absolute;pointer-events:none;border-radius:50%}
+.globo__stage::before{inset:-2% -6%;border:1.5px dashed rgba(29,74,159,.38);
+  background:radial-gradient(circle at 50% 0,var(--accent) 0 7px,transparent 8px);
+  transform:rotateX(74deg) rotateZ(0);animation:m2-orbit 16s linear infinite}
+.globo__stage::after{inset:6% -12%;z-index:2;border:1.5px solid rgba(107,75,216,.3);
+  background:radial-gradient(circle at 50% 100%,var(--coral) 0 6px,transparent 7px);
+  transform:rotateX(74deg) rotateY(18deg) rotateZ(0);animation:m2-orbit 24s linear infinite reverse}
+@keyframes m2-orbit{to{transform:rotateX(74deg) rotateZ(360deg)}}
+.globo__stage::after{--o:0}
+@keyframes m2-orbit2{to{transform:rotateX(74deg) rotateY(18deg) rotateZ(360deg)}}
+.globo__stage::after{animation-name:m2-orbit2}
+
+/* ---------- inclinação 3D com profundidade (JS aplica .is-tilt) ---------- */
+.is-tilt{transform-style:preserve-3d;box-shadow:0 34px 60px -18px rgba(29,74,159,.38)}
+.is-tilt>*{translate:0 0 26px;transition:translate .35s var(--ease)}
+.is-tilt .icon,.is-tilt .bk__ic{translate:0 0 44px}
+
+/* ---------- palavras que sobem (leads) ---------- */
+.js .wsplit .w{display:inline-block;opacity:0;transform:translateY(.7em) rotate(4deg);filter:blur(5px);
+  transition:opacity .7s var(--ease),transform .8s var(--ease),filter .7s var(--ease);transition-delay:calc(var(--i)*28ms)}
+.js .wsplit.in .w{opacity:1;transform:none;filter:none}
+
+/* ---------- cards de venda: entrada em 3D, um por um ---------- */
+.proj-in{animation:m2-projin .95s var(--ease) backwards;animation-delay:calc(var(--i,0)*.08s)}
+@keyframes m2-projin{from{opacity:0;transform:perspective(900px) rotateX(-30deg) translateY(70px) scale(.9)}}
+.vtabs button.on{animation:m2-tab .5s var(--ease)}
+@keyframes m2-tab{from{scale:.9}60%{scale:1.06}}
+
+/* ---------- passos: número pulsa quando acende ---------- */
+.steps__list li.on b{animation:m2-step 2.6s ease-out infinite}
+@keyframes m2-step{0%{box-shadow:0 0 0 0 rgba(29,74,159,.45)}70%,100%{box-shadow:0 0 0 16px rgba(29,74,159,0)}}
+
+/* ---------- destaques: parallax interno ---------- */
+.dest__bg{transition:transform 7s linear,translate .45s ease-out}
+.dest__slide.is-active .dest__bg{translate:calc(var(--px,0)*-22px) calc(var(--py,0)*-14px)}
+.dest__slide.is-active .dest__body{translate:calc(var(--px,0)*12px) calc(var(--py,0)*8px);transition:translate .45s ease-out}
+.dest__glyph{translate:calc(var(--px,0)*30px) calc(var(--py,0)*20px)}
+
+/* ---------- promo: hero com profundidade ---------- */
+.lp__hero__in{translate:calc(var(--hx,0)*-12px) calc(var(--hy,0)*-9px);transition:translate .5s var(--ease)}
+.lp__chip--1{translate:calc(var(--hx,0)*22px) calc(var(--hy,0)*16px)}
+.lp__chip--2{translate:calc(var(--hx,0)*-16px) calc(var(--hy,0)*20px)}
+.lp__chip--3{translate:calc(var(--hx,0)*28px) calc(var(--hy,0)*-12px)}
+.lp__chip{transition:translate .5s var(--ease)}
+.lp__slide{transition:opacity 1.2s ease,translate .6s var(--ease);translate:calc(var(--hx,0)*-14px) calc(var(--hy,0)*-10px);scale:1.06}
+
+/* ---------- rodapé, whatsapp ---------- */
+.footer{position:relative}
+.footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--accent),var(--coral),var(--violet),var(--brand),var(--accent));background-size:300% 100%;animation:m2-flow 6s linear infinite}
+@keyframes m2-flow{to{background-position:300% 0}}
+.fab.show{animation:fabin .6s var(--ease) both,m2-wig 6s ease-in-out 3s infinite}
+@keyframes m2-wig{0%,88%,100%{rotate:0deg}91%{rotate:-16deg}94%{rotate:14deg}97%{rotate:-8deg}}
+.logo img{animation:m2-logo 7s ease-in-out infinite}
+@keyframes m2-logo{0%,100%{rotate:-3deg}50%{rotate:4deg;translate:0 -2px}}
+
+/* ---------- movimento guiado pela rolagem (CSS puro) ---------- */
+@supports (animation-timeline:view()){
+  .next__img{animation-name:morph,m2-nxt;animation-duration:12s,auto;animation-timing-function:ease-in-out,linear;
+    animation-iteration-count:infinite,1;animation-fill-mode:none,both;animation-timeline:auto,view();animation-range:normal,entry 0% exit 100%}
+  @keyframes m2-nxt{from{rotate:-12deg;translate:0 60px;scale:.82}to{rotate:10deg;translate:0 -60px;scale:1.06}}
+  .next h2{animation:m2-slideR linear both;animation-timeline:view();animation-range:entry 0% cover 45%}
+  @keyframes m2-slideR{from{translate:-90px 0;opacity:0}}
+  .contact__side{animation:m2-cs linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
+  .contact__form{animation:m2-cf linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
+  @keyframes m2-cs{from{transform:perspective(1000px) rotateY(16deg) translateX(-50px);opacity:.2}}
+  @keyframes m2-cf{from{transform:perspective(1000px) rotateY(-16deg) translateX(50px);opacity:.2}}
+  .cards .card:nth-child(odd),.reviews__grid blockquote:nth-child(odd),.steps__list li:nth-child(odd){animation:m2-pa linear both;animation-timeline:view()}
+  .cards .card:nth-child(even),.reviews__grid blockquote:nth-child(even),.steps__list li:nth-child(even){animation:m2-pb linear both;animation-timeline:view()}
+  #destinos .proj:nth-child(3n+1){animation:m2-pa linear both;animation-timeline:view()}
+  #destinos .proj:nth-child(3n+2){animation:m2-pb linear both;animation-timeline:view()}
+  .stats div:nth-child(2){animation:m2-pb linear both;animation-timeline:view()}
+  @keyframes m2-pa{from{translate:0 44px}to{translate:0 -44px}}
+  @keyframes m2-pb{from{translate:0 -26px}to{translate:0 26px}}
+  .lp__hero .lp__hero__in{animation:m2-hero linear both;animation-timeline:scroll(root);animation-range:0 60vh}
+  @keyframes m2-hero{to{translate:0 -70px;opacity:.2}}
+}
+
+/* ---------- acessibilidade ---------- */
+@media (hover:none){.cur-dot,.cur-ring{display:none}}
+@media (max-width:640px){.globo__stage::before,.globo__stage::after{display:none}}
+@media (prefers-reduced-motion:reduce){
+  .bg3d,.intro,.cur-dot,.cur-ring{display:none}
+  .js .wsplit .w{opacity:1;transform:none;filter:none;transition:none}
+  .proj-in,.hero::before,.footer::before,.logo img,.steps__list li.on b{animation:none}
+  .globo__stage::before,.globo__stage::after{animation:none}
+  .globo__stage,.hero__text{transform:none;translate:none}
+}

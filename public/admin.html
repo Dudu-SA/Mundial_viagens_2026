@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Painel | Mundial Viagens</title>
+<link rel="icon" type="image/png" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<link rel="apple-touch-icon" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+<style>
+  body{background:var(--soft);font-family:Inter,system-ui,sans-serif;color:var(--ink)}
+  .adm{max-width:960px;margin:0 auto;padding:2rem 1.25rem 4rem}
+  .adm__top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem}
+  .adm h1{font-size:1.6rem}
+  .box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
+  .box h2{font-size:1.15rem;margin-bottom:1rem}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+  .grid .full{grid-column:1/-1}
+  label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.3rem}
+  input,textarea{width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit;background:#fff}
+  small.hint{display:block;color:var(--muted);font-size:.75rem;margin-top:.25rem}
+  .chk{display:flex;align-items:center;gap:.5rem}.chk input{width:auto}
+  .thumbs{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem}
+  .thumbs div{position:relative}
+  .thumbs img{width:96px;height:72px;object-fit:cover;border-radius:8px;display:block}
+  .thumbs button{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:0;background:#c0392b;color:#fff;cursor:pointer;line-height:1}
+  .msg{margin-top:.8rem;font-size:.9rem}.msg.err{color:#c0392b}.msg.ok{color:#1a7f4b}
+  .item{display:flex;gap:1rem;align-items:center;padding:.9rem 0;border-top:1px solid var(--line)}
+  .item:first-of-type{border-top:0}
+  .item img,.item .ph{width:88px;height:66px;border-radius:8px;object-fit:cover;background:#dfe6f3;flex:none}
+  .item__info{flex:1;min-width:0}.item__info strong{display:block}
+  .item__info span{font-size:.82rem;color:var(--muted)}
+  .tag{display:inline-block;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:99px;margin-left:.4rem}
+  .tag.on{background:#dff5e8;color:#1a7f4b}.tag.off{background:#f3dede;color:#a03030}
+  .del{border:1px solid #c0392b;color:#c0392b;background:#fff;border-radius:8px;padding:.45rem .8rem;cursor:pointer;font:inherit}
+  .del:hover{background:#c0392b;color:#fff}
+  .bloco{border:1px solid var(--line);border-radius:12px;padding:1rem;margin-top:.8rem;background:#f9fbff}
+  .bloco__top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+  .bloco__top button{width:30px;height:30px;border:1px solid #cfd6e4;background:#fff;border-radius:8px;cursor:pointer;margin-left:.3rem}
+  .bloco__top button:disabled{opacity:.35;cursor:default}
+  .bloco .grid{grid-template-columns:90px 1fr}
+  .bloco img{width:140px;height:100px;object-fit:cover;border-radius:8px;display:block;margin-top:.5rem}
+  .addrow{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem}
+  .addrow button{border:1px dashed var(--brand);color:var(--brand);background:#fff;border-radius:99px;padding:.5rem 1rem;cursor:pointer;font:inherit;font-size:.85rem}
+  .addrow button:hover{background:var(--soft)}
+  #login{max-width:380px;margin:12vh auto}
+  [hidden]{display:none!important}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}.item{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="box" id="login" hidden>
+  <h2>Acesso restrito</h2>
+  <label for="em">E-mail</label><input id="em" type="email" autocomplete="username">
+  <label for="pw" style="margin-top:.8rem">Senha</label><input id="pw" type="password" autocomplete="current-password">
+  <button class="btn btn--dark" id="entrar" style="margin-top:1rem;width:100%">Entrar</button>
+  <p class="msg err" id="loginErr"></p>
+</div>
+
+<!-- PAINEL -->
+<div class="adm" id="painel" hidden>
+  <div class="adm__top">
+    <h1>Painel do site</h1>
+    <button class="btn btn--outline btn--sm" id="sair">Sair</button>
+  </div>
+
+  <form class="box" id="dForm">
+    <h2 id="dFormTitulo">Novo item do bloco</h2>
+    <p class="hint" style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Estes itens aparecem no bloco deslizante logo abaixo do topo da página inicial.</p>
+    <div class="grid">
+      <div class="full"><label for="dPromo">Atalho: puxar dados de uma promoção</label><select id="dPromo" style="width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit"></select></div>
+      <div><label for="dTipo">Tipo</label><select id="dTipo" style="width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit"><option value="promocao">Promoção</option><option value="grupo">Grupo</option><option value="pacote">Pacote</option><option value="peregrinacao">Peregrinação</option><option value="novidade">Novidade</option></select></div>
+      <div><label for="dEtiqueta">Etiqueta (opcional)</label><input id="dEtiqueta" maxlength="30" placeholder="Se vazio, usa o tipo"></div>
+      <div class="full"><label for="dTitulo">Título *</label><input id="dTitulo" required maxlength="70" placeholder="Ex.: Peregrinação a Fátima"></div>
+      <div class="full"><label for="dTexto">Texto curto</label><textarea id="dTexto" rows="3" maxlength="220"></textarea></div>
+      <div><label for="dBotao">Texto do botão</label><input id="dBotao" maxlength="24" placeholder="Saiba mais"></div>
+      <div><label for="dLink">Link do botão</label><input id="dLink" placeholder="promo.html?id=… ou https://…"></div>
+      <div><label for="dOrdem">Ordem (1 aparece primeiro)</label><input id="dOrdem" type="number" min="1" value="1"></div>
+      <div><label for="dAte">Exibir até (opcional)</label><input id="dAte" type="date"></div>
+      <div class="full"><label for="dImg">Imagem de fundo</label><input id="dImg" type="file" accept="image/*"><div class="thumbs" id="dThumb"></div></div>
+      <div class="full chk"><input id="dAtivo" type="checkbox" checked><label for="dAtivo" style="margin:0">Mostrar no site</label></div>
+    </div>
+    <button class="btn btn--dark" id="dSalvar" type="submit" style="margin-top:1.2rem">Publicar item</button>
+    <button class="btn btn--outline" id="dCancelar" type="button" style="margin-top:1.2rem;margin-left:.5rem" hidden>Cancelar edição</button>
+    <p class="msg" id="dMsg"></p>
+  </form>
+
+  <div class="box">
+    <h2>Itens do bloco da página inicial</h2>
+    <div id="dLista">Carregando…</div>
+  </div>
+
+  <form class="box" id="form">
+    <h2 id="formTitulo">Nova viagem (promoção, grupo ou pacote)</h2>
+    <div class="grid">
+      <div class="full"><label for="categoria">Seção do site *</label><select id="categoria" style="width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit"><option value="promocao">Promoções</option><option value="grupo">Grupos</option><option value="pacote">Pacotes</option></select></div>
+      <div><label for="lugar">Lugar *</label><input id="lugar" required maxlength="60" placeholder="Ex.: Lisboa e Porto"></div>
+      <div><label for="etiqueta">Etiqueta (continente/tipo)</label><input id="etiqueta" maxlength="30" placeholder="Ex.: Europa"></div>
+      <div class="full"><label for="descricao">Detalhes do pacote</label><input id="descricao" maxlength="80" placeholder="Ex.: 9 noites · Traslados inclusos"></div>
+      <div class="full"><label for="sobre">Apresentação do pacote</label><textarea id="sobre" rows="4" maxlength="1200" placeholder="Texto de abertura que aparece no topo da página da promoção"></textarea></div>
+      <div><label for="saida">Data de saída *</label><input id="saida" type="date" required></div>
+      <div><label for="volta">Data de volta</label><input id="volta" type="date"></div>
+      <div>
+        <label for="ate">Exibir no site até *</label><input id="ate" type="date" required>
+        <small class="hint">Depois desta data a promoção some sozinha do site. Por padrão é a data de saída.</small>
+      </div>
+      <div><label for="preco">Valor a partir de (R$) *</label><input id="preco" type="number" min="0" step="0.01" required placeholder="8640"></div>
+      <div class="full">
+        <label for="fotos">Fotos (até 3)</label>
+        <input id="fotos" type="file" accept="image/*" multiple>
+        <small class="hint">As imagens são reduzidas automaticamente. Com mais de uma foto, elas se alternam no card.</small>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <div class="full">
+        <label>Blocos de conteúdo</label>
+        <small class="hint">Monte a página da promoção em blocos separados (roteiro, o que está incluso, hotel, dicas…). Cada bloco aparece animado e organizado na página. Use ↑ ↓ para mudar a ordem.</small>
+        <div id="blocos"></div>
+        <div class="addrow">
+          <button type="button" data-t="texto">+ Bloco de texto</button>
+          <button type="button" data-t="lista">+ Lista com ✓</button>
+          <button type="button" data-t="foto">+ Foto com texto</button>
+        </div>
+      </div>
+      <div class="full chk"><input id="destaque" type="checkbox"><label for="destaque" style="margin:0">Destacar (card em largura total, aparece primeiro)</label></div>
+    </div>
+    <button class="btn btn--dark" id="salvar" type="submit" style="margin-top:1.2rem">Publicar promoção</button>
+    <button class="btn btn--outline" id="cancelar" type="button" style="margin-top:1.2rem;margin-left:.5rem" hidden>Cancelar edição</button>
+    <p class="msg" id="msg"></p>
+  </form>
+
+  <div class="box">
+    <h2>Viagens cadastradas</h2>
+    <div id="lista">Carregando…</div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { firebaseConfig, ADMIN_EMAIL } from "./js/conexao.js";
+
+const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
+const $ = id => document.getElementById(id);
+const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
+const linkDe = id => new URL("promo.html?id=" + encodeURIComponent(id), location.href).href;
+const br = s => s ? s.split("-").reverse().join("/") : "";
+let fotos = [], blocos = [], editId = null;
+
+/* ---------- Login ---------- */
+onAuthStateChanged(auth, u => {
+  const ok = u && u.email === ADMIN_EMAIL;
+  if (u && !ok) { signOut(auth); $("loginErr").textContent = "Esta conta não tem permissão."; }
+  $("login").hidden = !!ok; $("painel").hidden = !ok;
+  if (ok) carregar();
+});
+$("entrar").onclick = async () => {
+  $("loginErr").textContent = "";
+  try { await signInWithEmailAndPassword(auth, $("em").value.trim(), $("pw").value); }
+  catch { $("loginErr").textContent = "E-mail ou senha incorretos."; }
+};
+$("pw").addEventListener("keydown", e => e.key === "Enter" && $("entrar").click());
+$("sair").onclick = () => signOut(auth);
+
+/* ---------- Fotos: redimensiona e comprime no navegador ---------- */
+const reduzir = (file, max = 1100, q = 0.72) => new Promise((res, rej) => {
+  const img = new Image(), url = URL.createObjectURL(file);
+  img.onload = () => {
+    const k = Math.min(1, max / Math.max(img.width, img.height));
+    const c = document.createElement("canvas");
+    c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+    c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url);
+    res(c.toDataURL("image/jpeg", q));
+  };
+  img.onerror = rej; img.src = url;
+});
+function desenharThumbs() {
+  $("thumbs").replaceChildren(...fotos.map((src, i) => {
+    const d = document.createElement("div"), im = document.createElement("img"), b = document.createElement("button");
+    im.src = src; b.type = "button"; b.textContent = "×"; b.title = "Remover foto";
+    b.onclick = () => { fotos.splice(i, 1); desenharThumbs(); };
+    d.append(im, b); return d;
+  }));
+}
+$("fotos").onchange = async e => {
+  for (const f of [...e.target.files]) {
+    if (fotos.length >= 3) break;
+    try { fotos.push(await reduzir(f)); } catch { aviso("Não consegui ler a imagem \"" + f.name + "\". Use JPG ou PNG.", "err"); }
+  }
+  e.target.value = ""; desenharThumbs();
+};
+
+/* ---------- Blocos de conteúdo ---------- */
+const TIPOS = { texto: "Texto", lista: "Lista com ✓", foto: "Foto com texto" };
+const mover = (i, d) => { [blocos[i], blocos[i + d]] = [blocos[i + d], blocos[i]]; desenharBlocos(); };
+function desenharBlocos() {
+  $("blocos").replaceChildren(...blocos.map((b, i) => {
+    const w = document.createElement("div"); w.className = "bloco";
+    const top = document.createElement("div"); top.className = "bloco__top";
+    const t = document.createElement("strong"); t.textContent = `${i + 1}. ${TIPOS[b.tipo]}`;
+    const ctr = document.createElement("div");
+    const mk = (txt, title, fn, dis) => { const x = document.createElement("button"); x.type = "button"; x.textContent = txt; x.title = title; x.disabled = !!dis; x.onclick = fn; return x; };
+    ctr.append(mk("↑", "Subir", () => mover(i, -1), i === 0), mk("↓", "Descer", () => mover(i, 1), i === blocos.length - 1), mk("×", "Remover bloco", () => { blocos.splice(i, 1); desenharBlocos(); }));
+    top.append(t, ctr);
+    const campo = (lab, el) => { const d = document.createElement("div"), l = document.createElement("label"); l.textContent = lab; d.append(l, el); return d; };
+    const inp = (k, ph, max) => { const e = document.createElement("input"); e.value = b[k] || ""; e.placeholder = ph; e.maxLength = max; e.oninput = () => b[k] = e.value; return e; };
+    const ta = (k, ph) => { const e = document.createElement("textarea"); e.rows = 4; e.value = b[k] || ""; e.placeholder = ph; e.maxLength = 900; e.oninput = () => b[k] = e.value; return e; };
+    const g = document.createElement("div"); g.className = "grid";
+    if (b.tipo !== "foto") g.append(campo("Ícone", inp("icone", "✈️", 4))); else g.style.gridTemplateColumns = "1fr";
+    g.append(campo("Título", inp("titulo", b.tipo === "lista" ? "Ex.: O que está incluso" : "Ex.: Roteiro dia a dia", 60)));
+    const corpo = campo(b.tipo === "lista" ? "Itens (um por linha)" : "Texto", ta("texto", b.tipo === "lista" ? "Passagem aérea\nHospedagem com café da manhã\nTraslados" : "Escreva aqui…"));
+    corpo.className = "full";
+    g.append(corpo);
+    w.append(top, g);
+    if (b.tipo === "foto") {
+      const f = document.createElement("input"); f.type = "file"; f.accept = "image/*"; f.style.marginTop = ".6rem";
+      f.onchange = async () => { try { b.foto = await reduzir(f.files[0], 800, 0.65); desenharBlocos(); } catch { aviso("Não consegui ler a imagem.", "err"); } };
+      w.append(f);
+      if (b.foto) { const im = document.createElement("img"); im.src = b.foto; w.append(im); }
+    }
+    return w;
+  }));
+}
+document.querySelectorAll(".addrow button").forEach(btn => btn.onclick = () => { blocos.push({ tipo: btn.dataset.t, icone: "", titulo: "", texto: "" }); desenharBlocos(); });
+
+/* ---------- Modo edição ---------- */
+function sairEdicao() {
+  editId = null; $("formTitulo").textContent = "Nova promoção"; $("salvar").textContent = "Publicar promoção"; $("cancelar").hidden = true;
+}
+$("cancelar").onclick = () => { $("form").reset(); fotos = []; blocos = []; ateManual = false; desenharThumbs(); desenharBlocos(); sairEdicao(); aviso(""); };
+function editar(id, p) {
+  editId = id;
+  $("categoria").value = p.categoria || "promocao"; $("lugar").value = p.lugar || ""; $("etiqueta").value = p.etiqueta || ""; $("descricao").value = p.descricao || "";
+  $("sobre").value = p.sobre || ""; $("saida").value = p.dataSaida || ""; $("volta").value = p.dataVolta || "";
+  $("ate").value = p.exibirAte || ""; $("preco").value = p.preco ?? ""; $("destaque").checked = !!p.destaque;
+  fotos = [...(p.fotos || [])]; blocos = (p.blocos || []).map(b => ({ ...b }));
+  ateManual = true; desenharThumbs(); desenharBlocos();
+  $("formTitulo").textContent = "Editando: " + p.lugar; $("salvar").textContent = "Salvar alterações"; $("cancelar").hidden = false;
+  aviso(""); $("form").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+/* Data "exibir até\" acompanha a saída, até o admin mexer nela */
+let ateManual = false;
+$("ate").oninput = () => ateManual = true;
+$("saida").onchange = () => { if (!ateManual) $("ate").value = $("saida").value; };
+
+/* ---------- Salvar ---------- */
+const aviso = (t, c = "") => { $("msg").textContent = t; $("msg").className = "msg " + c; };
+const limite = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error("TIMEOUT")), ms))]);
+
+$("form").onsubmit = async e => {
+  e.preventDefault();
+  const form = e.target;
+  console.log("[admin] enviando formulário…");
+  const saida = $("saida").value, volta = $("volta").value;
+  const ate = $("ate").value || saida;              // se "exibir até" estiver vazio, usa a data de saída
+  if (!saida) return aviso("Preencha a data de saída.", "err");
+  if (volta && volta < saida) return aviso("A data de volta não pode ser antes da saída.", "err");
+  if (ate < hoje()) return aviso("A data de exibição já passou; a promoção não apareceria no site.", "err");
+  const preco = parseFloat($("preco").value);
+  if (!(preco >= 0)) return aviso("Informe o valor a partir de (R$).", "err");
+  if (!auth.currentUser) return aviso("Sessão expirada. Saia e entre novamente.", "err");
+
+  const dados = {
+    categoria: $("categoria").value, lugar: $("lugar").value.trim(), etiqueta: $("etiqueta").value.trim(), descricao: $("descricao").value.trim(),
+    dataSaida: saida, dataVolta: volta, exibirAte: ate, preco,
+    sobre: $("sobre").value.trim(),
+    blocos: blocos.filter(b => b.titulo.trim() || b.texto.trim() || b.foto).map(b => ({ tipo: b.tipo, icone: (b.icone || "").trim(), titulo: b.titulo.trim(), texto: b.texto.trim(), foto: b.foto || "" })),
+    fotos, destaque: $("destaque").checked, criadoEm: serverTimestamp()
+  };
+  if (editId) delete dados.criadoEm;           // ao editar, mantém a data de criação original
+  const editando = !!editId;
+  const peso = JSON.stringify([dados.fotos, dados.blocos]).length, kb = Math.round(peso / 1024);
+  console.log("[admin] fotos:", fotos.length, "·", kb, "KB");
+  if (peso > 900000) return aviso("As fotos ficaram pesadas demais (" + kb + " KB). Use menos fotos ou imagens menores.", "err");
+
+  $("salvar").disabled = true; aviso("Salvando…");
+  try {
+    const id = editando ? editId : (await limite(addDoc(collection(db, "promocoes"), dados), 15000)).id;
+    if (editando) await limite(updateDoc(doc(db, "promocoes", editId), dados), 15000);
+    console.log("[admin] promoção salva");
+    form.reset(); fotos = []; blocos = []; desenharBlocos(); sairEdicao(); ateManual = false; desenharThumbs();
+    const link = linkDe(id);
+    let copiado = false;
+    try { await navigator.clipboard.writeText(link); copiado = true; } catch {}
+    aviso((editando ? "Promoção atualizada." : "Promoção publicada.") + " Link da página" + (copiado ? " (já copiado)" : "") + ": " + link, "ok"); carregar();
+  } catch (err) {
+    console.error("[admin] falha ao salvar:", err);
+    if (err.message === "TIMEOUT")
+      aviso("O Firestore não respondeu em 15s. Verifique no Firebase Console se o banco Firestore foi criado (Build > Firestore Database) e se a internet/bloqueador de anúncios não está barrando firestore.googleapis.com.", "err");
+    else if (err.code === "permission-denied")
+      aviso("Sem permissão: ajuste as regras do Firestore para permitir escrita do e-mail administrador na coleção \"promocoes\".", "err");
+    else aviso("Erro ao salvar: " + (err.code || "") + " " + err.message, "err");
+  } finally { $("salvar").disabled = false; }
+};
+
+/* ---------- Listar / remover ---------- */
+async function carregar() {
+  let snap;
+  try { snap = await getDocs(query(collection(db, "promocoes"), orderBy("exibirAte", "desc"))); }
+  catch (err) { console.error("[admin] falha ao listar:", err); $("lista").textContent = "Não foi possível carregar a lista: " + (err.code || err.message); return; }
+  const l = $("lista");
+  if (snap.empty) { l.textContent = "Nenhuma promoção cadastrada."; return; }
+  l.replaceChildren(...snap.docs.map(d => {
+    const p = d.data(), ativa = p.exibirAte >= hoje();
+    const row = document.createElement("div"); row.className = "item";
+    let thumb;
+    if (p.fotos?.[0]) { thumb = document.createElement("img"); thumb.src = p.fotos[0]; thumb.alt = ""; }
+    else { thumb = document.createElement("div"); thumb.className = "ph"; }
+    const info = document.createElement("div"); info.className = "item__info";
+    const s = document.createElement("strong"); s.textContent = p.lugar;
+    const tag = document.createElement("span"); tag.className = "tag " + (ativa ? "on" : "off"); tag.textContent = ativa ? "No site" : "Expirada";
+    s.append(tag);
+    const sp = document.createElement("span");
+    sp.textContent = `${{promocao:"Promoção",grupo:"Grupo",pacote:"Pacote"}[p.categoria || "promocao"]} · ${br(p.dataSaida)}${p.dataVolta ? " a " + br(p.dataVolta) : ""} · R$ ${Number(p.preco).toLocaleString("pt-BR")} · visível até ${br(p.exibirAte)}`;
+    info.append(s, sp);
+    const acoes = document.createElement("div"); acoes.style.cssText = "display:flex;gap:.5rem;flex-wrap:wrap";
+    const abrir = document.createElement("a"); abrir.className = "del"; abrir.style.cssText = "text-decoration:none;color:#1d4a9f;border-color:#1d4a9f"; abrir.textContent = "Abrir página";
+    abrir.href = linkDe(d.id); abrir.target = "_blank"; abrir.rel = "noopener";
+    const copiar = document.createElement("button"); copiar.type = "button"; copiar.className = "del"; copiar.style.cssText = "color:#1d4a9f;border-color:#1d4a9f"; copiar.textContent = "Copiar link";
+    copiar.onclick = async () => {
+      try { await navigator.clipboard.writeText(linkDe(d.id)); copiar.textContent = "Copiado"; }
+      catch { prompt("Copie o link:", linkDe(d.id)); }
+      setTimeout(() => copiar.textContent = "Copiar link", 2000);
+    };
+    const del = document.createElement("button"); del.className = "del"; del.textContent = "Remover";
+    del.onclick = async () => {
+      if (!confirm(`Remover "${p.lugar}" do site?`)) return;
+      await deleteDoc(doc(db, "promocoes", d.id)); if (editId === d.id) $("cancelar").click(); carregar();
+    };
+    const ed = document.createElement("button"); ed.type = "button"; ed.className = "del"; ed.style.cssText = "color:#1a7f4b;border-color:#1a7f4b"; ed.textContent = "Editar";
+    ed.onclick = () => editar(d.id, p);
+    acoes.append(abrir, copiar, ed, del); row.append(thumb, info, acoes); return row;
+  }));
+}
+</script>
+<script type="module" src="./js/admin-destaques.js"></script>
+</body>
+</html>

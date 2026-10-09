@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#1d4a9f">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Pacote em promoção da Mundial Viagens. Veja detalhes e peça pelo WhatsApp.">
+<title>Promoção | Mundial Viagens</title>
+<link rel="icon" type="image/png" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<link rel="apple-touch-icon" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/motion.css">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+  .lp{max-width:1200px;margin:0 auto;padding:1.2rem var(--gut,1.25rem) 6rem}
+  .lp__back{display:inline-block;margin-bottom:1rem;font-size:.9rem;color:var(--muted)}
+  .lp__back:hover{text-decoration:underline}
+  /* Hero */
+  .lp__hero{position:relative;height:clamp(380px,66vh,580px);border-radius:var(--r,28px);overflow:hidden;color:#fff;isolation:isolate;box-shadow:var(--sh,0 18px 44px rgba(29,74,159,.13))}
+  .lp__slide{position:absolute;inset:0;background:#dfe6f3 center/cover no-repeat;opacity:0;transition:opacity 1.2s ease;z-index:-2}
+  .lp__slide.on{opacity:1;animation:lpzoom 9s ease-out both}
+  @keyframes lpzoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+  .lp__hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(14,36,82,.85),rgba(14,36,82,.15) 60%,rgba(14,36,82,.25))}
+  .lp__hero__in{position:absolute;left:clamp(1.2rem,4vw,3rem);right:clamp(1.2rem,4vw,3rem);bottom:clamp(1.4rem,4vw,2.8rem);max-width:760px}
+  .lp__tag{display:inline-block;font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:99px;background:rgba(255,255,255,.92);color:var(--brand)}
+  .lp h1{font-size:clamp(2.4rem,7vw,5rem);line-height:1.02;letter-spacing:-.03em;margin:.8rem 0 .6rem}
+  .lp__desc{font-size:1.05rem;opacity:.92;max-width:52ch}
+  .lp__chip{position:absolute;z-index:2;display:flex;align-items:center;gap:.5rem;padding:.6rem 1rem;border-radius:99px;background:rgba(255,255,255,.93);color:var(--ink);font-size:.85rem;font-weight:700;box-shadow:var(--sh);animation:lpbob 7s ease-in-out infinite}
+  .lp__chip b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--grad,#1d4a9f);color:#fff;font-size:.75rem}
+  .lp__chip--1{top:7%;right:4%}.lp__chip--2{top:22%;right:12%;animation-delay:-2.5s}.lp__chip--3{top:7%;right:calc(4% + 190px);animation-delay:-4s}
+  @keyframes lpbob{50%{transform:translateY(-10px)}}
+  .lp__dots{position:absolute;right:1.4rem;bottom:1.4rem;display:flex;gap:.45rem}
+  .lp__dots button{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:rgba(255,255,255,.5);cursor:pointer;transition:.3s}
+  .lp__dots button[aria-current="true"]{background:#fff;width:28px;border-radius:99px}
+  /* Corpo */
+  .lp__body{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:2rem;margin-top:2rem;align-items:start}
+  .lp__sobre h2{font-size:clamp(1.6rem,3vw,2.2rem);margin:0 0 .8rem}
+  .lp__sobre p{color:var(--muted);white-space:pre-line;max-width:62ch}
+  .lp__blocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;margin-top:2rem}
+  .bk{background:#fff;border:1px solid var(--line);border-radius:var(--r,28px);padding:1.6rem;box-shadow:var(--sh);transition:transform .35s,box-shadow .35s}
+  .bk:hover{transform:translateY(-6px)}
+  .bk__ic{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--soft);font-size:1.4rem;margin-bottom:1rem;transition:.35s}
+  .bk:hover .bk__ic{background:var(--grad);transform:rotate(-8deg) scale(1.08)}
+  .bk h3{font-size:1.2rem;margin-bottom:.5rem}
+  .bk p{color:var(--muted);font-size:.95rem;white-space:pre-line}
+  .bk ul{display:grid;gap:.5rem}
+  .bk li{position:relative;padding-left:1.7rem;font-size:.95rem}
+  .bk li::before{content:"✓";position:absolute;left:0;top:0;width:1.2rem;height:1.2rem;border-radius:50%;background:#dff5e8;color:#1a7f4b;font-size:.7rem;font-weight:700;display:grid;place-items:center;top:.25rem}
+  .bk--foto{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;align-items:center;padding:0;overflow:hidden;background:var(--soft)}
+  .bk--foto .bk__img{min-height:280px;height:100%;background:#dfe6f3 center/cover no-repeat;transition:transform .8s}
+  .bk--foto:hover .bk__img{transform:scale(1.04)}
+  .bk--foto .bk__t{padding:1.6rem}
+  .bk--foto .bk__imgw{overflow:hidden;height:100%}
+  .bk--foto.rev .bk__imgw{order:2}
+  /* Reserva */
+  .lp__book{position:sticky;top:calc(var(--h,80px) + 1rem);background:#fff;border:1px solid var(--line);border-radius:var(--r,28px);padding:1.6rem;box-shadow:var(--sh)}
+  .lp__book small{letter-spacing:.2em}
+  .lp__price strong{display:block;font-size:2.6rem;line-height:1.1;margin:.2rem 0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lp__price span{font-size:.8rem;color:var(--muted)}
+  .lp__dates{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1.2rem 0}
+  .lp__dates div{background:var(--soft);border-radius:16px;padding:.7rem .9rem}
+  .lp__dates dt{font-size:.75rem;color:var(--muted)}.lp__dates dd{margin:0;font-weight:700;font-size:.9rem}
+  .lp__actions{display:grid;gap:.6rem}
+  .lp__cta{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.95rem 1.4rem;border-radius:99px;background:#1a9f55;color:#fff;font-weight:700;border:0;font:inherit;font-weight:700;cursor:pointer;transition:.3s}
+  .lp__cta:hover{background:#15864a;transform:translateY(-3px)}
+  .lp__cta--alt{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+  .lp__cta--alt:hover{background:var(--soft)}
+  .lp__cta:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+  .lp__valid{margin-top:1rem;font-size:.8rem;color:var(--muted)}
+  /* Faixa final */
+  .lp__end{margin-top:3rem;border-radius:var(--r,28px);padding:clamp(2rem,5vw,3.5rem);background:var(--grad);background-size:200% 200%;animation:drift 14s ease-in-out infinite;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+  .lp__end h2{margin:0;font-size:clamp(1.6rem,3.5vw,2.4rem)}
+  .lp__end .lp__cta{background:#fff;color:var(--ink)}
+  .lp__state{text-align:center;padding:4rem 1rem}
+  .lp__state h1{margin-bottom:.5rem;color:var(--ink)}
+  .lp__bar{display:none}
+  /* Entrada animada */
+  .js .rv{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+  .js .rv.in{opacity:1;transform:none}
+  [hidden]{display:none!important}
+  @media(max-width:900px){
+    .lp__body{grid-template-columns:1fr}
+    .lp__book{position:static;order:-1}
+    .lp__chip--3{display:none}.lp__chip{font-size:.75rem}
+    .lp__bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;gap:.6rem;align-items:center;padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid var(--line)}
+    .lp__bar .lp__cta{flex:1}.lp__bar strong{font-size:1rem;line-height:1.1}.lp__bar small{font-size:.6rem;letter-spacing:.1em}
+  }
+  @media(max-width:640px){.lp__blocks{grid-template-columns:1fr}.bk--foto{grid-template-columns:1fr}.bk--foto.rev .bk__imgw{order:0}.lp__chip--2{display:none}}
+  @media(prefers-reduced-motion:reduce){.lp__chip,.lp__slide.on,.lp__end{animation:none}.js .rv{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<header class="header" id="topo">
+  <div class="wrap header__in">
+    <a class="logo" href="index.html"><img src="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png" alt=""><span>Mundial Viagens</span></a>
+    <button class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <nav class="nav" id="menu">
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#destinos">Destinos</a>
+      <a href="promocoes.html">Promoções</a>
+      <a href="index.html#como-funciona">Como funciona</a>
+      <a href="index.html#depoimentos">Depoimentos</a>
+      <a href="index.html#duvidas">Dúvidas</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main class="lp" id="lp">
+  <p class="lead" style="text-align:center;padding:4rem 0">Carregando promoção…</p>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <div class="footer__brand">
+      <a class="logo logo--big" href="index.html"><img src="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png" alt=""><span>Mundial Viagens</span></a>
+      <strong>Sobre nós</strong>
+      <span>Há 14 anos no mercado, transformando sonhos em destinos inesquecíveis, com compromisso, segurança e atendimento personalizado.</span>
+    </div>
+    <div class="footer__col">
+      <small>Navegação</small>
+      <ul>
+        <li><a href="index.html#sobre">Sobre</a></li>
+        <li><a href="index.html#destinos">Destinos</a></li>
+        <li><a href="promocoes.html">Promoções</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <small>Siga-nos</small>
+      <ul>
+        <li><a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener"><i>◎</i> @mundial_viagens_ <b>→</b></a></li>
+        <li><a href="https://www.facebook.com/mundialmilhas/?locale=pt_BR" target="_blank" rel="noopener"><i>f</i> /mundialmilhas <b>→</b></a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="wrap footer__legal">© 2026 Mundial Viagens. Todos os direitos reservados. Valores sujeitos a alteração e disponibilidade.</p>
+</footer>
+
+<script>
+  const burger=document.querySelector('.burger'),nav=document.querySelector('.nav');
+  const setMenu=o=>{document.body.classList.toggle('menu-open',o);burger.setAttribute('aria-expanded',o)};
+  burger.addEventListener('click',()=>setMenu(!document.body.classList.contains('menu-open')));
+  nav.addEventListener('click',e=>{if(e.target.tagName==='A')setMenu(false)});
+</script>
+<script src="js/main.js" defer></script>
+<script type="module" src="js/motion.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { firebaseConfig, WHATSAPP } from "./js/conexao.js";
+
+const box = document.getElementById("lp");
+const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
+const dia = s => { const [y, m, d] = s.split("-"); return `${+d} de ${MESES[+m-1]} de ${y}`; };
+const brl = n => "R$ " + Number(n).toLocaleString("pt-BR", { minimumFractionDigits: n % 1 ? 2 : 0 });
+const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+function estado(titulo, texto) {
+  const s = el("div", "lp__state");
+  s.append(el("h1", "", titulo), el("p", "lead", texto));
+  s.lastChild.style.margin = "1rem auto 1.5rem";
+  const a = el("a", "lp__cta", "Ver outras promoções"); a.href = "promocoes.html";
+  s.append(a);
+  box.replaceChildren(s);
+}
+
+function bloco(b, i, fotoN) {
+  const c = el("article", "bk rv");
+  c.style.setProperty("--d", (i % 2) * 0.1 + "s");
+  if (b.tipo === "foto") {
+    c.classList.add("bk--foto"); if (fotoN % 2) c.classList.add("rev");
+    const w = el("div", "bk__imgw"), im = el("div", "bk__img");
+    if (b.foto) im.style.backgroundImage = `url("${b.foto}")`; else im.className += " img-1";
+    im.setAttribute("role", "img"); im.setAttribute("aria-label", b.titulo || "Foto");
+    w.append(im);
+    const t = el("div", "bk__t");
+    if (b.titulo) t.append(el("h3", "", b.titulo));
+    if (b.texto) t.append(el("p", "", b.texto));
+    c.append(w, t); return c;
+  }
+  if (b.icone) c.append(el("span", "bk__ic", b.icone));
+  if (b.titulo) c.append(el("h3", "", b.titulo));
+  if (b.tipo === "lista") {
+    const ul = el("ul");
+    (b.texto || "").split("\n").map(x => x.trim()).filter(Boolean).forEach(x => ul.append(el("li", "", x)));
+    c.append(ul);
+  } else if (b.texto) c.append(el("p", "", b.texto));
+  return c;
+}
+
+function montar(p) {
+  document.title = `${p.lugar} | Mundial Viagens`;
+  const periodo = p.dataSaida ? (p.dataVolta ? `${dia(p.dataSaida)} a ${dia(p.dataVolta)}` : `Saída em ${dia(p.dataSaida)}`) : "";
+  const msg = `Olá! Vi a promoção ${p.lugar} no site e tenho interesse${periodo ? " (" + periodo + ")" : ""}, a partir de ${brl(p.preco)}. Pode me passar mais informações?`;
+  const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  const zap = (txt) => { const a = el("a", "lp__cta", txt); a.href = wa; a.target = "_blank"; a.rel = "noopener"; return a; };
+
+  const back = el("a", "lp__back", "← Todas as promoções"); back.href = "promocoes.html";
+
+  /* HERO */
+  const hero = el("section", "lp__hero");
+  const fotos = p.fotos || [];
+  if (!fotos.length) hero.classList.add("img-1");
+  const slides = fotos.map(src => { const s = el("div", "lp__slide"); s.style.backgroundImage = `url("${src}")`; hero.append(s); return s; });
+  const hin = el("div", "lp__hero__in");
+  hin.append(el("span", "lp__tag", p.etiqueta || "Promoção"), el("h1", "", p.lugar));
+  if (p.descricao) hin.append(el("p", "lp__desc", p.descricao));
+  hero.append(hin);
+  const chips = [];
+  if (p.dataSaida) chips.push(["✈", "Saída " + dia(p.dataSaida)]);
+  if (p.dataSaida && p.dataVolta) {
+    const n = Math.round((new Date(p.dataVolta) - new Date(p.dataSaida)) / 864e5);
+    if (n > 0) chips.push(["☾", n + (n > 1 ? " noites" : " noite")]);
+  }
+  chips.forEach(([i, t], n) => { const c = el("span", "lp__chip lp__chip--" + (n + 1)); c.append(el("b", "", i), t); hero.append(c); });
+  if (slides.length) {
+    let atual = 0, timer;
+    const dots = el("div", "lp__dots");
+    const ir = i => {
+      atual = i;
+      slides.forEach((s, j) => s.classList.toggle("on", j === i));
+      [...dots.children].forEach((d, j) => d.setAttribute("aria-current", j === i));
+    };
+    slides.forEach((_, i) => { const d = el("button"); d.type = "button"; d.setAttribute("aria-label", "Ver foto " + (i + 1)); d.onclick = () => { ir(i); clearInterval(timer); }; dots.append(d); });
+    ir(0);
+    if (slides.length > 1) { hero.append(dots); timer = setInterval(() => ir((atual + 1) % slides.length), 5000); }
+  }
+
+  /* CORPO */
+  const body = el("div", "lp__body");
+  const left = el("div", "lp__left");
+  const textoSobre = p.sobre || "";
+  if (textoSobre) {
+    const sb = el("div", "lp__sobre rv");
+    sb.append(el("h2", "", "Sobre o pacote"), el("p", "", textoSobre));
+    left.append(sb);
+  }
+  const bl = (p.blocos || []).filter(b => b && (b.titulo || b.texto || b.foto));
+  if (bl.length) {
+    const g = el("div", "lp__blocks"); let fn = 0;
+    bl.forEach((b, i) => g.append(bloco(b, i, b.tipo === "foto" ? fn++ : 0)));
+    left.append(g);
+  }
+
+  const book = el("aside", "lp__book rv");
+  const price = el("div", "lp__price");
+  price.append(el("small", "", "A partir de"), el("strong", "", brl(p.preco)), el("span", "", "por pessoa, em quarto duplo"));
+  book.append(price);
+  if (p.dataSaida) {
+    const dl = el("dl", "lp__dates");
+    const d1 = el("div"); d1.append(el("dt", "", "Saída"), el("dd", "", dia(p.dataSaida))); dl.append(d1);
+    if (p.dataVolta) { const d2 = el("div"); d2.append(el("dt", "", "Volta"), el("dd", "", dia(p.dataVolta))); dl.append(d2); }
+    book.append(dl);
+  }
+  const share = el("button", "lp__cta lp__cta--alt", "Compartilhar"); share.type = "button";
+  share.onclick = async () => {
+    const url = location.href;
+    try {
+      if (navigator.share) await navigator.share({ title: `${p.lugar} | Mundial Viagens`, text: `Promoção ${p.lugar} a partir de ${brl(p.preco)}`, url });
+      else { await navigator.clipboard.writeText(url); share.textContent = "Link copiado"; setTimeout(() => share.textContent = "Compartilhar", 2000); }
+    } catch {}
+  };
+  const acoes = el("div", "lp__actions"); acoes.append(zap("Pedir no WhatsApp"), share);
+  book.append(acoes, el("p", "lp__valid", `Oferta válida até ${dia(p.exibirAte)}. Valores sujeitos a alteração e disponibilidade.`));
+  body.append(left, book);
+
+  /* FAIXA FINAL */
+  const end = el("section", "lp__end rv");
+  const eh = el("h2", "", "Gostou? Garanta o seu pacote."); end.append(eh, zap("Falar com a gente"));
+
+  /* Barra fixa no celular */
+  const bar = el("div", "lp__bar");
+  const bp = el("div"); bp.append(el("small", "", "A partir de"), el("strong", "", brl(p.preco)));
+  bar.append(bp, zap("Pedir no WhatsApp"));
+
+  box.replaceChildren(back, hero, body, end, bar);
+
+  /* Animação de entrada ao rolar */
+  const els = [...box.querySelectorAll(".rv")];
+  if (!("IntersectionObserver" in window)) return els.forEach(e => e.classList.add("in"));
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 });
+  els.forEach(e => io.observe(e));
+}
+
+try {
+  const id = new URLSearchParams(location.search).get("id");
+  if (!id) throw new Error("sem-id");
+  const db = getFirestore(initializeApp(firebaseConfig));
+  const snap = await getDoc(doc(db, "promocoes", id));
+  if (!snap.exists()) throw new Error("nao-existe");
+  const p = snap.data();
+  if (p.exibirAte < hoje()) estado("Esta promoção terminou", "O prazo dessa oferta acabou, mas temos outras. Veja as promoções ativas ou fale com a gente no WhatsApp.");
+  else montar(p);
+} catch (e) {
+  if (e.message === "sem-id" || e.message === "nao-existe") estado("Promoção não encontrada", "O link pode estar incorreto ou a promoção foi removida.");
+  else estado("Não foi possível carregar", "Tente novamente em instantes.");
+}
+</script>
+</body>
+<script src="js/main.js" defer></script>
+<script type="module" src="js/promos.js"></script>
+<script type="module" src="js/motion.js"></script>
+<link rel="stylesheet" href="css/motion3.css">
+<script type="module" src="js/motion3.js"></script>
+<link rel="stylesheet" href="css/motion2.css">
+<script type="module" src="js/motion2.js"></script>
+<link rel="stylesheet" href="css/pastel.css">
+<link rel="stylesheet" href="css/luxo.css">
+<script type="module" src="js/pastel.js"></script>
+</html>

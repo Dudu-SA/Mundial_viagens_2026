@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#1d4a9f">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Mundial Viagens: pacotes nacionais e internacionais, roteiros personalizados e parcelamento em até 12x.">
+<title>Mundial Viagens</title>
+<link rel="icon" type="image/png" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<link rel="apple-touch-icon" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/destaques.css">
+<link rel="stylesheet" href="css/motion.css">
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header class="header" id="topo">
+  <div class="wrap header__in">
+    <a class="logo" href="#topo"><img src="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png" alt=""><span>Mundial Viagens</span></a>
+    <button class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <nav class="nav" id="menu">
+      <a href="#sobre">Sobre</a>
+      <a href="#destinos">Destinos</a>
+      <a href="promocoes.html">Vendas</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero__text">
+      <h1><span class="ln"><span>Viagens</span></span><span class="ln"><span>imperdíveis.</span></span></h1>
+      <p>Pacotes nacionais e internacionais com roteiro sob medida, atendimento humano do primeiro contato ao retorno e parcelamento em até 12x.</p>
+      <div class="hero__actions">
+        <a class="btn btn--dark" href="promocoes.html">Ver promoções</a>
+        <a class="btn btn--outline" href="#contato">Entre em contato</a>
+      </div>
+    </div>
+    <div class="globo" id="globo">
+      <div class="globo__stage">
+        <div class="globo__fallback" aria-hidden="true"></div>
+        <canvas role="img" aria-label="Globo 3D com a rota de Crateús até o continente escolhido"></canvas>
+      </div>
+      <div class="globo__row">
+        <div class="globo__info" aria-live="polite"><span class="globo__nome"><span></span></span><span class="globo__dist"></span></div>
+        <a class="btn btn--dark btn--sm globo__cta" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      </div>
+      <div class="globo__sel" role="group" aria-label="Escolher continente"></div>
+    </div>
+  </section>
+
+  <!-- DESTAQUES (editável no painel admin) -->
+  <section id="novidades" class="novidades wrap" aria-label="Em destaque" hidden>
+    <div class="dest">
+      <div class="section-head">
+        <div><small>Novidades e ofertas</small><h2>Aproveite agora</h2></div>
+        <div class="dest__ctrl"><span class="dest__count"></span><button class="prev" type="button" aria-label="Anterior">←</button><button class="next-s" type="button" aria-label="Próximo">→</button></div>
+      </div>
+      <div class="dest__track"></div>
+      <div class="dest__dots"></div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee__track"><span>América Central</span><span>América do Norte</span><span>América do Sul</span><span>Europa</span><span>Ásia</span><span>África</span><span>Oceania</span><span>América Central</span><span>América do Norte</span><span>América do Sul</span><span>Europa</span><span>Ásia</span><span>África</span><span>Oceania</span><span>América Central</span><span>América do Norte</span><span>América do Sul</span><span>Europa</span><span>Ásia</span><span>África</span><span>Oceania</span><span>América Central</span><span>América do Norte</span><span>América do Sul</span><span>Europa</span><span>Ásia</span><span>África</span><span>Oceania</span></div></div>
+
+  <!-- NÚMEROS -->
+  <section class="stats wrap" aria-label="Mundial Viagens em números">
+    <div><strong>12+</strong><span>anos de experiência</span></div>
+    <div><strong>50+</strong><span>países atendidos</span></div>
+    <div><strong>5 mil</strong><span>viajantes satisfeitos</span></div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre" class="about wrap">
+    <div class="section-head">
+      <div>
+        <small>Sobre</small>
+        <h2>Visite o mundo<br>por menos</h2>
+        <p class="lead">Somos uma agência que cuida de tudo: passagens, hospedagem, traslados, seguro e passeios. Você escolhe o destino, nós cuidamos do resto.</p>
+      </div>
+      <a class="btn btn--dark" href="#destinos">Vem conhecer</a>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <span class="icon" aria-hidden="true">≡</span>
+        <h3>Preços justos</h3>
+        <p>Com a gente você conhece todo o globo por um preço acessível, com tarifas negociadas direto com companhias e hotéis parceiros.</p>
+      </article>
+      <article class="card card--active">
+        <span class="icon" aria-hidden="true">⚙</span>
+        <h3>Planos do seu jeito</h3>
+        <p>Diga onde quer ir que montamos seu roteiro personalizado, do orçamento ao ritmo da viagem.</p>
+        <a class="btn btn--outline btn--sm" href="#contato">Mande mensagem</a>
+      </article>
+      <article class="card">
+        <span class="icon" aria-hidden="true">▦</span>
+        <h3>Sonhos realizados</h3>
+        <p>Por que deixar seus sonhos de lado? Vem com a gente para que eles se realizem da melhor forma, com suporte 24 horas durante a viagem.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROMOÇÕES -->
+  <section id="destinos" class="promos wrap">
+    <div class="section-head">
+      <div>
+        <small>Destinos</small>
+        <h2>Para onde você quer ir?</h2>
+        <p class="lead">Escolha um continente e fale direto com a gente no WhatsApp.</p>
+      </div>
+    </div>
+    <div class="gallery">
+      <a class="proj img-2" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20Am%C3%A9rica%20Central.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>América Central</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
+      <a class="proj img-3" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20Am%C3%A9rica%20do%20Norte.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>América do Norte</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
+      <a class="proj img-4" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20Am%C3%A9rica%20do%20Sul.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>América do Sul</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
+      <a class="proj img-5" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20%C3%81sia.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>Ásia</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
+      <a class="proj img-6" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20%C3%81frica.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>África</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
+      <a class="proj img-7" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20Europa.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>Europa</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
+    </div>
+  </section>
+
+  <!-- DESTAQUE / NEXT -->
+  <section class="next">
+    <div class="next__img img-8"><span>Ofertas</span></div>
+    <h2>Página de<br>promoções</h2>
+    <div class="next__info">
+      <p>Veja pacotes com preço, noites e o que está incluso, e peça o seu direto pelo WhatsApp.</p>
+      <a class="btn btn--white btn--sm" href="promocoes.html">Ver promoções</a>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section id="como-funciona" class="steps wrap">
+    <div class="section-head">
+      <div>
+        <small>Como funciona</small>
+        <h2>Da ideia ao embarque em 4 passos</h2>
+      </div>
+    </div>
+    <ol class="steps__list">
+      <li><b>1</b><h3>Conversa inicial</h3><p>Você conta destino, datas e orçamento por WhatsApp, e-mail ou telefone.</p></li>
+      <li><b>2</b><h3>Proposta</h3><p>Em até 24 horas enviamos um roteiro com valores detalhados, sem taxas escondidas.</p></li>
+      <li><b>3</b><h3>Reserva</h3><p>Aprovado o roteiro, emitimos passagens e hospedagem. Parcelamos em até 12x.</p></li>
+      <li><b>4</b><h3>Viagem tranquila</h3><p>Você recebe os documentos organizados e conta com suporte 24 horas.</p></li>
+    </ol>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos" class="reviews wrap">
+    <div class="section-head">
+      <div>
+        <small>Depoimentos</small>
+        <h2>Quem viajou com a gente</h2>
+      </div>
+    </div>
+    <div class="reviews__grid">
+      <blockquote><p>Montaram a lua de mel em Portugal exatamente como sonhamos, e ainda ficou abaixo do orçamento.</p><footer><strong>Camila e Rafael</strong><span>Lisboa e Porto</span></footer></blockquote>
+      <blockquote><p>Tive um problema com o voo em Tóquio e o suporte resolveu tudo em minutos. Viajo sempre com eles.</p><footer><strong>Marcos Andrade</strong><span>Tóquio e Kyoto</span></footer></blockquote>
+      <blockquote><p>Viajamos em família com duas crianças. Roteiro leve, traslados certos e nenhuma dor de cabeça.</p><footer><strong>Família Nogueira</strong><span>Cancún</span></footer></blockquote>
+    </div>
+  </section>
+
+  <!-- DÚVIDAS -->
+  <section id="duvidas" class="faq wrap">
+    <div class="section-head">
+      <div>
+        <small>Dúvidas</small>
+        <h2>Perguntas frequentes</h2>
+      </div>
+    </div>
+    <div class="faq__list">
+      <details><summary>Posso parcelar minha viagem?</summary><p>Sim. Parcelamos em até 12x no cartão de crédito. Também aceitamos Pix e boleto com desconto.</p></details>
+      <details><summary>Vocês ajudam com passaporte e visto?</summary><p>Orientamos todo o processo, informamos os documentos necessários por destino e indicamos despachantes de confiança.</p></details>
+      <details><summary>O seguro viagem está incluso?</summary><p>Nos pacotes internacionais o seguro com cobertura médica é incluso. Para roteiros nacionais ele é opcional.</p></details>
+      <details><summary>Posso alterar ou cancelar a reserva?</summary><p>Depende das regras de cada companhia e hotel. Avisamos as condições antes da compra e ajudamos com remarcações.</p></details>
+      <details><summary>Qual o horário de atendimento?</summary><p>De segunda a sexta, das 8h às 18h, e aos sábados das 8h às 12h. Durante a viagem, o suporte funciona 24 horas.</p></details>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="contact wrap">
+    <div class="contact__side">
+      <small>Contato</small>
+      <h2>Entre em contato para mais informações</h2>
+      <ul class="contact__list">
+        <li><strong>WhatsApp</strong><a href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener">(88) 8887-0400</a></li>
+        <li><strong>E-mail</strong><a href="mailto:mundialviagens2014@gmail.com">mundialviagens2014@gmail.com</a></li>
+        <li><strong>Endereço</strong><span>BR-404, 1646 - São Vicente, Crateús - CE</span></li>
+        <li><strong>Horário</strong><span>Seg a sex, 8h às 18h · Sáb, 8h às 12h</span></li>
+      </ul>
+    </div>
+    <form class="contact__form img-1" method="POST">
+      <div class="row">
+        <div><label for="nome">Nome</label><input id="nome" type="text" placeholder="Seu nome" required></div>
+        <div><label for="tel">Telefone</label><input id="tel" type="tel" placeholder="(00) 00000-0000"></div>
+      </div>
+      <label for="email">E-mail</label>
+      <input id="email" type="email" placeholder="Seu e-mail" required>
+      <div class="row">
+        <div><label for="destino">Destino desejado</label><input id="destino" type="text" placeholder="Ex.: Lisboa"></div>
+        <div><label for="data">Mês da viagem</label><input id="data" type="month"></div>
+      </div>
+      <label for="msg">Mensagem</label>
+      <textarea id="msg" rows="4" placeholder="Conte o que você procura"></textarea>
+      <button class="btn btn--white" type="submit">Enviar mensagem</button>
+      <p class="form__ok" hidden>Mensagem enviada. Respondemos em até 24 horas.</p>
+    </form>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <div class="footer__brand">
+      <a class="logo logo--big" href="#topo"><img src="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png" alt=""><span>Mundial Viagens</span></a>
+      <strong>Sobre nós</strong>
+      <span>Há 14 anos no mercado, nossa agência de viagens transforma sonhos em destinos inesquecíveis.
+         Trabalhamos com compromisso, segurança e atendimento personalizado para oferecer as melhores 
+         opções de passagens, hospedagens e pacotes de viagem. Nossa missão é proporcionar 
+         experiências únicas, tornando cada viagem especial do início ao fim.</span>
+    </div>
+    <div class="footer__col">
+      <small>Navegação</small>
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#destinos">Destinos</a></li>
+        <li><a href="promocoes.html">Vendas</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#duvidas">Dúvidas</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <small>Siga-nos</small>
+      <ul>
+        <li><a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener"><i>◎</i> @mundial_viagens_ <b>→</b></a></li>
+        <li><a href="https://www.facebook.com/mundialmilhas/?locale=pt_BR" target="_blank" rel="noopener"><i>f</i> /mundialmilhas <b>→</b></a></li>
+        <li><a href="https://wa.me/558888870400" target="_blank" rel="noopener"><i>W</i> /mundialmilhas <b>→</b></a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="wrap footer__legal">© 2026 Mundial Viagens. Todos os direitos reservados. Valores sujeitos a alteração e disponibilidade.</p>
+</footer>
+
+<script>
+  const burger=document.querySelector('.burger'),nav=document.querySelector('.nav');
+  const setMenu=o=>{document.body.classList.toggle('menu-open',o);burger.setAttribute('aria-expanded',o)};
+  burger.addEventListener('click',()=>setMenu(!document.body.classList.contains('menu-open')));
+  nav.addEventListener('click',e=>{if(e.target.tagName==='A')setMenu(false)});
+</script>
+<script src="js/main.js" defer></script>
+<script type="module" src="js/destaques.js"></script>
+<script type="module" src="js/motion.js"></script>
+<link rel="stylesheet" href="css/motion3.css">
+<script type="module" src="js/motion3.js"></script>
+<link rel="stylesheet" href="css/motion2.css">
+<script type="module" src="js/motion2.js"></script>
+<link rel="stylesheet" href="css/pastel.css">
+<link rel="stylesheet" href="css/luxo.css">
+<script type="module" src="js/pastel.js"></script>
+</body>
+</html>

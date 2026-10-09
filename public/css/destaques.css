@@ -1,0 +1,75 @@
+/* ===== Bloco em destaque da página inicial (carrossel com "espiada" do próximo item) ===== */
+.novidades[hidden]{display:none}
+.dest{--sw:min(86%,960px);position:relative}
+.dest__ctrl{display:flex;align-items:center;gap:.6rem}
+.dest__count{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;margin-right:.8rem;white-space:nowrap}
+.dest__count b{font-size:1.9rem;letter-spacing:-.02em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dest__count span{color:var(--muted);font-size:.85rem;margin-left:.35rem;font-weight:600}
+.dest__ctrl button{width:50px;height:50px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:1.15rem;cursor:pointer;box-shadow:var(--sh);transition:transform .35s var(--ease),background .3s,color .3s}
+.dest__ctrl button:hover{background:var(--grad);color:#fff;border-color:transparent;transform:scale(1.1)}
+
+.dest__track{position:relative;display:flex;gap:1.1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:1.5rem 0 2rem;margin-block:-1.5rem -.5rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.dest__track::-webkit-scrollbar{display:none}
+/* espaçadores: centralizam o primeiro e o último item */
+.dest__track::before,.dest__track::after{content:"";flex:0 0 calc((100% - var(--sw)) / 2 - 1.1rem)}
+
+.dest__slide{position:relative;isolation:isolate;flex:0 0 var(--sw);scroll-snap-align:center;min-height:clamp(340px,46vw,470px);border-radius:var(--r,28px);overflow:hidden;color:#fff;display:flex;align-items:flex-end;
+  background:linear-gradient(125deg,#1d4a9f,#6b4bd8 50%,#ff7a59);background-size:220% 220%;animation:destdrift 12s ease-in-out infinite;
+  transform:scale(.92);opacity:.5;box-shadow:0 10px 24px rgba(14,36,82,.12);
+  transition:transform .8s var(--ease),opacity .8s var(--ease),box-shadow .8s var(--ease)}
+.dest__slide.is-active{transform:none;opacity:1;box-shadow:0 30px 60px rgba(29,74,159,.32)}
+.dest__slide.t-grupo{background-image:linear-gradient(125deg,#0f766e,#1d4a9f 55%,#6b4bd8)}
+.dest__slide.t-pacote{background-image:linear-gradient(125deg,#0e2452,#1d4a9f 55%,#4a86d6)}
+.dest__slide.t-peregrinacao{background-image:linear-gradient(125deg,#2b1b6b,#6b4bd8 55%,#d9b3ff)}
+.dest__slide.t-novidade{background-image:linear-gradient(125deg,#ff7a59,#f2a33a 50%,#6b4bd8)}
+
+.dest__bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;transform:scale(1.06);transition:transform 7s linear}
+.dest__slide.is-active .dest__bg{transform:scale(1.2)}              /* zoom lento (Ken Burns) */
+.dest__slide::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(10,22,56,.86) 0%,rgba(10,22,56,.4) 45%,rgba(10,22,56,0) 78%)}
+.dest__slide::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 36%,rgba(255,255,255,.24) 50%,transparent 64%);transform:translateX(-120%);pointer-events:none}
+.dest__slide.is-active::after{animation:destshine 1.7s var(--ease) .35s both}
+.dest__glyph{position:absolute;right:7%;top:50%;z-index:-1;font-size:clamp(6rem,17vw,12rem);opacity:.22;animation:destfloat 7s ease-in-out infinite;filter:drop-shadow(0 20px 30px rgba(0,0,0,.25))}
+
+.dest__body{position:relative;padding:clamp(1.5rem,4.5vw,3rem);max-width:700px;display:flex;flex-direction:column;align-items:flex-start;gap:.9rem}
+.dest__body>*{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.dest__slide.is-active .dest__body>*{opacity:1;transform:none}
+.dest__slide.is-active .dest__body>:nth-child(2){transition-delay:.12s}
+.dest__slide.is-active .dest__body>:nth-child(3){transition-delay:.24s}
+.dest__slide.is-active .dest__body>:nth-child(4){transition-delay:.36s}
+.dest__tag{display:inline-flex;align-items:center;gap:.55rem;padding:.5rem 1.1rem;border-radius:99px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.38);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+.dest__tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent,#f2a33a);animation:destpulse 2s infinite}
+.dest__body h3{font-size:clamp(1.9rem,4.6vw,3.5rem);line-height:1.04;letter-spacing:-.025em;color:#fff;text-shadow:0 4px 26px rgba(0,0,0,.35)}
+.dest__body p{max-width:50ch;font-size:clamp(.98rem,1.6vw,1.12rem);opacity:.95}
+.dest__body .btn{margin-top:.5rem;box-shadow:0 14px 30px rgba(0,0,0,.28)}
+
+/* bolinhas viram barras de progresso do autoplay */
+.dest__dots{display:flex;justify-content:center;gap:.55rem}
+.dest__dots button{position:relative;overflow:hidden;width:10px;height:10px;padding:0;border:0;border-radius:99px;background:#d3dcef;cursor:pointer;transition:width .6s var(--ease)}
+.dest__dots button.on{width:56px}
+.dest__dots button.on::after{content:"";position:absolute;inset:0;background:var(--grad);transform-origin:left;animation:destfill 6s linear forwards}
+.dest.paused .dest__dots button.on::after{animation-play-state:paused}
+.dest.solo{--sw:100%}
+.dest.solo .dest__track::before,.dest.solo .dest__track::after{display:none}
+.dest.solo .dest__slide{transform:none;opacity:1}
+.dest.solo .dest__dots,.dest.solo .dest__ctrl button{display:none}
+
+@keyframes destdrift{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+@keyframes destshine{to{transform:translateX(120%)}}
+@keyframes destfloat{0%,100%{transform:translateY(-50%) rotate(-4deg)}50%{transform:translateY(-58%) rotate(4deg)}}
+@keyframes destpulse{0%{box-shadow:0 0 0 0 rgba(242,163,58,.7)}70%,100%{box-shadow:0 0 0 10px rgba(242,163,58,0)}}
+@keyframes destfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+@media (max-width:640px){
+  .dest{--sw:90%}
+  .dest__ctrl button{display:none}
+  .dest__slide{min-height:400px}
+  .dest__body .btn{width:100%}
+  .dest__glyph{right:-2%;top:30%}
+}
+@media (prefers-reduced-motion:reduce){
+  .dest__track{scroll-behavior:auto}
+  .dest__slide,.dest__bg,.dest__body>*{transition:none;animation:none}
+  .dest__slide.is-active .dest__bg{transform:scale(1.06)}
+  .dest__slide::after,.dest__glyph{animation:none}
+  .dest__dots button.on::after{animation:none}
+}

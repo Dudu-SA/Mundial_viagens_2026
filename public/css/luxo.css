@@ -1,0 +1,234 @@
+/* ============================================================
+   luxo.css — tema branco e azul, sofisticado e minimalista
+   Carregar POR ÚLTIMO, depois de pastel.css, em index, promocoes e promo.
+   Para mudar a cor do site inteiro, edite só o bloco PALETA.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+/* ---------- PALETA ---------- */
+:root{
+  --navy:#0b1f4d; --blue:#1d4a9f; --blue2:#3b73d9; --sky:#9cc0ff;
+  --b0:#ffffff; --b1:#f3f7ff; --b2:#e3edff; --b3:#cfe0ff;   /* fundos claros */
+  --mute:#4a5b82;
+
+  --ink:var(--navy); --dark:var(--navy); --brand:var(--blue); --accent:var(--blue2);
+  --violet:var(--blue2); --coral:var(--blue2); --soft:var(--b2); --line:rgba(29,74,159,.16); --muted:var(--mute);
+  --grad:linear-gradient(120deg,#cfe0ff,#e8f0ff); --grad-ink:linear-gradient(120deg,var(--blue),var(--blue2));
+  --glass:rgba(255,255,255,.72);
+  --sh:0 26px 50px -30px rgba(29,74,159,.38);
+  --r:6px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Manrope','DM Sans',sans-serif;
+  --display:var(--serif);
+}
+
+/* ---------- fundo: diagonal em blocos + triângulos em contorno à deriva ---------- */
+html{background:var(--b0)}
+body{font-family:var(--sans);color:var(--navy);transition:none;
+  background:linear-gradient(156deg,var(--b0) 0 36%,var(--b1) 36% 60%,var(--b0) 60%) fixed}
+body::before{content:"";position:fixed;inset:-15%;z-index:-1;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 1000' fill='none' stroke='rgba(29,74,159,0.17)' stroke-width='2'%3E%3Cpolygon points='120,160 620,120 360,520'/%3E%3Cpolygon points='430,330 900,300 640,760'/%3E%3Cpolygon points='980,120 1300,420 1000,600'/%3E%3Cpolygon points='700,620 1250,560 980,960'/%3E%3Cpolygon points='60,640 380,600 200,900'/%3E%3C/svg%3E") center/cover no-repeat;
+  animation:lx-drift 90s ease-in-out infinite alternate;will-change:transform}
+@keyframes lx-drift{to{transform:translate3d(-3%,2%,0) rotate(5deg) scale(1.06)}}
+/* sem aviãozinho, sem barra de progresso, sem enfeites pastel */
+.plane,.progress,.intro svg,.bg3d,.p-big,.p-orb,.p-badge,.p-trail,.deco,.chip,.wave{display:none!important}
+::selection{background:var(--blue);color:#fff}
+:focus-visible{outline:2px solid var(--blue2);outline-offset:3px}
+
+/* ---------- tipografia ---------- */
+h1,h2,h3,.page-title,.globo__nome,.stats strong,.marquee span,.dest__body h3{font-family:var(--serif);color:var(--navy)}
+.btn,.nav a,small,summary,strong,.logo,.vtabs button,.globo__sel button{font-family:var(--sans)}
+h1,h2,.page-title{font-weight:600;letter-spacing:-.02em;line-height:1}
+h2{font-size:clamp(2.6rem,5.6vw,4.6rem)}
+.hero h1{font-size:clamp(3.2rem,7.4vw,6.4rem);line-height:.96;letter-spacing:-.025em;color:var(--navy)}
+.lead,.hero__text p,.vdesc{color:var(--mute);font-size:1.05rem;line-height:1.7}
+small,.section-head small,.contact__side small{color:var(--blue);font-weight:600;letter-spacing:.04em}
+
+/* ---------- cabeçalho ---------- */
+.header__in{background:rgba(255,255,255,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--line);box-shadow:0 20px 40px -26px rgba(29,74,159,.45)}
+.nav a{color:var(--navy);font-weight:500;letter-spacing:.02em}
+.nav-pill{background:rgba(29,74,159,.1)!important;transition:translate .8s var(--ease),width .8s var(--ease),height .8s var(--ease),opacity .4s}
+.logo{color:var(--navy)}
+.logo img{filter:none;animation:none}
+@media (max-width:860px){.nav{background:rgba(255,255,255,.98)}}
+
+/* ---------- botões ---------- */
+.btn{border-radius:2px;font-weight:600;font-size:.92rem;letter-spacing:.04em;text-transform:none;padding:1.05rem 2.1rem;
+  transition:background .6s var(--ease),color .6s var(--ease),border-color .6s var(--ease),transform .6s var(--ease),box-shadow .6s var(--ease)}
+.btn--dark,.btn--dark:hover,.btn--white,.contact__form .btn--white,.next .btn--white{background:var(--blue);color:#fff;box-shadow:none;border:1px solid var(--blue)}
+.btn--dark:hover,.btn--white:hover,.contact__form .btn--white:hover,.next .btn--white:hover{background:var(--navy);border-color:var(--navy);color:#fff;transform:translateY(-2px);box-shadow:0 18px 30px -16px rgba(11,31,77,.6)}
+.btn--outline{background:transparent;color:var(--blue);border:1px solid rgba(29,74,159,.55)}
+.btn--outline:hover{background:var(--blue);color:#fff;border-color:var(--blue);transform:translateY(-2px)}
+.rip{background:rgba(255,255,255,.45)}
+
+/* ---------- hero ---------- */
+.hero::before{background:
+  radial-gradient(40% 50% at 18% 30%,rgba(120,168,255,.3),transparent 70%),
+  radial-gradient(36% 46% at 85% 60%,rgba(207,224,255,.7),transparent 70%);filter:blur(30px)}
+.hero__text{transition:translate 1.1s var(--ease)}
+.globo__stage{transition:transform 1s var(--ease)}
+.globo::before{background:radial-gradient(circle at 40% 35%,#fff,var(--b3) 55%,transparent 74%);filter:blur(36px);opacity:.9}
+.globo__fallback{background:radial-gradient(circle at 35% 30%,#fff,var(--b3) 65%,var(--sky))}
+.globo__stage::before{border-color:rgba(29,74,159,.4)}
+.globo__stage::after{border-color:rgba(59,115,217,.35)}
+.globo__dist{color:var(--mute)}
+.globo__sel button{background:rgba(255,255,255,.8);border:1px solid var(--line);color:var(--navy);border-radius:2px;transition:background .6s var(--ease),color .6s var(--ease),border-color .6s var(--ease)}
+.globo__sel button:hover{border-color:var(--blue)}
+.globo__sel button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.globo__sel button.on::after{background:var(--sky)}
+
+/* ---------- faixa de continentes ---------- */
+.marquee{background:transparent;border-block:1px solid var(--line);animation:none;color:var(--navy)}
+.marquee span{font-weight:500;font-size:clamp(1.6rem,3.2vw,2.6rem);color:transparent;-webkit-text-stroke:1px rgba(29,74,159,.75);letter-spacing:.01em}
+.marquee span::after{content:"\25E2";color:var(--blue2);-webkit-text-stroke:0;font-size:.55em;vertical-align:middle;margin-left:2.4rem}
+
+/* ---------- cartões ---------- */
+.card,.steps__list li,blockquote,.stats div,details,.bk,.lp__book{
+  background:var(--glass);border:1px solid var(--line);box-shadow:var(--sh);color:var(--navy);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transition:background .7s var(--ease),border-color .7s var(--ease),box-shadow .7s var(--ease),opacity 1.1s var(--ease),transform 1.3s var(--ease),filter 1.1s var(--ease)}
+.card:hover,blockquote:hover{background:#fff;border-color:rgba(29,74,159,.45);box-shadow:0 34px 60px -30px rgba(29,74,159,.5)}
+.card p,blockquote p,details p,.steps__list p{color:var(--mute)}
+.card .icon,.card:hover .icon{background:var(--b1);border:1px solid rgba(29,74,159,.35);color:var(--blue)}
+.card--active,.card--active:hover{background:linear-gradient(145deg,var(--blue),var(--blue2));border-color:transparent;color:#fff}
+.card--active h3{color:#fff}
+.card--active p{color:#dce8ff}
+.card--active .icon,.card--active:hover .icon{background:#fff;color:var(--blue);border-color:#fff}
+.card--active .btn--outline{color:#fff;border-color:rgba(255,255,255,.7)}
+.card--active .btn--outline:hover{background:#fff;color:var(--blue)}
+.stats strong{background:none;-webkit-text-fill-color:currentColor;color:var(--blue);font-weight:600}
+.stats span{color:var(--mute)}
+.steps__list b,.steps__list li.on b{background:#fff;border:1px solid rgba(29,74,159,.45);color:var(--blue);animation:none;transition:background .8s var(--ease),color .8s var(--ease)}
+.steps__list li.on b{background:var(--blue);color:#fff}
+.steps__list::before{background:var(--blue2)}
+.steps__list::after{background:var(--b3)}
+blockquote::before{background:none;-webkit-text-fill-color:currentColor;color:var(--blue2)}
+blockquote footer,blockquote footer strong{color:var(--navy)}
+details[open]{background:#fff}
+summary{color:var(--navy)}
+summary::after{color:var(--blue2)}
+
+/* ---------- entradas mais suaves (sem giro 3D) ---------- */
+.js .card[data-reveal],.js .steps__list li[data-reveal],.js blockquote[data-reveal],.js .stats div[data-reveal]{
+  opacity:0;transform:translateY(34px);filter:blur(4px);transform-origin:50% 50%;
+  transition:opacity 1.1s var(--ease),transform 1.3s var(--ease),filter 1.1s var(--ease),background .7s var(--ease),border-color .7s var(--ease),box-shadow .7s var(--ease);
+  transition-delay:var(--d,0s)}
+.js .card[data-reveal].in,.js .steps__list li[data-reveal].in,.js blockquote[data-reveal].in,.js .stats div[data-reveal].in{opacity:1;transform:none;filter:none}
+.js .section-head h2[data-reveal],.js .contact__side h2[data-reveal]{transition:transform 1.3s var(--ease),clip-path 1.3s var(--ease)}
+.hero h1 .ln>span{animation-duration:1.5s;animation-timing-function:var(--ease)}
+.proj-in{animation:m2-projin 1.3s var(--ease) backwards;animation-delay:calc(var(--i,0)*.09s)}
+@keyframes m2-projin{from{opacity:0;transform:translateY(46px) scale(.96)}}
+@keyframes m2-pa{from{translate:0 22px}to{translate:0 -22px}}
+@keyframes m2-pb{from{translate:0 -14px}to{translate:0 14px}}
+.fab.show{animation:fabin .8s var(--ease) both}
+.vtabs button.on{animation:none}
+.is-tilt{box-shadow:0 34px 60px -26px rgba(29,74,159,.45)}
+
+/* ---------- destinos e destaques ---------- */
+.proj{border-radius:var(--r)}
+.proj::after{background:linear-gradient(to top,rgba(11,31,77,.88),rgba(11,31,77,.05) 64%)}
+.proj strong{color:#bcd5ff}
+.proj::before{background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.3),transparent 46%)}
+.view{background:#fff;color:var(--blue)}
+.dest__slide{border-radius:var(--r);background-image:linear-gradient(125deg,#0b1f4d,#1d4a9f 60%,#4f8cff);
+  transition:transform 1.2s var(--ease),opacity 1.2s var(--ease),box-shadow 1.2s var(--ease)}
+.dest__slide.t-grupo{background-image:linear-gradient(125deg,#0b1f4d,#163a85 55%,#2f6bd8)}
+.dest__slide.t-pacote{background-image:linear-gradient(125deg,#08163a,#1d4a9f 55%,#6aa0ff)}
+.dest__slide.t-peregrinacao{background-image:linear-gradient(125deg,#14246b,#3454c9 55%,#9db8ff)}
+.dest__slide.t-novidade{background-image:linear-gradient(125deg,#1d4a9f,#4f8cff 55%,#cfe0ff)}
+.dest__slide.is-active{box-shadow:0 40px 70px -30px rgba(11,31,77,.6)}
+.dest__slide::before{background:linear-gradient(0deg,rgba(11,31,77,.86) 0%,rgba(11,31,77,.35) 45%,rgba(11,31,77,0) 78%)}
+.dest__body>*{transition:opacity 1.2s var(--ease),transform 1.2s var(--ease)}
+.dest__tag{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.5);color:#fff}
+.dest__tag::before{background:var(--sky);animation:none}
+.dest__body h3,.dest__body p{color:#fff}
+.dest__glyph{opacity:.14}
+.dest__count b{background:none;-webkit-text-fill-color:currentColor;color:var(--blue)}
+.dest__ctrl button{background:#fff;border:1px solid var(--line);color:var(--blue);box-shadow:none;transition:transform .6s var(--ease),background .5s var(--ease),color .5s var(--ease)}
+.dest__ctrl button:hover{background:var(--blue);color:#fff}
+.dest__dots button{background:rgba(29,74,159,.2)}
+.dest__dots button.on::after{background:var(--blue)}
+
+/* ---------- vendas (abas) ---------- */
+.vtabs{background:var(--glass);border:1px solid var(--line);border-radius:4px}
+.vtabs button{color:var(--navy);border-radius:2px;font-weight:600;letter-spacing:.06em;transition:color .6s var(--ease),background .6s var(--ease),transform .6s var(--ease)}
+.vtabs button.on,.m3-pilled button.on{color:#fff;background:transparent;box-shadow:none}
+.vtabs:not(.m3-pilled) button.on{background:var(--blue)}
+.vtabs-pill{background:var(--blue);border-radius:2px;box-shadow:none;transition:translate .8s var(--ease),width .8s var(--ease),height .8s var(--ease)}
+.vtabs b{background:rgba(29,74,159,.1)}
+.vtabs .on b{background:rgba(255,255,255,.25)}
+#lista-promos.fade{animation-duration:.9s}
+.m3-skel{background:var(--glass);border:1px solid var(--line)}
+.m3-skel i{background:var(--b2)}
+.m3-skel::after{background:linear-gradient(100deg,transparent 28%,rgba(255,255,255,.9) 50%,transparent 72%)}
+
+/* ---------- imagens-padrão em azul ---------- */
+.img-1{background:linear-gradient(120deg,#cfe0ff,#9cc0ff)}
+.img-2{background:linear-gradient(160deg,#b9d4ff,#6aa0ff)}
+.img-3{background:linear-gradient(160deg,#9cc0ff,#3b73d9)}
+.img-4{background:linear-gradient(160deg,#e3edff,#9cc0ff)}
+.img-5{background:linear-gradient(160deg,#8fb4ff,#1d4a9f)}
+.img-6{background:linear-gradient(160deg,#cfe0ff,#4f8cff)}
+.img-7{background:linear-gradient(160deg,#6aa0ff,#0b1f4d)}
+.img-8{background:linear-gradient(160deg,#b9d4ff,#3b73d9)}
+
+/* ---------- próximas promoções e contato ---------- */
+.next{border-radius:var(--r);background:linear-gradient(120deg,var(--b2),var(--b3));border:1px solid var(--line);color:var(--navy)}
+.next__info p{color:var(--mute)}
+.next__info li{border-top-color:rgba(29,74,159,.18)}
+.next__img span{color:#fff}
+.contact__side{background:linear-gradient(160deg,var(--b2),var(--b3));border:1px solid var(--line);color:var(--navy)}
+.contact__side h2,.contact__list strong{color:var(--navy)}
+.contact__form{color:var(--navy);border:1px solid var(--line)}
+.contact__form::before{background:rgba(255,255,255,.82)}
+.contact__form input,.contact__form textarea{background:#fff;border:1px solid rgba(29,74,159,.2);color:var(--navy);border-radius:2px}
+.contact__form ::placeholder{color:#8294bb}
+.contact__form input:focus,.contact__form textarea:focus{background:#fff;border-color:var(--blue2);box-shadow:0 0 0 4px rgba(59,115,217,.2)}
+.form__ok{color:#1a7f4b}
+
+/* ---------- rodapé com corte diagonal ---------- */
+.footer{background:var(--navy);color:#fff;clip-path:polygon(0 clamp(28px,5vw,80px),100% 0,100% 100%,0 100%);padding-top:clamp(28px,5vw,80px)}
+.footer::before{animation:none;height:1px;top:clamp(28px,5vw,80px);background:linear-gradient(90deg,transparent,rgba(156,192,255,.7),transparent)}
+.footer .logo,.footer strong,.footer small{color:#fff}
+.footer__col a,.footer__brand span,.footer__legal{color:rgba(255,255,255,.72)}
+.footer__col a:hover{color:var(--sky)}
+.totop{background:#fff;color:var(--blue);box-shadow:var(--sh)}
+.totop:hover{background:var(--blue);color:#fff}
+.totop .tr{stroke:var(--b3)}
+.totop .pr{stroke:var(--blue)}
+
+/* ---------- intro e cursor ---------- */
+.intro{background:linear-gradient(156deg,var(--b0) 0 40%,var(--b2) 40%);color:var(--navy)}
+.intro__bar{background:rgba(29,74,159,.15)}
+.intro__bar i{background:var(--blue)}
+.cur-dot{background:var(--blue)}
+.cur-ring,.cur-ring.big{border-color:var(--blue2);transition:opacity .4s,scale .6s var(--ease),background .4s,border-color .4s}
+.cur-ring.big{background:rgba(59,115,217,.12)}
+
+/* ---------- página de promoção ---------- */
+.lp__hero{border-radius:var(--r)}
+.lp__hero::after{background:linear-gradient(to top,rgba(11,31,77,.88),rgba(11,31,77,.12) 62%)}
+.lp__tag{background:#fff;color:var(--blue);border-radius:2px}
+.lp__chip{background:rgba(255,255,255,.92);color:var(--navy);border:1px solid var(--line)}
+.lp__chip b{background:var(--blue);color:#fff}
+.lp__price strong{background:none;-webkit-text-fill-color:currentColor;color:var(--blue)}
+.lp__dates div{background:var(--b1);border:1px solid var(--line);color:var(--navy)}
+.lp__back,.lp__desc,.lp__valid{color:var(--mute)}
+.bk--foto{background:var(--glass)}
+.bk:hover .bk__ic{background:var(--blue);color:#fff}
+.lp__end{background:linear-gradient(120deg,var(--b2),var(--b3));color:var(--navy);border:1px solid var(--line)}
+.lp__end .lp__cta,.lp__cta{background:var(--blue);color:#fff;border-radius:2px;transition:background .6s var(--ease),transform .6s var(--ease)}
+.lp__cta:hover{background:var(--navy)}
+.lp__cta--alt,.lp__end .lp__cta--alt{background:transparent;color:var(--blue);border:1px solid rgba(29,74,159,.55)}
+.lp__bar{background:rgba(255,255,255,.92);color:var(--navy);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+
+@media (prefers-reduced-motion:reduce){
+  body::before{animation:none}
+  .js .card[data-reveal],.js .steps__list li[data-reveal],.js blockquote[data-reveal],.js .stats div[data-reveal]{opacity:1;transform:none;filter:none}
+}
+
+/* ============================================================
+   OUTRAS CORES: troque --navy, --blue, --blue2, --sky e --b0..--b3 no bloco PALETA.
+   Ex. verde: --navy:#0b2a22; --blue:#1f7a5c; --blue2:#3fae88; --sky:#a7e3cc; --b1:#f2faf6; --b2:#e0f3ea; --b3:#c6e8d9
+   ============================================================ */

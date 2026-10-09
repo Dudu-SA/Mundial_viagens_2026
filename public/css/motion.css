@@ -1,0 +1,103 @@
+/* ============================================================
+   motion.css — carregar DEPOIS de index.css e destaques.css/vendas.css
+   1) tira os "cacoetes" de página gerada (orbes, blobs, ondas, texto em degradê,
+      faixa torta, todos os cards com o mesmo hover)
+   2) um momento principal de movimento: o globo 3D do hero
+   3) movimentos com função: marquee que reage à rolagem, linha dos passos,
+      brilho nos cards de destino, entrada dos blocos com perspectiva
+   ============================================================ */
+:root{--r:20px;--sh:0 1px 2px rgba(14,36,82,.06),0 14px 30px -14px rgba(14,36,82,.22);--ease:cubic-bezier(.2,.7,.2,1)}
+body{background:#f7f8fb}
+
+/* ---------- 1. limpeza ---------- */
+.deco,.chip,.wave{display:none!important}
+.hero h1{background:none;-webkit-text-fill-color:currentColor;color:var(--ink);animation:none}
+.section-head small,.contact__side small{padding:0;background:none;border-radius:0;letter-spacing:.02em;text-transform:none;font-size:.9rem;font-weight:700;color:var(--brand)}
+.stats strong{background:none;-webkit-text-fill-color:currentColor;color:var(--brand)}
+.stats div{box-shadow:var(--sh)}
+.stats div:hover strong{transform:none}
+.btn{letter-spacing:.14em}
+.btn::before{display:none}
+.btn--dark,.btn--dark:hover{background:var(--brand)}
+.btn--dark:hover{background:var(--dark);box-shadow:0 12px 24px -8px rgba(14,36,82,.5)}
+.card,.steps__list li,blockquote,.proj{border-radius:var(--r)}
+.card:hover,.steps__list li:hover,blockquote:hover{transform:none;box-shadow:var(--sh)}
+.card--active,.card--active:hover{background:var(--brand)}
+.steps__list b,.steps__list li:hover b{background:var(--soft);color:var(--brand);width:44px;height:44px;transition:background .5s var(--ease),color .5s}
+blockquote::before{background:none;-webkit-text-fill-color:currentColor;color:var(--accent)}
+.view{background:var(--brand)}
+.next{animation:none;background:var(--dark)}
+.next__img{border-radius:var(--r);animation:none;margin:2rem}
+.contact__side{border-radius:var(--r) 0 0 var(--r);background:var(--soft)}
+.contact__form{border-radius:0 var(--r) var(--r) 0}
+.contact__form::before{background:rgba(14,36,82,.92)}
+.contact__form input,.contact__form textarea{border-radius:10px}
+details,details:last-child{border-radius:14px;box-shadow:none}
+details[open]{box-shadow:var(--sh)}
+@media (max-width:860px){.contact__side{border-radius:var(--r) var(--r) 0 0}.contact__form{border-radius:0 0 var(--r) var(--r)}}
+
+/* faixa de continentes: reta, sólida, e a velocidade reage à rolagem (motion.js) */
+.marquee{transform:none;background:var(--dark);border-block:3px solid var(--accent);box-shadow:none;margin-block:0}
+.marquee.js-on .marquee__track{animation:none;will-change:transform}
+
+/* ---------- 2. hero: título em linhas + globo ---------- */
+.hero{align-items:center;min-height:clamp(560px,82vh,720px)}
+.hero h1{font-size:clamp(2.8rem,6.6vw,5.6rem);line-height:1.02}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.hero h1 .ln>span{display:block;animation:ln-up 1.1s var(--ease) both}
+.hero h1 .ln:nth-child(2)>span{animation-delay:.12s}
+@keyframes ln-up{from{transform:translateY(105%) rotate(2.5deg)}to{transform:none}}
+
+.globo{position:relative;min-height:clamp(380px,56vh,560px);display:flex;flex-direction:column;margin-right:var(--gut)}
+.globo__stage{position:relative;flex:1;min-height:360px}
+.globo canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:pan-y;opacity:0;transform:scale(.92);transition:opacity 1.2s var(--ease),transform 1.6s var(--ease)}
+.globo canvas:active{cursor:grabbing}
+.globo.pronto canvas{opacity:1;transform:none}
+.globo__fallback{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#dbe5fa 60%,#c3d2f3);transition:opacity .6s}
+.globo.pronto .globo__fallback{opacity:0}
+.globo__row{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-top:.4rem}
+.globo__nome{display:block;overflow:hidden;font:800 clamp(1.6rem,3.2vw,2.5rem)/1.1 'Plus Jakarta Sans',sans-serif;letter-spacing:-.03em;padding-bottom:.1em}
+.globo__nome span{display:block}
+.globo__dist{display:block;color:var(--muted);font-size:.9rem;margin-top:.2rem}
+.globo__sel{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+.globo__sel button{position:relative;overflow:hidden;border:1px solid #cfd8ec;background:#fff;color:var(--ink);font:700 .78rem 'Plus Jakarta Sans',sans-serif;padding:.65rem 1.05rem;border-radius:99px;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.globo__sel button:hover{border-color:var(--brand)}
+.globo__sel button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.globo__sel button.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--accent);transform-origin:left;transform:scaleX(0)}
+.globo.auto .globo__sel button.on::after{animation:rota-fill 5.5s linear forwards}
+.globo.paused .globo__sel button.on::after{animation-play-state:paused}
+@keyframes rota-fill{to{transform:scaleX(1)}}
+@media (max-width:860px){
+  .globo{margin:0 var(--gut) 2rem;min-height:0}
+  .globo__stage{min-height:300px}
+  .globo__cta{width:100%}
+}
+
+/* ---------- 3. movimentos com função ---------- */
+/* entrada com perspectiva (a cartela "vira" para a frente); só em blocos de grade */
+.js .card[data-reveal],.js .steps__list li[data-reveal],.js blockquote[data-reveal],.js .stats div[data-reveal]{
+  opacity:0;transform:perspective(900px) rotateX(-16deg) translateY(24px);transform-origin:50% 0;
+  transition:opacity .8s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.js .card[data-reveal].in,.js .steps__list li[data-reveal].in,.js blockquote[data-reveal].in,.js .stats div[data-reveal].in{opacity:1;transform:none}
+/* títulos sobem de dentro de uma máscara */
+.js .section-head h2[data-reveal],.js .contact__side h2[data-reveal]{opacity:1;transform:translateY(40%);clip-path:inset(0 0 100% 0);transition:transform .9s var(--ease),clip-path .9s var(--ease)}
+.js .section-head h2[data-reveal].in,.js .contact__side h2[data-reveal].in{transform:none;clip-path:inset(0 0 -.25em 0)}
+
+/* cards de destino: brilho que segue o mouse */
+.proj::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.3),transparent 46%)}
+.proj:hover::before{opacity:1}
+
+/* passos: a linha se desenha com a rolagem e cada número acende em ordem */
+.steps__list{position:relative}
+.steps__list::before{content:"";position:absolute;left:0;right:0;top:-.9rem;height:3px;border-radius:3px;background:var(--accent);transform-origin:left;transform:scaleX(var(--p,0))}
+.steps__list::after{content:"";position:absolute;left:0;right:0;top:-.9rem;height:3px;border-radius:3px;background:#dfe6f5;z-index:-1}
+.steps__list li.on b{background:var(--brand);color:#fff}
+@media (max-width:1000px){.steps__list::before,.steps__list::after{display:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .hero h1 .ln>span{animation:none}
+  .js .card[data-reveal],.js .steps__list li[data-reveal],.js blockquote[data-reveal],.js .stats div[data-reveal],
+  .js .section-head h2[data-reveal],.js .contact__side h2[data-reveal]{opacity:1;transform:none;clip-path:none}
+  .globo canvas{transition:none}
+}
