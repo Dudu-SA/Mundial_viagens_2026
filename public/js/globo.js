@@ -1,16 +1,24 @@
-/* Globo 3D do hero: pontos de terra, rota a partir de Crateús e seletor de continentes.
-   Usa three.js (CDN). Se o WebGL falhar, o hero continua funcionando só com o seletor. */
+/* Globo 3D do topo: pontos de terra, rota a partir de Crateús e seletor de continentes.
+   Usa three.js (CDN). Se o WebGL falhar, a página continua funcionando só com o seletor.
+   Controle de fora (js/site.js): o elemento #globo recebe os eventos
+     "mv:ir"   (detail = índice do continente)  → voa para o continente e para o automático
+     "mv:auto"                                  → volta a trocar sozinho
+   e avisa "mv:clique" (cancelável) quando alguém toca num botão do seletor. */
 const MASK = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/z////3EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/++f///wcAAPADgAEAAOADAAAAAAAAAAAAAAAg3N4f/v///wcAAB8AAAAAAAA4AAAAAAAAAAAAAAADAOAH/P///wcAAA4AAAAAAAAwAAAAAAAAAAAAAAC8cQwBAP///wcAAAAAAIAHAMD/DwDwAAAAAAAAAOAAAAAAAPz//wMAAAAAAGAAAPz/AQAAAAAAAAAAAOBdc/MDAPj//wEAAAAAABjAwP///z9gAAAAA4AAAED8A/P/AOD//wEAAAAAADjg/v///z//HwCAAPj/A0/8X4PwB/D//wAAAOA/AADh/v///////wM+A/7///8Pw56BB+D/DwAAAPz/Y+zf/f//////////N/D///////+Bf/D/AQAAAP7/x////v//////////GP7//////7/wJ+AfAH4AAD9++P//////////////AOD//////88GH8AfAAwAwJ////////////////9/APz//////wNxDIAPAAAA8M///////////////98/APzf/////wHwAwAGAAAA+M///////////////+ADAPAB+P///wHwMwAAAAAA8A//////////////ZBgAAIACgP///wPgfwAAAAAQAAf///////////8fAA4AACAAAP///z/gfwAAAAAwYMf///////////8PAB8AAAQAAP7////5/wMAAABoQOj///////////8DAA8AAAAAgPz////5/wcAAADs+P////////////9/AAcAAAAAAPj////7/wMAAADg+f////////////9/AAEAAAAAAPj/////zwAAAAAw/v////////////+/AAAAAAAAAPD/////Gw4AAACg//////////////8fAAAAAAAAAOD/////HxAAAADA//////////////8fAAAAAAAAAOD//////wAAAACA//9P/vj///////8PAAAAAAAAAOD/////EwAAAACA//wHfPz////////HAAAAAAAAAOD/////AQAAAAD8g/EH8Pj////////gAAAAAAAAAOD/////AAAAAAD8Aebn+fH//////z8AAAAAAAAAAOD///9/AAAAAAD8AGT8//H//////xpgAAAAAAAAAMD///8/AAAAAAD8AMT8//H/////fzggAAAAAAAAAID///8fAAAAAABwdAD8/////////zE4AAAAAAAAAID///8fAAAAAACwfwBD/////////zA/AAAAAAAAAAD+//8PAAAAAAD4fwAA/////////wAHAAAAAAAAAAD8//8DAAAAAAD8/2OA/////////4EAAAAAAAAAAADo//8DAAAAAAD8/+///////////wEAAAAAAAAAAADo/wkCAAAAAAD+//////z//////wEAAAAAAAAAAADYfwACAAAAAID///8///n//////wEAAAAAAAAAAACgfwAWAAAAAMD///9//+H//////wAAAAAAAAAAAAAgfwAAAAAAAMD///9//jPg////fwAAAAAAAAAAAAAAfgAAAAAAAOD//////H/A////PwEAAAAAAAAAAAAAfAAIAAAAAOD//////f/A/+f/BwAAAAAAAAAAAAAAfDBwAAAAAOD/////+X8A/sN/AAAAAAAAAAAAAAAA+DgAAwAAAOD/////+T8A/oB/AwAAAAAAAAAAAAAA4B8AAAAAAOD/////8x8AfoB/AAMAAAAAAAAAAAAAgPwAAAAAAOD/////8wcAPoD+AAEAAAAAAAAAAAAAAPgBAAAAAOD/////7wEAHAD+AQEAAAAAAAAAAAAAAMAAAAAAAOD/////PwAAHAD8AQQAAAAAAAAAAAAAAICAAgAAAMD/////HwMAGADgAAoAAAAAAAAAAAAAAADBfgAAAID//////wMAGABAAAAAAAAAAAAAAAAAAADy/wAAAID//////wEAIAAGAAwAAAAAAAAAAAAAAADw/wEAAAD//////wEAIAAIAAgAAAAAAAAAAAAAAADw/x8AAAD8+P///wAAAAAZYAAAAAAAAAAAAAAAAADg/z8AAAAAwP///wAAAAAbMAAAAAAAAAAAAAAAAADw/z8AAAAAwP//fwAAAAAWfAAAAAAAAAAAAAAAAAD4/38AAAAAwP//HwAAAAAcficAAAAAAAAAAAAAAAD8//8BAAAAwP//DwAAAAAYPiABAAAAAAAAAAAAAAD8//8DAAAAwP//BwAAAAA4vgEaAAAAAAAAAAAAAAD8//8/AAAAgP//BwAAAABwEBL+AAAAAAAAAAAAAAD8////AAAAAP//AwAAAABgAADwAQAAAAAAAAAAAAD8////AQAAAP//AwAAAADABADyAwEAAAAAAAAAAAD4////AQAAAP7/AwAAAAAAHADwBgQAAAAAAAAAAADw////AAAAAP7/BwAAAAAAAAQADAAAAAAAAAAAAADw//9/AAAAAP7/BwAAAAAAAAAAAAAAAAAAAAAAAADg//9/AAAAAP7/BwAAAAAAAICHAAAAAAAAAAAAAADg//8/AAAAAP//BwEAAAAAANDHAAAAAAAAAAAAAADA//8/AAAAAP//hwMAAAAAAPjHAQAAAAAAAAAAAAAA//8/AAAAAP//4QEAAAAAAPzfAQAAAAAAAAAAAAAA/v8/AAAAAP//4AEAAAAAAP7/AwAAAAAAAAAAAAAA/v8fAAAAAP5/wAAAAAAAgP//ByAAAAAAAAAAAAAA/v8fAAAAAP7/4AAAAAAA4P//D0AAAAAAAAAAAAAA/v8HAAAAAPz/4AAAAAAA8P//HwAAAAAAAAAAAAAA/v8AAAAAAPx/YAAAAAAA8P//PwAAAAAAAAAAAAAA/v8AAAAAAPw/AAAAAAAA8P//PwAAAAAAAAAAAAAA/v8AAAAAAPw/AAAAAAAA8P//PwAAAAAAAAAAAAAA/38AAAAAAPgfAAAAAAAA4P//PwAAAAAAAAAAAAAA/z8AAAAAAPAPAAAAAAAA4P//PwAAAAAAAAAAAAAA/x8AAAAAAPAHAAAAAAAA4B/+PwAAAAAAAAAAAAAA/w8AAAAAAPABAAAAAAAA4Af0HwAAAAAAAAAAAAAA/wMAAAAAAAAAAAAAAAAAAADwDwAIAAAAAAAAAACA/wMAAAAAAAAAAAAAAAAAAADgDwAQAAAAAAAAAACA/wEAAAAAAAAAAAAAAAAAAADAAgBwAAAAAAAAAACAfwAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAACAHwAAAAAAAAAAAAAAAAAAAAAABgAQAAAAAAAAAACAHwAAAAAAAAAAAAAAAAAAAAAABgAMAAAAAAAAAADADwAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAADABwAAAAAAAAAAAAAAAAAAAAAAAIADAAAAAAAAAADADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAgwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAADwAAAR4Pv4HAAAAAAAAAAAAAAAACAAAAAAAAAAA4P8/4P//////BwAAAAAAAAAAAAAAPwAAAAAAAADg//8//P///////wMAAAAAAAAAAACAewAAAADI/v////8///////////8BAAAAAAAAABAAeAAAAID///////////////////8DAAAAAAAe4P//fwAAAMD//////////////////38AAADA////////BwAAAPz//////////////////x8AAEDz//////8/AAAA8P///////////////////x8AABj///////8PAIAH/////////////////////38AAADA//////8/gPAD4P///////////////////wcAAAD+////////P4Dx/////////////////////w8AAAD8//////////////////////////////////8A/wMA/v//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////";
 const MW = 240, MH = 120;
 const ORIGEM = { lat: -5.17, lon: -40.65 };               // Crateús - CE
+// em ordem de distância a partir de Crateús (a mesma ordem dos capítulos da página inicial)
 const DESTINOS = [
-  { id: "ac", nome: "América Central", lat: 15, lon: -88 },
-  { id: "an", nome: "América do Norte", lat: 40, lon: -100 },
   { id: "as", nome: "América do Sul", lat: -15, lon: -60 },
+  { id: "ac", nome: "América Central", lat: 15, lon: -88 },
+  { id: "af", nome: "África", lat: 5, lon: 20 },
+  { id: "an", nome: "América do Norte", lat: 40, lon: -100 },
   { id: "eu", nome: "Europa", lat: 48, lon: 15 },
-  { id: "asia", nome: "Ásia", lat: 30, lon: 95 },
-  { id: "af", nome: "África", lat: 5, lon: 20 }
+  { id: "asia", nome: "Ásia", lat: 30, lon: 95 }
 ];
+// cores do globo noturno (fundo azul-marinho)
+const COR = { oceano: 0x0c2459, rota: 0x8fd0ff, origem: 0xffffff, destino: 0x8fd0ff, aviao: "#ffffff",
+  pontoBorda: "vec3(.16,.30,.62)", pontoFrente: "vec3(.84,.91,1.)" };
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const box = document.getElementById("globo");
 if (box) iniciar();
@@ -27,11 +35,16 @@ function iniciar() {
 
   DESTINOS.forEach((d, i) => {
     const b = document.createElement("button"); b.type = "button"; b.textContent = d.nome;
-    b.onclick = () => { auto = false; box.classList.remove("auto"); escolher(i); };
+    b.onclick = () => {
+      const ev = new CustomEvent("mv:clique", { detail: i, cancelable: true });
+      if (!box.dispatchEvent(ev)) return;            // a página cuidou (rolou até o capítulo)
+      auto = false; box.classList.remove("auto"); escolher(i);
+    };
     sel.append(b);
   });
 
   function escolher(i) {
+    if (i === atual && cena) return;
     atual = i; const d = DESTINOS[i];
     [...sel.children].forEach((b, k) => b.classList.toggle("on", k === i));
     nome.textContent = d.nome;
@@ -41,6 +54,9 @@ function iniciar() {
     if (cena) cena.ir(d);
   }
 
+  box.addEventListener("mv:ir", e => { auto = false; box.classList.remove("auto"); escolher(e.detail); });
+  box.addEventListener("mv:auto", () => { if (reduce) return; auto = true; box.classList.remove("auto"); void box.offsetWidth; box.classList.add("auto"); });
+
   // o seletor avança sozinho enquanto a pessoa não mexe
   sel.addEventListener("animationend", e => { if (e.animationName === "rota-fill" && auto) escolher((atual + 1) % DESTINOS.length); });
   box.addEventListener("pointerenter", () => box.classList.add("paused"));
@@ -48,7 +64,7 @@ function iniciar() {
   if (auto) box.classList.add("auto");
 
   let cena = null;
-  escolher(0);
+  atual = -1; escolher(0);
   import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js")
     .then(m => { THREE = m; cena = montar(THREE); cena.ir(DESTINOS[atual]); box.classList.add("pronto"); })
     .catch(e => console.warn("[globo]", e));
@@ -62,7 +78,7 @@ function iniciar() {
     const xyz = (lat, lon, h = 1) => new T.Vector3(Math.cos(rad(lat)) * Math.sin(rad(lon)), Math.sin(rad(lat)), Math.cos(rad(lat)) * Math.cos(rad(lon))).multiplyScalar(h);
 
     // oceano
-    g.add(new T.Mesh(new T.SphereGeometry(.992, 64, 48), new T.MeshBasicMaterial({ color: 0xe4ebfa })));
+    g.add(new T.Mesh(new T.SphereGeometry(.992, 64, 48), new T.MeshBasicMaterial({ color: COR.oceano })));
 
     // terra em pontos (espiral de Fibonacci filtrada pela máscara)
     const bin = atob(MASK), land = (lat, lon) => {
@@ -79,20 +95,20 @@ function iniciar() {
       transparent: true, depthWrite: false,
       uniforms: { px: { value: r.getPixelRatio() * 3.2 } },
       vertexShader: "uniform float px; varying float f; void main(){ vec4 mv=modelViewMatrix*vec4(position,1.); vec4 c=modelViewMatrix*vec4(0.,0.,0.,1.); f=normalize(mv.xyz-c.xyz).z; gl_PointSize=px*(.7+.5*f); gl_Position=projectionMatrix*mv; }",
-      fragmentShader: "varying float f; void main(){ if(length(gl_PointCoord-.5)>.5||f<0.) discard; gl_FragColor=vec4(mix(vec3(.55,.66,.9),vec3(.07,.2,.5),smoothstep(0.,.9,f)),1.); }"
+      fragmentShader: "varying float f; void main(){ if(length(gl_PointCoord-.5)>.5||f<0.) discard; gl_FragColor=vec4(mix(" + COR.pontoBorda + "," + COR.pontoFrente + ",smoothstep(0.,.9,f)),1.); }"
     });
     g.add(new T.Points(geo, mat));
 
     // origem
-    const cor = 0xf2a33a, pO = xyz(ORIGEM.lat, ORIGEM.lon, 1.003);
-    const pin = new T.Mesh(new T.SphereGeometry(.022, 16, 12), new T.MeshBasicMaterial({ color: cor })); pin.position.copy(pO); g.add(pin);
+    const cor = COR.rota, pO = xyz(ORIGEM.lat, ORIGEM.lon, 1.003);
+    const pin = new T.Mesh(new T.SphereGeometry(.022, 16, 12), new T.MeshBasicMaterial({ color: COR.origem })); pin.position.copy(pO); g.add(pin);
     const ring = (p, c) => { const m = new T.Mesh(new T.RingGeometry(.03, .036, 40), new T.MeshBasicMaterial({ color: c, transparent: true, side: T.DoubleSide, depthWrite: false })); m.position.copy(p); m.quaternion.setFromUnitVectors(new T.Vector3(0, 0, 1), p.clone().normalize()); g.add(m); return m; };
-    const ro = ring(pO, cor), rd = ring(new T.Vector3(), 0x1d4a9f);
+    const ro = ring(pO, COR.origem), rd = ring(new T.Vector3(), COR.destino);
 
     // rota + avião
     let curva = null, tubo = null, prog = 0, voo = 0;
     const aviao = (() => { const c = document.createElement("canvas"); c.width = c.height = 64; const x = c.getContext("2d");
-      x.fillStyle = "#f2a33a"; x.beginPath(); x.moveTo(60, 32); x.lineTo(14, 8); x.lineTo(24, 28); x.lineTo(4, 32); x.lineTo(24, 36); x.lineTo(14, 56); x.closePath(); x.fill();
+      x.fillStyle = COR.aviao; x.beginPath(); x.moveTo(60, 32); x.lineTo(14, 8); x.lineTo(24, 28); x.lineTo(4, 32); x.lineTo(24, 36); x.lineTo(14, 56); x.closePath(); x.fill();
       const s = new T.Sprite(new T.SpriteMaterial({ map: new T.CanvasTexture(c), depthTest: false, transparent: true })); s.scale.set(.11, .11, 1); s.renderOrder = 5; s.visible = false; g.add(s); return s; })();
     const rota = d => {
       if (tubo) { g.remove(tubo); tubo.geometry.dispose(); }

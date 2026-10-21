@@ -1,32 +1,34 @@
-rules_version='2'
+rules_version = '2';
 
+// Regras do banco do site da Mundial Viagens.
+// - Qualquer visitante pode LER as viagens e os destaques (é o que o site mostra).
+// - Só o administrador (o e-mail do painel) pode criar, editar ou apagar viagens e destaques.
+// - O formulário de contato pode CRIAR mensagens; só o administrador pode lê-las.
+// Para publicar: Firebase Console > Firestore Database > Regras (cole este arquivo)
+// ou, no terminal, `firebase deploy --only firestore:rules`.
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      // This rule allows anyone with your database reference to view, edit,
-      // and delete all data in your database. It is useful for getting
-      // started, but it is configured to expire after 30 days because it
-      // leaves your app open to attackers. At that time, all client
-      // requests to your database will be denied.
-      //
-      // Make sure to write security rules for your app before that time, or
-      // else all client requests to your database will be denied until you
-      // update your rules.
-      allow read, write: if request.time < timestamp.date(2026, 10, 28);
+
+    function admin() {
+      return request.auth != null && request.auth.token.email == "admin@mundialviagens.com";
+    }
+
+    match /promocoes/{id} {
+      allow read: if true;
+      allow write: if admin();
+    }
+
+    match /destaques/{id} {
+      allow read: if true;
+      allow write: if admin();
+    }
+
+    match /contatos/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['nome', 'telefone', 'email', 'destino', 'mes', 'mensagem', 'criadoEm'])
+                    && request.resource.data.nome is string && request.resource.data.nome.size() > 0 && request.resource.data.nome.size() <= 200
+                    && request.resource.data.email is string && request.resource.data.email.size() <= 200
+                    && request.resource.data.mensagem is string && request.resource.data.mensagem.size() <= 5000;
+      allow read, update, delete: if admin();
     }
   }
 }
-export const firebaseConfig = {
-  apiKey: "AIzaSyAosQ8pOaK0724W4IO3jD1smDUS5p788_A",
-  authDomain: "mundial-viagens.firebaseapp.com",
-  projectId: "mundial-viagens",
-  storageBucket: "mundial-viagens.firebasestorage.app",
-  messagingSenderId: "364137726411",
-  appId: "1:364137726411:web:05a02e01465955ef1b364e",
-  measurementId: "G-149X6NTPX3"
-};
-
-// E-mail do administrador (o mesmo cadastrado em Authentication > E-mail/senha)
-export const ADMIN_EMAIL = "admin@mundialviagens.com";
-
-export const WHATSAPP = "558888870800";
