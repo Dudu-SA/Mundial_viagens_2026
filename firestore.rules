@@ -10,7 +10,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     function admin() {
-      return request.auth != null && request.auth.token.email == "admin@mundialviagens.com";
+      return request.auth != null && request.auth.token.email == "mundialviagens2014@gmail.com";
     }
 
     match /promocoes/{id} {
