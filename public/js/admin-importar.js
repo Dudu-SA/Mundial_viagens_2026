@@ -243,7 +243,7 @@ $("iaSalvar").onclick = async () => {
   try { await setDoc(doc(db, "config", "ia"), { geminiKey: k, atualizadoEm: serverTimestamp() }); chaveIA = k; $("iaEstado").textContent = k ? "Chave salva. A leitura de fotos está ligada." : "Chave removida."; }
   catch (e) { $("iaEstado").textContent = e.code === "permission-denied" ? "Sem permissão: publique as regras do Firestore novas (config/ia)." : "Erro ao salvar: " + (e.code || e.message); }
 };
-$("iaAbrir").onclick = () => { $("iaBox").hidden = !$("iaBox").hidden; };
+
 
 /* ---------- tela de conferência ---------- */
 let itens = [];
@@ -260,7 +260,7 @@ async function receber(files) {
         if (faltam.length) erros.push(`${f.name}: não achei a coluna ${faltam.map(c => ({ lugar: "Lugar", dataSaida: "Saída", preco: "Preço" })[c]).join(", ")}.`);
         novos.push(...its);
       } else if (f.type.startsWith("image/")) {
-        if (!chaveIA) { erros.push(`${f.name}: para ler fotos, salve a chave do Google AI em "Leitura de fotos".`); continue; }
+        if (!chaveIA) { erros.push(`${f.name}: para ler fotos, salve a chave do Google AI no menu "Leitura de fotos".`); continue; }
         novos.push(...await lerFoto(f, chaveIA));
       } else erros.push(`${f.name}: envie uma planilha (xlsx ou csv) ou uma imagem.`);
     } catch (e) { console.error("[importar]", e); erros.push(`${f.name}: ${e.message}`); }
@@ -282,7 +282,7 @@ function cartao(it, i) {
   const top = el("div", "bloco__top");
   const t = el("strong", "", `${i + 1}. ${v.lugar || "(sem lugar)"}`);
   const tag = el("span", "tag " + (it.avisos.length ? "off" : "on"), it.avisos.length ? "Conferir" : "Pronta"); t.append(" ", tag);
-  const rem = el("button", "", "×"); rem.type = "button"; rem.title = "Tirar da lista"; rem.onclick = () => { itens.splice(i, 1); desenhar(); };
+  const rem = el("button", "btn mini fantasma", "×"); rem.type = "button"; rem.title = "Tirar da lista"; rem.onclick = () => { itens.splice(i, 1); desenhar(); };
   top.append(t, rem); w.append(top);
   if (it.avisos.length) { const ul = el("ul", "imp__avisos"); it.avisos.forEach(a => ul.append(el("li", "", a))); w.append(ul); }
 
@@ -321,8 +321,8 @@ function cartao(it, i) {
   fw.append(inp, thumbs); desenharFotos(); w.append(fw);
 
   const acoes = el("div", "addrow");
-  const abrir = el("button", "", "Abrir no formulário completo"); abrir.type = "button";
-  abrir.onclick = () => { window.mvAdmin?.preencher(v); itens.splice(i, 1); desenhar(); };
+  const abrir = el("button", "btn mini", "Abrir no formulário completo"); abrir.type = "button";
+  abrir.onclick = () => { window.mvAdmin?.preencher(v); itens.splice(i, 1); desenhar(); window.mvAdmin?.irPara("nova"); };
   acoes.append(abrir); w.append(acoes);
   return w;
 }

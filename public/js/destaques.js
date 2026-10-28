@@ -11,6 +11,7 @@ const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d
 const linkSeguro = u => /^(https?:\/\/|[\w\-./]+\.html|#)/i.test(u || "") ? u : "";
 const ROTULO = { promocao: "Promoção", grupo: "Saída em grupo", pacote: "Pacote", peregrinacao: "Peregrinação", novidade: "Novidade" };
 const dois = n => String(n).padStart(2, "0");
+const fotoOk = u => /^(data:image\/|https:\/\/)/i.test(u || "");
 const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -32,7 +33,7 @@ try {
     s.setAttribute("aria-roledescription", "item");
     s.setAttribute("aria-label", `${i + 1} de ${n}`);
     const fig = el("div", "dsl__img");
-    if (x.imagem) {
+    if (fotoOk(x.imagem)) {
       const im = el("img"); im.src = x.imagem; im.alt = ""; im.decoding = "async"; if (i) im.loading = "lazy";
       fig.append(im);
     } else {

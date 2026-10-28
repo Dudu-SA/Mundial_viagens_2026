@@ -28,11 +28,17 @@ service cloud.firestore {
       allow read, write: if admin();
     }
 
+    // qualquer outra coleção: ninguém lê nem escreve
+    match /{outra}/{id} {
+      allow read, write: if false;
+    }
+
     match /contatos/{id} {
       allow create: if request.resource.data.keys().hasOnly(['nome', 'telefone', 'email', 'destino', 'mes', 'mensagem', 'criadoEm'])
                     && request.resource.data.nome is string && request.resource.data.nome.size() > 0 && request.resource.data.nome.size() <= 200
                     && request.resource.data.email is string && request.resource.data.email.size() <= 200
-                    && request.resource.data.mensagem is string && request.resource.data.mensagem.size() <= 5000;
+                    && request.resource.data.mensagem is string && request.resource.data.mensagem.size() <= 5000
+                    && request.resource.data.criadoEm == request.time;   // só com a data do servidor
       allow read, update, delete: if admin();
     }
   }

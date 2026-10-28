@@ -84,7 +84,9 @@ async function carregar() {
   const l = $("dLista");
   try {
     const snap = await getDocs(query(collection(db, "destaques"), orderBy("ordem", "asc")));
-    if (snap.empty) { l.textContent = "Nenhum item cadastrado. Enquanto estiver vazio, o bloco não aparece no site."; return; }
+    document.getElementById("nItens").textContent = snap.docs.length;
+    if (snap.empty) { l.textContent = "Nenhum item cadastrado. Enquanto estiver vazio, o bloco não aparece no site."; l.className = "cartao muted"; return; }
+    l.className = "lista";
     l.replaceChildren(...snap.docs.map(d => {
       const x = { id: d.id, ...d.data() };
       const row = document.createElement("div"); row.className = "item";

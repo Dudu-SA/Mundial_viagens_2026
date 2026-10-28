@@ -4,174 +4,166 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<title>Painel | Mundial Viagens</title>
-<link rel="icon" type="image/png" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
-<link rel="apple-touch-icon" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/index.css">
-<style>
-  body{background:var(--soft);font-family:Inter,system-ui,sans-serif;color:var(--ink)}
-  .adm{max-width:960px;margin:0 auto;padding:2rem 1.25rem 4rem}
-  .adm__top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem}
-  .adm h1{font-size:1.6rem}
-  .box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
-  .box h2{font-size:1.15rem;margin-bottom:1rem}
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-  .grid .full{grid-column:1/-1}
-  label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.3rem}
-  input,textarea{width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit;background:#fff}
-  small.hint{display:block;color:var(--muted);font-size:.75rem;margin-top:.25rem}
-  .chk{display:flex;align-items:center;gap:.5rem}.chk input{width:auto}
-  .thumbs{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem}
-  .thumbs div{position:relative}
-  .thumbs img{width:96px;height:72px;object-fit:cover;border-radius:8px;display:block}
-  .thumbs button{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:0;background:#c0392b;color:#fff;cursor:pointer;line-height:1}
-  .msg{margin-top:.8rem;font-size:.9rem}.msg.err{color:#c0392b}.msg.ok{color:#1a7f4b}
-  .item{display:flex;gap:1rem;align-items:center;padding:.9rem 0;border-top:1px solid var(--line)}
-  .item:first-of-type{border-top:0}
-  .item img,.item .ph{width:88px;height:66px;border-radius:8px;object-fit:cover;background:#dfe6f3;flex:none}
-  .item__info{flex:1;min-width:0}.item__info strong{display:block}
-  .item__info span{font-size:.82rem;color:var(--muted)}
-  .tag{display:inline-block;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:99px;margin-left:.4rem}
-  .tag.on{background:#dff5e8;color:#1a7f4b}.tag.off{background:#f3dede;color:#a03030}
-  .del{border:1px solid #c0392b;color:#c0392b;background:#fff;border-radius:8px;padding:.45rem .8rem;cursor:pointer;font:inherit}
-  .del:hover{background:#c0392b;color:#fff}
-  .bloco{border:1px solid var(--line);border-radius:12px;padding:1rem;margin-top:.8rem;background:#f9fbff}
-  .bloco__top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
-  .bloco__top button{width:30px;height:30px;border:1px solid #cfd6e4;background:#fff;border-radius:8px;cursor:pointer;margin-left:.3rem}
-  .bloco__top button:disabled{opacity:.35;cursor:default}
-  .bloco .grid{grid-template-columns:90px 1fr}
-  .bloco img{width:140px;height:100px;object-fit:cover;border-radius:8px;display:block;margin-top:.5rem}
-  .addrow{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem}
-  .addrow button{border:1px dashed var(--brand);color:var(--brand);background:#fff;border-radius:99px;padding:.5rem 1rem;cursor:pointer;font:inherit;font-size:.85rem}
-  .addrow button:hover{background:var(--soft)}
-  #login{max-width:380px;margin:12vh auto}
-  [hidden]{display:none!important}
-  /* importar por planilha ou foto */
-  .zona{border:2px dashed #b8c6e2;border-radius:12px;padding:1.6rem;text-align:center;background:#f9fbff;transition:background .2s,border-color .2s}
-  .zona.arrasta{background:#eaf1ff;border-color:var(--brand)}
-  .zona p{margin:.3rem 0;color:var(--muted);font-size:.9rem}
-  .zona .btn{display:inline-block;margin-top:.6rem}
-  .zona input[type=file]{display:none}
-  .imp__avisos{margin:.2rem 0 .8rem;padding-left:1.1rem;list-style:disc;color:#a03030;font-size:.85rem}
-  .imp .bloco__top button{width:30px;height:30px;border:1px solid #cfd6e4;background:#fff;border-radius:8px;cursor:pointer}
-  .bloco .imp__grid{grid-template-columns:repeat(4,1fr)}
-  .imp__grid .full{grid-column:1/-1}
-  .imp__grid select{width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit;background:#fff}
-  @media(max-width:860px){.bloco .imp__grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:640px){.grid{grid-template-columns:1fr}.item{flex-wrap:wrap}.bloco .imp__grid{grid-template-columns:1fr}}
-</style>
+<meta name="theme-color" content="#1b468f">
+<title>Painel do site · Mundial Viagens</title>
+<link rel="icon" type="image/png" href="imgs/logo-azul.png">
+<link rel="apple-touch-icon" href="imgs/logo-azul.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 
 <!-- LOGIN -->
-<div class="box" id="login" hidden>
-  <h2>Acesso restrito</h2>
-  <label for="em">E-mail</label><input id="em" type="email" autocomplete="username">
-  <label for="pw" style="margin-top:.8rem">Senha</label><input id="pw" type="password" autocomplete="current-password">
-  <button class="btn btn--dark" id="entrar" style="margin-top:1rem;width:100%">Entrar</button>
-  <p class="msg err" id="loginErr"></p>
+<div class="login-caixa" id="login" hidden>
+  <div class="cartao">
+    <div class="logo"><img src="imgs/logo-azul.png" alt="">Painel do site</div>
+    <label for="em">E-mail</label><input id="em" type="email" autocomplete="username">
+    <label for="pw">Senha</label><input id="pw" type="password" autocomplete="current-password">
+    <button class="btn primario" id="entrar" style="width:100%">Entrar</button>
+    <p class="msg err" id="loginErr"></p>
+  </div>
 </div>
 
 <!-- PAINEL -->
-<div class="adm" id="painel" hidden>
-  <div class="adm__top">
-    <h1>Painel do site</h1>
-    <button class="btn btn--outline btn--sm" id="sair">Sair</button>
-  </div>
-
-  <div class="box" id="importar">
-    <h2>Cadastrar por planilha ou foto</h2>
-    <p class="hint" style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Envie uma planilha com várias viagens, ou a foto/arte de uma promoção. O painel lê os dados, mostra para você conferir e só pede as fotos.</p>
-    <div class="zona" id="impZona">
-      <strong>Arraste aqui a planilha ou a foto</strong>
-      <p>Planilha: xlsx ou csv (<a href="#" id="impModelo">baixar o modelo</a>). Foto: a arte da promoção, print do Instagram ou do WhatsApp. Também dá para colar uma imagem com Ctrl+V.</p>
-      <label class="btn btn--dark btn--sm" for="impArquivo">Escolher arquivo</label>
-      <input id="impArquivo" type="file" accept=".xlsx,.xls,.xlsm,.csv,.ods,image/*" multiple>
+<div class="app" id="painel" hidden>
+  <aside class="lateral">
+    <a class="marca" href="index.html" target="_blank" rel="noopener"><img src="imgs/logo-branco.png" alt=""><span>Mundial Viagens<small>Painel do site</small></span></a>
+    <nav class="menu">
+      <a data-pagina="inicio">Início</a>
+      <span class="secao">Viagens</span>
+      <a data-pagina="viagens">Viagens cadastradas <span class="contador" id="nMenu"></span></a>
+      <a data-pagina="nova">Nova viagem</a>
+      <a data-pagina="importar">Por planilha ou foto</a>
+      <span class="secao">Página inicial</span>
+      <a data-pagina="destaques">Em destaque</a>
+      <span class="secao">Configuração</span>
+      <a data-pagina="config">Leitura de fotos</a>
+    </nav>
+    <div class="rodape-menu">
+      <span><span class="papel">Admin</span></span>
+      <a href="index.html" target="_blank" rel="noopener">Ver o site ↗</a>
+      <a href="#" id="sair">Sair</a>
     </div>
-    <p class="msg" id="impMsg"></p>
-    <div id="impLista" hidden>
-      <div id="impItens"></div>
-      <button class="btn btn--dark" id="impPublicar" type="button" style="margin-top:1.2rem">Publicar</button>
-    </div>
-    <p style="margin-top:1rem;font-size:.85rem"><a href="#" id="iaAbrir">Leitura de fotos: configurar a chave do Google AI</a></p>
-    <div id="iaBox" hidden style="margin-top:.6rem;padding:1rem;border:1px solid var(--line);border-radius:12px;background:#f9fbff">
-      <label for="iaChave">Chave da API do Google AI (Gemini)</label>
-      <input id="iaChave" type="password" autocomplete="off" placeholder="AIza…">
-      <small class="hint">Grátis: entre em <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> com a conta Google da agência, clique em "Criar chave de API" e cole aqui. A chave fica guardada no banco e só o administrador acessa. Dá para ler cerca de 1.500 fotos por dia sem pagar.</small>
-      <button class="btn btn--outline btn--sm" id="iaSalvar" type="button" style="margin-top:.8rem">Salvar chave</button>
-      <p class="msg" id="iaEstado"></p>
-    </div>
-  </div>
+  </aside>
 
-  <form class="box" id="dForm">
-    <h2 id="dFormTitulo">Novo item do bloco</h2>
-    <p class="hint" style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Estes itens aparecem no bloco deslizante logo abaixo do topo da página inicial.</p>
-    <div class="grid">
-      <div class="full"><label for="dPromo">Atalho: puxar dados de uma promoção</label><select id="dPromo" style="width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit"></select></div>
-      <div><label for="dTipo">Tipo</label><select id="dTipo" style="width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit"><option value="promocao">Promoção</option><option value="grupo">Grupo</option><option value="pacote">Pacote</option><option value="peregrinacao">Peregrinação</option><option value="novidade">Novidade</option></select></div>
-      <div><label for="dEtiqueta">Etiqueta (opcional)</label><input id="dEtiqueta" maxlength="30" placeholder="Se vazio, usa o tipo"></div>
-      <div class="full"><label for="dTitulo">Título *</label><input id="dTitulo" required maxlength="70" placeholder="Ex.: Peregrinação a Fátima"></div>
-      <div class="full"><label for="dTexto">Texto curto</label><textarea id="dTexto" rows="3" maxlength="220"></textarea></div>
-      <div><label for="dBotao">Texto do botão</label><input id="dBotao" maxlength="24" placeholder="Saiba mais"></div>
-      <div><label for="dLink">Link do botão</label><input id="dLink" placeholder="promo.html?id=… ou https://…"></div>
-      <div><label for="dOrdem">Ordem (1 aparece primeiro)</label><input id="dOrdem" type="number" min="1" value="1"></div>
-      <div><label for="dAte">Exibir até (opcional)</label><input id="dAte" type="date"></div>
-      <div class="full"><label for="dImg">Imagem de fundo</label><input id="dImg" type="file" accept="image/*"><div class="thumbs" id="dThumb"></div></div>
-      <div class="full chk"><input id="dAtivo" type="checkbox" checked><label for="dAtivo" style="margin:0">Mostrar no site</label></div>
-    </div>
-    <button class="btn btn--dark" id="dSalvar" type="submit" style="margin-top:1.2rem">Publicar item</button>
-    <button class="btn btn--outline" id="dCancelar" type="button" style="margin-top:1.2rem;margin-left:.5rem" hidden>Cancelar edição</button>
-    <p class="msg" id="dMsg"></p>
-  </form>
+  <main class="conteudo">
 
-  <div class="box">
-    <h2>Itens do bloco da página inicial</h2>
-    <div id="dLista">Carregando…</div>
-  </div>
-
-  <form class="box" id="form">
-    <h2 id="formTitulo">Nova viagem (promoção, grupo ou pacote)</h2>
-    <div class="grid">
-      <div class="full"><label for="categoria">Seção do site *</label><select id="categoria" style="width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit"><option value="promocao">Promoções</option><option value="grupo">Grupos</option><option value="pacote">Pacotes</option></select></div>
-      <div><label for="lugar">Lugar *</label><input id="lugar" required maxlength="60" placeholder="Ex.: Lisboa e Porto"></div>
-      <div><label for="etiqueta">Etiqueta (continente/tipo)</label><input id="etiqueta" maxlength="30" placeholder="Ex.: Europa"></div>
-      <div class="full"><label for="descricao">Detalhes do pacote</label><input id="descricao" maxlength="80" placeholder="Ex.: 9 noites · Traslados inclusos"></div>
-      <div class="full"><label for="sobre">Apresentação do pacote</label><textarea id="sobre" rows="4" maxlength="1200" placeholder="Texto de abertura que aparece no topo da página da promoção"></textarea></div>
-      <div><label for="saida">Data de saída *</label><input id="saida" type="date" required></div>
-      <div><label for="volta">Data de volta</label><input id="volta" type="date"></div>
-      <div>
-        <label for="ate">Exibir no site até *</label><input id="ate" type="date" required>
-        <small class="hint">Depois desta data a promoção some sozinha do site. Por padrão é a data de saída.</small>
+    <section class="pagina" data-pagina="inicio">
+      <div class="topo"><div><h1>Início</h1><p class="sub">O que está no ar agora.</p></div><a class="btn primario" data-ir="nova">+ Nova viagem</a></div>
+      <div class="numeros">
+        <a class="numero destaque" data-ir="viagens"><b id="nAtivas">…</b><span>viagens no site</span></a>
+        <a class="numero" data-ir="viagens"><b id="nDestaque">…</b><span>em destaque nas vendas</span></a>
+        <a class="numero" data-ir="viagens"><b id="nExpiradas">…</b><span>expiradas</span></a>
+        <a class="numero" data-ir="destaques"><b id="nItens">…</b><span>itens em destaque na página inicial</span></a>
       </div>
-      <div><label for="preco">Valor a partir de (R$) *</label><input id="preco" type="number" min="0" step="0.01" required placeholder="8640"></div>
-      <div class="full">
-        <label for="fotos">Fotos (até 3)</label>
-        <input id="fotos" type="file" accept="image/*" multiple>
-        <small class="hint">As imagens são reduzidas automaticamente. Com mais de uma foto, elas se alternam no card.</small>
-        <div class="thumbs" id="thumbs"></div>
-      </div>
-      <div class="full">
-        <label>Blocos de conteúdo</label>
-        <small class="hint">Monte a página da promoção em blocos separados (roteiro, o que está incluso, hotel, dicas…). Cada bloco aparece animado e organizado na página. Use ↑ ↓ para mudar a ordem.</small>
-        <div id="blocos"></div>
-        <div class="addrow">
-          <button type="button" data-t="texto">+ Bloco de texto</button>
-          <button type="button" data-t="lista">+ Lista com ✓</button>
-          <button type="button" data-t="foto">+ Foto com texto</button>
+      <div class="cartao">
+        <h2>Atalhos</h2>
+        <div class="acoes" style="margin-top:0">
+          <a class="btn" data-ir="importar">Cadastrar por planilha ou foto</a>
+          <a class="btn" data-ir="nova">Cadastrar uma viagem</a>
+          <a class="btn" data-ir="destaques">Mudar o bloco "Em destaque"</a>
         </div>
       </div>
-      <div class="full chk"><input id="destaque" type="checkbox"><label for="destaque" style="margin:0">Destacar (card em largura total, aparece primeiro)</label></div>
-    </div>
-    <button class="btn btn--dark" id="salvar" type="submit" style="margin-top:1.2rem">Publicar promoção</button>
-    <button class="btn btn--outline" id="cancelar" type="button" style="margin-top:1.2rem;margin-left:.5rem" hidden>Cancelar edição</button>
-    <p class="msg" id="msg"></p>
-  </form>
+    </section>
 
-  <div class="box">
-    <h2>Viagens cadastradas</h2>
-    <div id="lista">Carregando…</div>
-  </div>
+    <section class="pagina" data-pagina="viagens" hidden>
+      <div class="topo"><div><h1>Viagens cadastradas</h1><p class="sub">Promoções, grupos e pacotes. As expiradas somem do site sozinhas.</p></div><a class="btn primario" data-ir="nova">+ Nova viagem</a></div>
+      <div id="lista" class="cartao muted">Carregando…</div>
+    </section>
+
+    <section class="pagina" data-pagina="nova" hidden>
+      <div class="topo"><div><h1 id="formTitulo">Nova viagem</h1><p class="sub">Promoção, grupo ou pacote. Aparece na página de vendas e nas próximas saídas.</p></div></div>
+      <form class="cartao" id="form">
+        <div class="grid">
+          <div class="full"><label for="categoria">Seção do site *</label><select id="categoria"><option value="promocao">Promoções</option><option value="grupo">Grupos</option><option value="pacote">Pacotes</option></select></div>
+          <div><label for="lugar">Lugar *</label><input id="lugar" required maxlength="60" placeholder="Ex.: Lisboa e Porto"></div>
+          <div><label for="etiqueta">Etiqueta (continente/tipo)</label><input id="etiqueta" maxlength="30" placeholder="Ex.: Europa"></div>
+          <div class="full"><label for="descricao">Detalhes do pacote</label><input id="descricao" maxlength="80" placeholder="Ex.: 9 noites · Traslados inclusos"></div>
+          <div class="full"><label for="sobre">Apresentação do pacote</label><textarea id="sobre" rows="4" maxlength="1200" placeholder="Texto de abertura que aparece no topo da página da viagem"></textarea></div>
+          <div><label for="saida">Data de saída *</label><input id="saida" type="date" required></div>
+          <div><label for="volta">Data de volta</label><input id="volta" type="date"></div>
+          <div><label for="ate">Exibir no site até *</label><input id="ate" type="date" required><small class="hint">Depois desta data a viagem some sozinha do site. Por padrão é a data de saída.</small></div>
+          <div><label for="preco">Valor a partir de (R$) *</label><input id="preco" type="number" min="0" step="0.01" required placeholder="8640"></div>
+          <div class="full"><label for="fotos">Fotos (até 3)</label><input id="fotos" type="file" accept="image/*" multiple><small class="hint">As imagens são reduzidas automaticamente. Com mais de uma foto, elas se alternam no card.</small><div class="thumbs" id="thumbs"></div></div>
+          <div class="full">
+            <label>Blocos de conteúdo</label>
+            <small class="hint">Monte a página da viagem em blocos (roteiro, o que está incluso, hotel, dicas…). Use ↑ ↓ para mudar a ordem.</small>
+            <div id="blocos"></div>
+            <div class="addrow">
+              <button type="button" data-t="texto">+ Bloco de texto</button>
+              <button type="button" data-t="lista">+ Lista com ✓</button>
+              <button type="button" data-t="foto">+ Foto com texto</button>
+            </div>
+          </div>
+          <div class="full chk"><input id="destaque" type="checkbox"><label for="destaque">Destacar (card em largura total, aparece primeiro)</label></div>
+        </div>
+        <div class="acoes">
+          <button class="btn primario" id="salvar" type="submit">Publicar viagem</button>
+          <button class="btn" id="cancelar" type="button" hidden>Cancelar edição</button>
+        </div>
+        <p class="msg" id="msg"></p>
+      </form>
+    </section>
+
+    <section class="pagina" data-pagina="importar" hidden>
+      <div class="topo"><div><h1>Cadastrar por planilha ou foto</h1><p class="sub">Envie uma planilha com várias viagens, ou a arte de uma promoção. O painel lê os dados, mostra para conferir e só pede as fotos.</p></div></div>
+      <div class="cartao" id="importar">
+        <div class="zona" id="impZona">
+          <strong>Arraste aqui a planilha ou a foto</strong>
+          <p>Planilha: xlsx ou csv (<a href="#" id="impModelo">baixar o modelo</a>). Foto: a arte da promoção, print do Instagram ou do WhatsApp. Também dá para colar uma imagem com Ctrl+V.</p>
+          <label class="btn primario" for="impArquivo">Escolher arquivo</label>
+          <input id="impArquivo" type="file" accept=".xlsx,.xls,.xlsm,.csv,.ods,image/*" multiple>
+        </div>
+        <p class="msg" id="impMsg"></p>
+        <div id="impLista" hidden>
+          <div id="impItens"></div>
+          <div class="acoes"><button class="btn primario" id="impPublicar" type="button">Publicar</button></div>
+        </div>
+        <p class="hint" style="margin-top:1rem">Leitura de fotos desligada? <a data-ir="config" href="#">Configure a chave do Google AI</a>.</p>
+      </div>
+    </section>
+
+    <section class="pagina" data-pagina="destaques" hidden>
+      <div class="topo"><div><h1 id="dFormTitulo">Em destaque</h1><p class="sub">Os itens do bloco grande logo abaixo do topo da página inicial.</p></div></div>
+      <form class="cartao" id="dForm">
+        <h2>Novo item</h2>
+        <div class="grid">
+          <div class="full"><label for="dPromo">Atalho: puxar dados de uma viagem cadastrada</label><select id="dPromo"></select></div>
+          <div><label for="dTipo">Tipo</label><select id="dTipo"><option value="promocao">Promoção</option><option value="grupo">Grupo</option><option value="pacote">Pacote</option><option value="peregrinacao">Peregrinação</option><option value="novidade">Novidade</option></select></div>
+          <div><label for="dEtiqueta">Etiqueta (opcional)</label><input id="dEtiqueta" maxlength="30" placeholder="Se vazio, usa o tipo"></div>
+          <div class="full"><label for="dTitulo">Título *</label><input id="dTitulo" required maxlength="70" placeholder="Ex.: Peregrinação a Fátima"></div>
+          <div class="full"><label for="dTexto">Texto curto</label><textarea id="dTexto" rows="3" maxlength="220"></textarea></div>
+          <div><label for="dBotao">Texto do botão</label><input id="dBotao" maxlength="24" placeholder="Saiba mais"></div>
+          <div><label for="dLink">Link do botão</label><input id="dLink" placeholder="promo.html?id=… ou https://…"></div>
+          <div><label for="dOrdem">Ordem (1 aparece primeiro)</label><input id="dOrdem" type="number" min="1" value="1"></div>
+          <div><label for="dAte">Exibir até (opcional)</label><input id="dAte" type="date"></div>
+          <div class="full"><label for="dImg">Imagem de fundo</label><input id="dImg" type="file" accept="image/*"><div class="thumbs" id="dThumb"></div></div>
+          <div class="full chk"><input id="dAtivo" type="checkbox" checked><label for="dAtivo">Mostrar no site</label></div>
+        </div>
+        <div class="acoes">
+          <button class="btn primario" id="dSalvar" type="submit">Publicar item</button>
+          <button class="btn" id="dCancelar" type="button" hidden>Cancelar edição</button>
+        </div>
+        <p class="msg" id="dMsg"></p>
+      </form>
+      <h2>Itens cadastrados</h2>
+      <div id="dLista" class="cartao muted">Carregando…</div>
+    </section>
+
+    <section class="pagina" data-pagina="config" hidden>
+      <div class="topo"><div><h1>Leitura de fotos</h1><p class="sub">O painel usa o Google AI (Gemini) para ler lugar, datas e preço nas artes das promoções.</p></div></div>
+      <div class="cartao" id="iaBox">
+        <label for="iaChave">Chave da API do Google AI (Gemini)</label>
+        <input id="iaChave" type="password" autocomplete="off" placeholder="AIza…">
+        <small class="hint">Grátis: entre em <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> com a conta Google da agência, clique em "Criar chave de API" e cole aqui. A chave fica guardada no banco e só o administrador acessa. Dá para ler centenas de fotos por dia sem pagar.</small>
+        <div class="acoes"><button class="btn primario" id="iaSalvar" type="button">Salvar chave</button></div>
+        <p class="msg" id="iaEstado"></p>
+        <a id="iaAbrir" hidden></a>
+      </div>
+    </section>
+
+  </main>
 </div>
 
 <script type="module">
@@ -182,6 +174,19 @@ import { firebaseConfig, ADMIN_EMAIL } from "./js/conexao.js";
 
 const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
 const $ = id => document.getElementById(id);
+/* páginas do painel: só uma aparece por vez; o menu da lateral troca */
+function irPara(n) {
+  document.querySelectorAll(".pagina").forEach(p => { p.hidden = p.dataset.pagina !== n; });
+  document.querySelectorAll(".menu a[data-pagina]").forEach(a => a.classList.toggle("ativo", a.dataset.pagina === n));
+  try { sessionStorage.setItem("mv-pagina", n); } catch {}
+  if (n !== "nova" && !document.querySelector(".pagina[data-pagina=nova]").contains(document.activeElement)) scrollTo({ top: 0 });
+}
+document.querySelectorAll(".menu a[data-pagina], [data-ir]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); irPara(a.dataset.pagina || a.dataset.ir); }));
+let pag = "inicio"; try { pag = sessionStorage.getItem("mv-pagina") || "inicio"; } catch {}
+irPara(pag);
+/* botão mostra que está esperando o servidor (como no MVO) */
+document.addEventListener("submit", e => { const b = e.target.querySelector('button[type="submit"]'); if (b) { b.classList.add("carregando"); setTimeout(() => b.classList.remove("carregando"), 15000); } });
+new MutationObserver(() => document.querySelectorAll(".btn.carregando:not([disabled])").forEach(b => b.classList.remove("carregando"))).observe(document.body, { subtree: true, attributes: true, attributeFilter: ["disabled"] });
 const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
 const linkDe = id => new URL("promo.html?id=" + encodeURIComponent(id), location.href).href;
 const br = s => s ? s.split("-").reverse().join("/") : "";
@@ -190,6 +195,7 @@ let fotos = [], blocos = [], editId = null;
 /* ---------- Login ---------- */
 onAuthStateChanged(auth, u => {
   const ok = u && u.email === ADMIN_EMAIL;
+  document.body.classList.toggle("logado", !!ok);
   if (u && !ok) { signOut(auth); $("loginErr").textContent = "Esta conta não tem permissão."; }
   $("login").hidden = !!ok; $("painel").hidden = !ok;
   if (ok) carregar();
@@ -200,7 +206,7 @@ $("entrar").onclick = async () => {
   catch { $("loginErr").textContent = "E-mail ou senha incorretos."; }
 };
 $("pw").addEventListener("keydown", e => e.key === "Enter" && $("entrar").click());
-$("sair").onclick = () => signOut(auth);
+$("sair").onclick = e => { e.preventDefault(); signOut(auth); };
 
 /* ---------- Fotos: redimensiona e comprime no navegador ---------- */
 const reduzir = (file, max = 1100, q = 0.72) => new Promise((res, rej) => {
@@ -266,7 +272,7 @@ document.querySelectorAll(".addrow button").forEach(btn => btn.onclick = () => {
 
 /* ---------- Modo edição ---------- */
 function sairEdicao() {
-  editId = null; $("formTitulo").textContent = "Nova promoção"; $("salvar").textContent = "Publicar promoção"; $("cancelar").hidden = true;
+  editId = null; $("formTitulo").textContent = "Nova viagem"; $("salvar").textContent = "Publicar viagem"; $("cancelar").hidden = true;
 }
 $("cancelar").onclick = () => { $("form").reset(); fotos = []; blocos = []; ateManual = false; desenharThumbs(); desenharBlocos(); sairEdicao(); aviso(""); };
 function editar(id, p) {
@@ -277,15 +283,17 @@ function editar(id, p) {
   fotos = [...(p.fotos || [])]; blocos = (p.blocos || []).map(b => ({ ...b }));
   ateManual = true; desenharThumbs(); desenharBlocos();
   $("formTitulo").textContent = "Editando: " + p.lugar; $("salvar").textContent = "Salvar alterações"; $("cancelar").hidden = false;
-  aviso(""); $("form").scrollIntoView({ behavior: "smooth", block: "start" });
+  aviso(""); window.mvAdmin?.irPara("nova"); $("form").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 /* o importador (js/admin-importar.js) usa estes dois */
 window.mvAdmin = {
   carregar: () => carregar(),
+  irPara: n => irPara(n),
+  contar: ps => { const h = hoje(); $("nAtivas").textContent = ps.filter(p => p.exibirAte >= h).length; $("nExpiradas").textContent = ps.filter(p => p.exibirAte < h).length; $("nDestaque").textContent = ps.filter(p => p.exibirAte >= h && p.destaque).length; const n = ps.filter(p => p.exibirAte >= h).length; $("nMenu").textContent = n || ""; $("nMenu").hidden = !n; },
   preencher: p => {
     editar(null, { ...p, fotos: [...(p.fotos || [])], blocos: (p.blocos || []).map(b => ({ ...b })) });
-    $("formTitulo").textContent = "Conferir e publicar: " + (p.lugar || "viagem"); $("salvar").textContent = "Publicar promoção";
+    $("formTitulo").textContent = "Conferir e publicar: " + (p.lugar || "viagem"); $("salvar").textContent = "Publicar viagem";
   }
 };
 
@@ -350,7 +358,9 @@ async function carregar() {
   try { snap = await getDocs(query(collection(db, "promocoes"), orderBy("exibirAte", "desc"))); }
   catch (err) { console.error("[admin] falha ao listar:", err); $("lista").textContent = "Não foi possível carregar a lista: " + (err.code || err.message); return; }
   const l = $("lista");
-  if (snap.empty) { l.textContent = "Nenhuma promoção cadastrada."; return; }
+  window.mvAdmin?.contar(snap.docs.map(d => d.data()));
+  if (snap.empty) { l.textContent = "Nenhuma viagem cadastrada."; l.className = "cartao muted"; return; }
+  l.className = "lista";
   l.replaceChildren(...snap.docs.map(d => {
     const p = d.data(), ativa = p.exibirAte >= hoje();
     const row = document.createElement("div"); row.className = "item";

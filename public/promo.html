@@ -89,6 +89,7 @@ const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d
 const dia = s => { const [y, m, d] = s.split("-"); return `${+d} de ${MESES[+m-1]} de ${y}`; };
 const brl = n => "R$ " + Number(n).toLocaleString("pt-BR", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
 const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+const fotoOk = u => /^(data:image\/|https:\/\/)/i.test(u || "");
 const svgRoseta = () => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.dataset.roseta = "cheio"; return s; };
 const VOLTAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>';
 const zapLink = (txt, msg, cls = "btn btn--azul") => {
@@ -113,7 +114,7 @@ function bloco(b, fotoN) {
   if (b.tipo === "foto") {
     const f = el("figure", "bloco bloco--foto" + (fotoN % 2 ? " inverte" : "")); f.dataset.surge = "";
     const w = el("div", "bloco__img");
-    if (b.foto) { const im = el("img"); im.src = b.foto; im.alt = b.titulo || ""; im.loading = "lazy"; w.append(im); w.dataset.paralaxe = ""; }
+    if (fotoOk(b.foto)) { const im = el("img"); im.src = b.foto; im.alt = b.titulo || ""; im.loading = "lazy"; w.append(im); w.dataset.paralaxe = ""; }
     else w.append(svgRoseta());
     const cap = el("figcaption");
     if (b.titulo) cap.append(el("h2", "", b.titulo));
@@ -144,7 +145,7 @@ function montar(p) {
   /* capa em tela cheia: as fotos se alternam devagar e o título sobe letra por letra */
   const capa = el("section", "lp__capa escuro");
   const fotosBox = el("div", "lp__fotos");
-  const fotos = (p.fotos || []).filter(Boolean);
+  const fotos = (p.fotos || []).filter(fotoOk);
   if (!fotos.length) fotosBox.append(svgRoseta());
   const imgs = fotos.map((src, i) => { const im = el("img"); im.src = src; im.alt = i ? "" : "Foto de " + p.lugar; fotosBox.append(im); return im; });
   capa.append(fotosBox);

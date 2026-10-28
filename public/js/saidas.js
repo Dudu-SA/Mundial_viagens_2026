@@ -13,6 +13,7 @@ const TIPO = { promocao: "Promoção", grupo: "Saída em grupo", pacote: "Pacote
 const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 const brl = n => "R$ " + Number(n).toLocaleString("pt-BR", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
 const noites = p => p.dataVolta ? Math.round((Date.parse(p.dataVolta) - Date.parse(p.dataSaida)) / 864e5) : 0;
+const fotoOk = u => /^(data:image\/|https:\/\/)/i.test(u || "");
 const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 const SETA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>';
 
@@ -23,7 +24,7 @@ function cartao(p, i) {
   a.setAttribute("aria-label", `${p.lugar}, saída em ${+d} de ${MES[+m - 1]}, a partir de ${brl(p.preco)}`);
 
   const img = el("div", "sc__img");
-  const foto = (p.fotos || []).find(Boolean);
+  const foto = (p.fotos || []).find(fotoOk);
   if (foto) { const im = el("img"); im.src = foto; im.alt = ""; im.decoding = "async"; if (i > 2) im.loading = "lazy"; img.append(im); }
   else { const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.dataset.roseta = "cheio"; img.append(svg); }
 

@@ -18,6 +18,7 @@ const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 const dia = s => { const [y, m, d] = s.split("-"); return `${+d} de ${MESES[+m - 1]}` + (+y !== new Date().getFullYear() ? ` de ${y}` : ""); };
 const brl = n => "R$ " + Number(n).toLocaleString("pt-BR", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+const fotoOk = u => /^(data:image\/|https:\/\/)/i.test(u || "");
 const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 let timers = [];
 
@@ -29,7 +30,7 @@ function bilhete(p, cat, i) {
 
   /* foto: com mais de uma, elas se alternam devagar */
   const foto = el("div", "bilhete__foto");
-  const fotos = (p.fotos || []).filter(Boolean);
+  const fotos = (p.fotos || []).filter(fotoOk);
   if (fotos.length) {
     const imgs = fotos.map((src, k) => { const im = el("img"); im.src = src; im.alt = ""; im.decoding = "async"; if (i > 2) im.loading = "lazy"; if (!k) im.classList.add("on"); foto.append(im); return im; });
     if (imgs.length > 1 && !reduz) {
