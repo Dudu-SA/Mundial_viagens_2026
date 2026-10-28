@@ -47,7 +47,19 @@
   .addrow button:hover{background:var(--soft)}
   #login{max-width:380px;margin:12vh auto}
   [hidden]{display:none!important}
-  @media(max-width:640px){.grid{grid-template-columns:1fr}.item{flex-wrap:wrap}}
+  /* importar por planilha ou foto */
+  .zona{border:2px dashed #b8c6e2;border-radius:12px;padding:1.6rem;text-align:center;background:#f9fbff;transition:background .2s,border-color .2s}
+  .zona.arrasta{background:#eaf1ff;border-color:var(--brand)}
+  .zona p{margin:.3rem 0;color:var(--muted);font-size:.9rem}
+  .zona .btn{display:inline-block;margin-top:.6rem}
+  .zona input[type=file]{display:none}
+  .imp__avisos{margin:.2rem 0 .8rem;padding-left:1.1rem;list-style:disc;color:#a03030;font-size:.85rem}
+  .imp .bloco__top button{width:30px;height:30px;border:1px solid #cfd6e4;background:#fff;border-radius:8px;cursor:pointer}
+  .bloco .imp__grid{grid-template-columns:repeat(4,1fr)}
+  .imp__grid .full{grid-column:1/-1}
+  .imp__grid select{width:100%;padding:.65rem .8rem;border:1px solid #cfd6e4;border-radius:8px;font:inherit;background:#fff}
+  @media(max-width:860px){.bloco .imp__grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}.item{flex-wrap:wrap}.bloco .imp__grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -66,6 +78,30 @@
   <div class="adm__top">
     <h1>Painel do site</h1>
     <button class="btn btn--outline btn--sm" id="sair">Sair</button>
+  </div>
+
+  <div class="box" id="importar">
+    <h2>Cadastrar por planilha ou foto</h2>
+    <p class="hint" style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Envie uma planilha com várias viagens, ou a foto/arte de uma promoção. O painel lê os dados, mostra para você conferir e só pede as fotos.</p>
+    <div class="zona" id="impZona">
+      <strong>Arraste aqui a planilha ou a foto</strong>
+      <p>Planilha: xlsx ou csv (<a href="#" id="impModelo">baixar o modelo</a>). Foto: a arte da promoção, print do Instagram ou do WhatsApp. Também dá para colar uma imagem com Ctrl+V.</p>
+      <label class="btn btn--dark btn--sm" for="impArquivo">Escolher arquivo</label>
+      <input id="impArquivo" type="file" accept=".xlsx,.xls,.xlsm,.csv,.ods,image/*" multiple>
+    </div>
+    <p class="msg" id="impMsg"></p>
+    <div id="impLista" hidden>
+      <div id="impItens"></div>
+      <button class="btn btn--dark" id="impPublicar" type="button" style="margin-top:1.2rem">Publicar</button>
+    </div>
+    <p style="margin-top:1rem;font-size:.85rem"><a href="#" id="iaAbrir">Leitura de fotos: configurar a chave do Google AI</a></p>
+    <div id="iaBox" hidden style="margin-top:.6rem;padding:1rem;border:1px solid var(--line);border-radius:12px;background:#f9fbff">
+      <label for="iaChave">Chave da API do Google AI (Gemini)</label>
+      <input id="iaChave" type="password" autocomplete="off" placeholder="AIza…">
+      <small class="hint">Grátis: entre em <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> com a conta Google da agência, clique em "Criar chave de API" e cole aqui. A chave fica guardada no banco e só o administrador acessa. Dá para ler cerca de 1.500 fotos por dia sem pagar.</small>
+      <button class="btn btn--outline btn--sm" id="iaSalvar" type="button" style="margin-top:.8rem">Salvar chave</button>
+      <p class="msg" id="iaEstado"></p>
+    </div>
   </div>
 
   <form class="box" id="dForm">
@@ -244,6 +280,15 @@ function editar(id, p) {
   aviso(""); $("form").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+/* o importador (js/admin-importar.js) usa estes dois */
+window.mvAdmin = {
+  carregar: () => carregar(),
+  preencher: p => {
+    editar(null, { ...p, fotos: [...(p.fotos || [])], blocos: (p.blocos || []).map(b => ({ ...b })) });
+    $("formTitulo").textContent = "Conferir e publicar: " + (p.lugar || "viagem"); $("salvar").textContent = "Publicar promoção";
+  }
+};
+
 /* Data "exibir até\" acompanha a saída, até o admin mexer nela */
 let ateManual = false;
 $("ate").oninput = () => ateManual = true;
@@ -340,5 +385,7 @@ async function carregar() {
 }
 </script>
 <script type="module" src="./js/admin-destaques.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+<script type="module" src="./js/admin-importar.js"></script>
 </body>
 </html>

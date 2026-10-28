@@ -23,6 +23,11 @@ service cloud.firestore {
       allow write: if admin();
     }
 
+    // chave do Google AI usada pelo painel para ler fotos: só o admin
+    match /config/{id} {
+      allow read, write: if admin();
+    }
+
     match /contatos/{id} {
       allow create: if request.resource.data.keys().hasOnly(['nome', 'telefone', 'email', 'destino', 'mes', 'mensagem', 'criadoEm'])
                     && request.resource.data.nome is string && request.resource.data.nome.size() > 0 && request.resource.data.nome.size() <= 200
