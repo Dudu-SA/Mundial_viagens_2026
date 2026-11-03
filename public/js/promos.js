@@ -12,7 +12,7 @@ const CATS = [
   { id: "promocao", hash: "promocoes", nome: "Promoções", um: "Promoção", desc: "Ofertas por tempo limitado, com preço especial." },
   { id: "grupo", hash: "grupos", nome: "Grupos", um: "Saída em grupo", desc: "Saídas em grupo com data marcada e roteiro organizado." },
   { id: "pacote", hash: "pacotes", nome: "Pacotes", um: "Pacote", desc: "Roteiros completos, prontos para embarcar." },
-  { id: "peregrinacao", hash: "peregrinacoes", nome: "Peregrinações", um: "Peregrinação", desc: "Viagens de fé, com missas, santuários e acompanhamento da agência." }
+  { id: "peregrinacao", hash: "peregrinacao", nome: "Peregrinações", um: "Peregrinação", desc: "Viagens de fé, com missas, santuários e acompanhamento da agência." }
 ];
 const ZAP = "https://wa.me/558888870400?text=" + encodeURIComponent("Olá! Quero montar um roteiro de viagem. Pode me ajudar?");
 const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
