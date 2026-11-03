@@ -152,7 +152,7 @@ function montar(p) {
   const dentro = el("div", "lp__capa-in");
   const voltar = el("a", "lp__voltar"); voltar.href = "promocoes.html"; voltar.innerHTML = VOLTAR; voltar.append("Todas as viagens");
   const h1 = el("h1", "", p.lugar); h1.dataset.letras = "";
-  dentro.append(voltar, el("span", "lp__tag", p.etiqueta || ({ grupo: "Saída em grupo", pacote: "Pacote" }[p.categoria] || "Promoção")), h1);
+  dentro.append(voltar, el("span", "lp__tag", p.etiqueta || ({ grupo: "Saída em grupo", pacote: "Pacote", peregrinacao: "Peregrinação" }[p.categoria] || "Promoção")), h1);
   if (p.descricao) dentro.append(el("p", "lp__desc", p.descricao));
   const fatos = el("dl", "lp__fatos");
   const fato = (t, v) => { const d = el("div"); d.append(el("dt", "", t), el("dd", "", v)); fatos.append(d); };

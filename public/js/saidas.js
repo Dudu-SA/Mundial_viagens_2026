@@ -9,7 +9,7 @@ import { firebaseConfig } from "./conexao.js";
 const QUANTAS = 8;
 const sec = document.getElementById("saidas"), trilho = document.getElementById("saidas-trilho"), vazio = document.getElementById("saidas-vazio");
 const MES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
-const TIPO = { promocao: "Promoção", grupo: "Saída em grupo", pacote: "Pacote" };
+const TIPO = { promocao: "Promoção", grupo: "Saída em grupo", pacote: "Pacote", peregrinacao: "Peregrinação" };
 const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 const brl = n => "R$ " + Number(n).toLocaleString("pt-BR", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
 const noites = p => p.dataVolta ? Math.round((Date.parse(p.dataVolta) - Date.parse(p.dataSaida)) / 864e5) : 0;

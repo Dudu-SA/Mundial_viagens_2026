@@ -15,7 +15,7 @@ const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) 
 const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 const br = s => s ? s.split("-").reverse().join("/") : "";
 const MESES = ["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
-const CATS = { promocao: "Promoção", grupo: "Grupo", pacote: "Pacote" };
+const CATS = { promocao: "Promoção", grupo: "Grupo", pacote: "Pacote", peregrinacao: "Peregrinação" };
 const MODELO_IA = "gemini-2.5-flash";
 
 /* ---------- utilidades de texto ---------- */
@@ -69,7 +69,7 @@ export function lerPreco(v) {
 }
 
 const lerBool = v => /^(s|sim|x|1|true|verdadeiro|yes|ok)$/.test(limpo(v));
-const lerCategoria = v => { const s = limpo(v); return s.startsWith("grup") ? "grupo" : s.startsWith("pac") ? "pacote" : "promocao"; };
+const lerCategoria = v => { const s = limpo(v); return s.startsWith("pereg") || s.startsWith("roma") ? "peregrinacao" : s.startsWith("grup") ? "grupo" : s.startsWith("pac") ? "pacote" : "promocao"; };
 const linhas = v => String(v ?? "").split(/\r?\n|;|•|\|/).map(x => x.replace(/^[-*✓]\s*/, "").trim()).filter(Boolean);
 
 /* ---------- colunas da planilha: nome na planilha → campo ---------- */
@@ -155,7 +155,7 @@ function baixarModelo() {
   const ex = [
     ["Lisboa e Porto", "Promoção", "Europa", "9 noites · Aéreo, hotel e traslados", "12/11/2026", "21/11/2026", "10/11/2026", 8640, "sim",
       "Duas cidades à beira do rio, bondes amarelos e pastéis de nata.", "Passagem aérea ida e volta; Hospedagem com café da manhã; Traslados; Seguro viagem", "Dia 1: chegada em Lisboa...", "Hotéis 4 estrelas no centro", "Leve casaco: em novembro faz frio à noite."],
-    ["Peregrinação a Fátima", "Grupo", "Portugal", "Grupo com guia da agência", "08/05/2027", "18/05/2027", "", 12490, "", "", "Aéreo; Hotel; Missas no Santuário", "", "", ""],
+    ["Peregrinação a Fátima", "Peregrinação", "Portugal", "Grupo com guia da agência", "08/05/2027", "18/05/2027", "", 12490, "", "", "Aéreo; Hotel; Missas no Santuário", "", "", ""],
     ["Jericoacoara", "Pacote", "Ceará", "3 noites · Transfer 4x4", "20/11/2026", "23/11/2026", "", 1290, "", "", "", "", "", ""]
   ];
   const ws = XLSX.utils.aoa_to_sheet([cab, ...ex]);
@@ -163,7 +163,7 @@ function baixarModelo() {
   const ajuda = XLSX.utils.aoa_to_sheet([
     ["Como preencher"], [""],
     ["Lugar", "Obrigatório. Nome da viagem como aparece no site."],
-    ["Seção", "Promoção, Grupo ou Pacote (vazio = Promoção)."],
+    ["Seção", "Promoção, Grupo, Pacote ou Peregrinação (vazio = Promoção)."],
     ["Etiqueta", "Continente, país ou tipo (ex.: Europa)."],
     ["Detalhes", "Uma linha curta (ex.: 9 noites · Aéreo e hotel)."],
     ["Saída / Volta", "Obrigatória a saída. Datas como 12/11/2026 ou 12/11."],
@@ -184,7 +184,7 @@ function baixarModelo() {
 /* ---------- foto: Google AI (Gemini) ---------- */
 const PROMPT = `Esta imagem é a divulgação de uma ou mais viagens de uma agência brasileira (Mundial Viagens, Crateús-CE).
 Extraia os dados e responda SOMENTE com JSON: um array de objetos, um por viagem, com as chaves:
-lugar (nome do destino/viagem), categoria ("promocao", "grupo" ou "pacote"; grupo quando for saída em grupo/excursão/peregrinação),
+lugar (nome do destino/viagem), categoria ("promocao", "grupo", "pacote" ou "peregrinacao"; peregrinacao quando for viagem religiosa (Fátima, Aparecida, Terra Santa, romaria); grupo quando for saída em grupo/excursão),
 etiqueta (continente, país ou região), descricao (uma linha curta, ex.: "7 noites · Aéreo e hotel"),
 dataSaida e dataVolta (formato AAAA-MM-DD; se só houver dia e mês, use o próximo ano em que a data ainda não passou; hoje é ${hoje()}),
 preco (número, valor "a partir de" por pessoa em reais, sem texto; se houver parcelas e total, use o total),
