@@ -10,9 +10,18 @@
 <link rel="apple-touch-icon" href="imgs/logo-azul.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
-<script>document.documentElement.classList.add("js");</script>
+<script>
+  /* marca que o JS está ligado; mostra a capa do álbum na primeira visita;
+     se algo falhar, solta tudo depois de 3,5 s para nada ficar escondido */
+  (function (h) {
+    h.classList.add("js");
+    try { if (h.dataset.abre != null && !sessionStorage.getItem("mv-abriu") && !matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("mv-abre"); } catch (e) {}
+    setTimeout(function () { if (!h.classList.contains("mv-anim")) { h.classList.add("mv-solta"); h.classList.remove("mv-abre"); } }, 3500);
+  })(document.documentElement);
+</script>
 </head>
 <body>
 
@@ -62,10 +71,15 @@
       </ul>
     </div>
   </div>
+  <p class="rodape__nome" aria-hidden="true"><span>Mundial Viagens</span></p>
   <div class="wrap rodape__legal"><span>© 2026 Mundial Viagens. Todos os direitos reservados.</span><span>Valores sujeitos a alteração e disponibilidade.</span></div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
 <script src="js/site.js" defer></script>
+<script src="js/motion.js" defer></script>
 <script type="module">
 /* Página de uma viagem: lê promocoes/{id} e monta a página dupla do álbum:
    fotos impressas à esquerda, ficha à direita, blocos do painel e o pedido no WhatsApp. */

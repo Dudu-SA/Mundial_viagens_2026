@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-abre>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,9 +10,18 @@
 <link rel="apple-touch-icon" href="imgs/logo-azul.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
-<script>document.documentElement.classList.add("js");</script>
+<script>
+  /* marca que o JS está ligado; mostra a capa do álbum na primeira visita;
+     se algo falhar, solta tudo depois de 3,5 s para nada ficar escondido */
+  (function (h) {
+    h.classList.add("js");
+    try { if (h.dataset.abre != null && !sessionStorage.getItem("mv-abriu") && !matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("mv-abre"); } catch (e) {}
+    setTimeout(function () { if (!h.classList.contains("mv-anim")) { h.classList.add("mv-solta"); h.classList.remove("mv-abre"); } }, 3500);
+  })(document.documentElement);
+</script>
 </head>
 <body>
 
@@ -46,7 +55,7 @@
   <section class="wrap album" aria-labelledby="album-tit">
     <div class="album__txt">
       <span class="mao">Crateús · desde 2012</span>
-      <h1 id="album-tit">O álbum de quem viajou com a Mundial</h1>
+      <h1 id="album-tit" data-letras>O álbum de quem viajou com a Mundial</h1>
       <p class="album__lead lead">Grupos saindo de Fortaleza, peregrinações com acompanhamento e pacotes parcelados em até 12x. Tudo combinado com uma pessoa de verdade, no WhatsApp.</p>
       <div class="album__acoes">
         <a class="btn btn--zap" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Vi%20o%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6a9.4 9.4 0 0 0-8.1 14.2L2.6 21.4l4.7-1.2A9.4 9.4 0 1 0 12 2.6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path transform="translate(7.1 7) scale(.42)" fill="currentColor" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.98.98 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99Z"/></svg>Falar no WhatsApp</a>
@@ -65,7 +74,7 @@
   <section id="novidades" class="destaques sec" aria-labelledby="dest-tit" hidden>
     <div class="wrap">
       <div class="cab" data-surge>
-        <div><span class="mao">Páginas marcadas</span><h2 id="dest-tit">Em destaque</h2></div>
+        <div><span class="mao">Páginas marcadas</span><h2 id="dest-tit" data-letras>Em destaque</h2></div>
       </div>
       <div class="destaques__lista"></div>
     </div>
@@ -75,7 +84,7 @@
   <section class="sec" id="saidas" aria-labelledby="saidas-tit">
     <div class="wrap">
       <div class="cab" data-surge>
-        <div><span class="mao">As próximas páginas</span><h2 id="saidas-tit">Próximas saídas</h2><p class="lead">Promoções, grupos, pacotes e peregrinações, em ordem de embarque. Valores por pessoa, em quarto duplo.</p></div>
+        <div><span class="mao">As próximas páginas</span><h2 id="saidas-tit" data-letras>Próximas saídas</h2><p class="lead">Promoções, grupos, pacotes e peregrinações, em ordem de embarque. Valores por pessoa, em quarto duplo.</p></div>
         <a class="btn btn--linha" href="promocoes.html">Ver todas as viagens</a>
       </div>
       <div class="saidas__lista" id="saidas-lista">
@@ -88,13 +97,19 @@
     </div>
   </section>
 
+  <!-- FAIXA DE DESTINOS: corre sozinha e acelera com a rolagem (motion.js) -->
+  <div class="faixa" aria-hidden="true">
+    <div class="faixa__linha faixa__linha--1"><div class="faixa__trilho" data-dir="-1"><span>Gramado</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Bariloche</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Lisboa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Fátima</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Aparecida</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Buenos Aires</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Cancún</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Santiago</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Jericoacoara</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Terra Santa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Porto</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Mendoza</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Gramado</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Bariloche</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Lisboa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Fátima</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Aparecida</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Buenos Aires</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Cancún</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Santiago</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Jericoacoara</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Terra Santa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Porto</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Mendoza</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></div></div>
+    <div class="faixa__linha faixa__linha--2"><div class="faixa__trilho" data-dir="1"><span>saindo de Fortaleza</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>em até 12x</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>com guia da agência</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>grupos de igreja</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>famílias e casais</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>suporte 24h na viagem</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>saindo de Fortaleza</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>em até 12x</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>com guia da agência</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>grupos de igreja</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>famílias e casais</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>suporte 24h na viagem</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></div></div>
+  </div>
+
   <!-- POR QUE A MUNDIAL -->
   <section id="porque" class="porque sec" aria-labelledby="porque-tit">
     <div class="wrap">
       <div data-surge>
-        <h2 id="porque-tit">Uma agência de verdade, com gente de verdade</h2>
-        <p class="lead">Não somos um buscador. Somos a Mundial, em Crateús, há 14 anos combinando viagem por viagem com cada cliente.</p>
-        <p class="porque__anos">— equipe Mundial Viagens</p>
+        <h2 id="porque-tit" data-letras>Uma agência de verdade, com gente de verdade</h2>
+        <p class="lead" data-palavras>Não somos um buscador. Somos a Mundial, em Crateús, há 14 anos combinando viagem por viagem com cada cliente.</p>
+        <p class="porque__anos">há <b data-conta="14">14</b> anos em Crateús — equipe Mundial Viagens</p>
       </div>
       <ul class="porque__lista">
         <li data-surge><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M24 6a17 17 0 0 0-14.7 25.6L6.5 41l9.6-2.6A17 17 0 1 0 24 6Z"/><path d="M17 20c0 6 5 11 11 11l3-3-4-3-2 2a7 7 0 0 1-4-4l2-2-3-4-3 3Z" fill="currentColor" stroke="none"/></svg><div><h3>Atendimento humano no WhatsApp</h3><p>Do orçamento ao retorno, você fala com a mesma pessoa. Durante a viagem, o suporte funciona 24 horas.</p></div></li>
@@ -107,12 +122,20 @@
   <!-- COMO FUNCIONA -->
   <section id="como-funciona" class="sec" aria-labelledby="passos-tit">
     <div class="wrap">
-      <div class="cab" data-surge><div><span class="mao">Passo a passo</span><h2 id="passos-tit">Como funciona</h2></div></div>
+      <div class="cab" data-surge><div><span class="mao">Passo a passo</span><h2 id="passos-tit" data-letras>Como funciona</h2></div></div>
+      <div class="voo" aria-hidden="true">
+        <svg class="voo__svg" viewBox="0 0 1200 200" preserveAspectRatio="none">
+          <path class="voo__base" d="M20 170 C 130 170 200 50 320 50 S 510 160 620 160 S 810 40 920 40 S 1110 20 1180 20"/>
+          <path class="voo__linha" d="M20 170 C 130 170 200 50 320 50 S 510 160 620 160 S 810 40 920 40 S 1110 20 1180 20"/>
+          <circle class="voo__ponto" cx="20" cy="170" r="7"/><circle class="voo__ponto" cx="320" cy="50" r="7"/><circle class="voo__ponto" cx="620" cy="160" r="7"/><circle class="voo__ponto" cx="920" cy="40" r="7"/>
+          <g class="voo__aviao" transform="translate(1180 20) rotate(-20)"><path d="M16 0 -8 -10 -4 -1.5 -13 -1.5 -16 -6 -18 -6 -17 0 -18 6 -16 6 -13 1.5 -4 1.5 -8 10Z"/></g>
+        </svg>
+      </div>
       <ol class="passos__lista">
-        <li data-surge><h3>Escolha uma viagem</h3><p>Veja as próximas saídas ou conte para onde quer ir.</p></li>
-        <li data-surge style="--atraso:.08s"><h3>Fale com a gente</h3><p>No WhatsApp, por telefone ou na loja. Tiramos as dúvidas e fechamos as datas.</p></li>
-        <li data-surge style="--atraso:.16s"><h3>Reserve parcelado</h3><p>Até 12x no cartão. Cuidamos de passagens, hotel, seguro e documentos.</p></li>
-        <li data-surge style="--atraso:.24s"><h3>Embarque acompanhado</h3><p>Suporte 24 horas durante a viagem. Depois, sua foto entra no álbum.</p></li>
+        <li data-surge data-f="0"><h3>Escolha uma viagem</h3><p>Veja as próximas saídas ou conte para onde quer ir.</p></li>
+        <li data-surge data-f=".268" style="--atraso:.08s"><h3>Fale com a gente</h3><p>No WhatsApp, por telefone ou na loja. Tiramos as dúvidas e fechamos as datas.</p></li>
+        <li data-surge data-f=".528" style="--atraso:.16s"><h3>Reserve parcelado</h3><p>Até 12x no cartão. Cuidamos de passagens, hotel, seguro e documentos.</p></li>
+        <li data-surge data-f=".792" style="--atraso:.24s"><h3>Embarque acompanhado</h3><p>Suporte 24 horas durante a viagem. Depois, sua foto entra no álbum.</p></li>
       </ol>
     </div>
   </section>
@@ -121,7 +144,7 @@
   <section id="duvidas" class="duvidas wrap sec">
     <div data-surge>
       <span class="mao">Antes de fechar</span>
-      <h2>Perguntas frequentes</h2>
+      <h2 data-letras>Perguntas frequentes</h2>
       <p class="lead">Não achou a sua? <a class="link" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Tenho%20uma%20d%C3%BAvida%20sobre%20viagens." target="_blank" rel="noopener">Pergunte no WhatsApp</a></p>
     </div>
     <div class="faq" data-surge>
@@ -136,7 +159,7 @@
   <!-- CONTATO -->
   <section id="contato" class="contato sec">
     <div class="wrap">
-      <div class="cab" data-surge><div><span class="mao">A última página</span><h2>Vamos viajar?</h2></div></div>
+      <div class="cab" data-surge><div><span class="mao">A última página</span><h2 data-letras>Vamos viajar?</h2></div></div>
       <div class="contato__grade">
         <div data-surge>
           <p class="lead">Entre em contato para mais informações. Respondemos em até 24 horas.</p>
@@ -192,10 +215,15 @@
       </ul>
     </div>
   </div>
+  <p class="rodape__nome" aria-hidden="true"><span>Mundial Viagens</span></p>
   <div class="wrap rodape__legal"><span>© 2026 Mundial Viagens. Todos os direitos reservados.</span><span>Valores sujeitos a alteração e disponibilidade.</span></div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
 <script src="js/site.js" defer></script>
+<script src="js/motion.js" defer></script>
 <script type="module" src="js/destaques.js"></script>
 <script type="module" src="js/saidas.js"></script>
 </body>

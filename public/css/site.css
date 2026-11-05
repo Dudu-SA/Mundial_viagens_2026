@@ -383,3 +383,81 @@ strong,b{font-weight:650}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js [data-surge]{opacity:1;translate:0 0}
 }
+
+/* ============================================================
+   19. Movimento (js/motion.js com GSAP + Lenis). Sem as bibliotecas
+   ou com "reduzir movimento", nada daqui atrapalha: a página fica parada.
+   ============================================================ */
+/* letras que sobem de dentro da linha */
+.pal{display:inline-block;white-space:nowrap;vertical-align:top;overflow:hidden;padding:.14em .02em .1em;margin:-.14em -.02em -.1em}
+.ch{display:inline-block;will-change:transform}
+.js [data-letras]:not(.letras){opacity:0}
+.mv-solta [data-letras]{opacity:1!important}
+.letras .ch{transform:translateY(118%) rotate(8deg);transition:transform 1.1s var(--sai);transition-delay:calc(var(--i,0) * 24ms + var(--atraso,0s))}
+.letras.entra .ch{transform:none}
+.album h1 .ch{transition-duration:1.3s}
+
+/* abertura: a capa do álbum, que se abre uma vez por visita */
+.mv-abre .album__pag .foto,.mv-abre .album__pag .fita{animation-play-state:paused}
+.mv-abre .album__txt>*{opacity:0}
+.abertura{position:fixed;inset:0;z-index:210;perspective:1600px;pointer-events:none}
+.abertura__capa{position:absolute;inset:0;display:grid;place-items:center;background:var(--capa);color:#fff;transform-origin:left center;backface-visibility:hidden;
+  box-shadow:inset 0 0 0 clamp(8px,1.4vw,18px) #1a3f80,inset 0 0 120px rgba(0,0,0,.25)}
+.abertura__capa::after{content:"";position:absolute;left:0;top:0;bottom:0;width:clamp(14px,2vw,26px);background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,0))}
+.abertura__in{display:grid;justify-items:center;gap:1.2rem;text-align:center}
+.abertura img{width:90px;height:auto}
+.abertura__titulo{font:800 clamp(1.6rem,4vw,2.8rem)/1 var(--fonte);font-stretch:112%;letter-spacing:-.03em}
+.abertura__mao{font:500 clamp(1.3rem,2.6vw,1.8rem)/1 var(--mao);color:#ffd2b5}
+.abertura__num{font:800 clamp(3rem,9vw,6rem)/.9 var(--fonte);font-stretch:125%;letter-spacing:-.05em;font-variant-numeric:tabular-nums;color:#fff}
+.abertura__barra{position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--fita);transform-origin:left;transform:scaleX(0)}
+.abertura__pagina{position:absolute;inset:0;background:var(--papel);opacity:0}
+
+/* cursor (só com mouse) */
+.cursor{position:fixed;left:0;top:0;z-index:150;pointer-events:none;display:grid;place-items:center;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;
+  background:var(--fita);opacity:0;transition:width .5s var(--sai),height .5s var(--sai),margin .5s var(--sai),opacity .3s,background-color .3s}
+.cursor span{font:500 1.1rem/1 var(--mao);color:#fff;opacity:0;transition:opacity .3s}
+.cursor.on{opacity:1}
+.cursor.grande{width:84px;height:84px;margin:-42px 0 0 -42px;background:var(--fita)}
+.cursor.grande span{opacity:1}
+.cursor.mira{width:40px;height:40px;margin:-20px 0 0 -20px;background:rgba(255,145,77,.35)}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* faixa de destinos: corre sozinha; o motion.js a acelera com a rolagem */
+.faixa{padding-block:clamp(2rem,4vw,3rem);overflow:hidden;user-select:none;border-block:1px solid var(--linha);background:var(--papel-2)}
+.faixa__linha{display:flex;white-space:nowrap}
+.faixa__trilho{display:flex;align-items:center;flex:none;will-change:transform;animation:corre 60s linear infinite}
+.faixa__linha--2 .faixa__trilho{animation-direction:reverse}
+.faixa span{font:850 clamp(2.6rem,7vw,7rem)/1.1 var(--fonte);font-stretch:125%;letter-spacing:-.045em;padding-inline:.22em;color:var(--capa)}
+.faixa__linha--1 span{color:transparent;-webkit-text-stroke:1.5px var(--capa)}
+.faixa__linha--2{margin-top:-.2em}
+.faixa__linha--2 span{font:500 clamp(2rem,5vw,4.6rem)/1.2 var(--mao);letter-spacing:0;color:var(--fita-tinta);padding-inline:.5em}
+.faixa svg{width:clamp(1.6rem,3vw,2.8rem);height:auto;color:var(--fita);flex:none;rotate:45deg}
+.faixa__linha--2 svg{rotate:-135deg;color:var(--capa)}
+.mv-anim .faixa__trilho{animation:none}
+@keyframes corre{to{transform:translate3d(-50%,0,0)}}
+
+/* palavras que acendem (seção azul) */
+.mv-anim .porque .w{opacity:.3}
+
+/* como funciona: o avião percorre a rota no computador */
+.voo{position:relative;margin-top:-.5rem;margin-bottom:-1rem}
+.voo__svg{width:100%;height:auto;aspect-ratio:1200/200;overflow:visible}
+.voo__base{fill:none;stroke:var(--linha);stroke-width:1.5;stroke-dasharray:3 8;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.voo__linha{fill:none;stroke:var(--fita);stroke-width:3;vector-effect:non-scaling-stroke;stroke-linecap:round}
+.voo__aviao path{fill:var(--capa)}
+.voo__ponto{fill:#fff;stroke:var(--capa);stroke-width:2;vector-effect:non-scaling-stroke;transition:fill .5s}
+.voo__ponto.chegou{fill:var(--fita)}
+.mv-anim .passos__lista li h3,.mv-anim .passos__lista li p{opacity:.35;transition:opacity .6s var(--sai)}
+.mv-anim .passos__lista li.chegou h3,.mv-anim .passos__lista li.chegou p{opacity:1}
+@media (max-width:900px){.voo{display:none}.mv-anim .passos__lista li h3,.mv-anim .passos__lista li p{opacity:1}}
+
+/* rodapé: o nome gigante que se estica ao chegar */
+.rodape__nome{display:block;margin-top:clamp(3rem,7vw,5rem);font:900 9.2vw/.8 var(--fonte);font-stretch:var(--wd,118%);letter-spacing:-.06em;white-space:nowrap;text-align:center;color:#fff;
+  padding-inline:var(--gut);user-select:none;translate:0 .06em;overflow:hidden}
+.rodape__nome span{display:inline-block}
+
+@media (prefers-reduced-motion:reduce){
+  .letras .ch{transform:none}
+  .js [data-letras]{opacity:1}
+  .mv-abre .album__txt>*{opacity:1}
+}

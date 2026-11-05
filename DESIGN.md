@@ -31,10 +31,17 @@ O site é o álbum de fotos de quem viajou com a Mundial. Cada viagem é uma pá
 - **Botões**: pílula, 3.3rem de altura mínima. `.btn` azul, `.btn--zap` verde (só WhatsApp), `.btn--linha`, `.btn--claro`, `.btn--linha-clara` (sobre azul).
 - **Formulário de contato**: folha branca com fita no topo, campos só com linha inferior.
 
-## Movimento
-- Único momento autoral: na abertura da página inicial as três fotos caem uma a uma (`@keyframes cai`, 0.9s, ease-out expo, atrasos 0/.18/.36s) e a fita cola por último (1s).
-- Um `data-surge` por bloco: aparece uma vez ao entrar na tela (IntersectionObserver), 0.7s.
-- Nada por quadro: sem Lenis, GSAP, três.js ou cursor. Rolagem nativa. `prefers-reduced-motion` desliga tudo.
+## Movimento (js/motion.js, GSAP + ScrollTrigger + Lenis)
+- Abertura (uma vez por visita): a capa azul do álbum com logo e contador 0–100 vira como um livro (`rotateY`), as três fotos caem uma a uma (`@keyframes cai`) e a fita cola por último.
+- Rolagem suave (Lenis). Cursor laranja que cresce ("ver") sobre fotos; botões magnéticos.
+- Títulos `[data-letras]`: letras sobem de dentro da linha ao entrar na tela. Blocos `[data-surge]`: aparecem uma vez.
+- Topo: as fotos fogem de leve do mouse e se espalham ao rolar.
+- Fotos das listas "pousam" ao entrar (mais inclinadas → repouso) e a imagem dentro tem profundidade.
+- Faixa de destinos: duas linhas que correm sozinhas e aceleram/entortam com a velocidade da rolagem.
+- "Por que a Mundial": as palavras acendem com a rolagem; "14 anos" conta.
+- Como funciona (computador): o avião percorre a rota tracejada e acende cada passo.
+- Rodapé: o nome gigante se estica ao chegar.
+- Sem bibliotecas ou com `prefers-reduced-motion`, nada fica escondido: a página solta tudo em 3,5 s. Sem três.js.
 - Transição entre páginas: View Transitions (fade + 14px).
 
 ## Regras

@@ -36,6 +36,35 @@
   }
   window.mv = { iconeZap: ICONE_ZAP, foto, el, ZAP };
   window.mvIconeZap = ICONE_ZAP;
+  const H = document.documentElement;
+
+  /* ---------- 1b) letras, palavras e contadores ----------
+     [data-letras]   → cada letra sobe de dentro da linha quando o título aparece
+     [data-palavras] → cada palavra vira <span class="w"> (o motion.js acende uma a uma)
+     [data-conta]    → número que conta de 0 até o valor */
+  function letras(t) {
+    if (!t || t.classList.contains("letras")) return;
+    const texto = t.textContent.replace(/\s+/g, " ").trim();
+    const leitor = el("span", "sr", texto), vis = el("span"); vis.setAttribute("aria-hidden", "true");
+    let i = 0;
+    const palavra = p => { const w = el("span", "pal"); [...p].forEach(c => { const x = el("span", "ch", c); x.style.setProperty("--i", i++); w.append(x); }); return w; };
+    [...t.childNodes].forEach(n => {
+      if (n.nodeName === "BR") { vis.append(document.createElement("br")); return; }
+      (n.textContent || "").split(/(\s+)/).forEach(part => { if (!part) return; /^\s+$/.test(part) ? vis.append(" ") : vis.append(palavra(part)); });
+    });
+    t.replaceChildren(leitor, vis); t.classList.add("letras");
+  }
+  function palavras(t) {
+    if (!t || t.dataset.feito) return; t.dataset.feito = "1";
+    t.replaceChildren(...t.textContent.trim().split(/\s+/).flatMap((w, i) => { const s = el("span", "w", w); return i ? [" ", s] : [s]; }));
+  }
+  function conta(t) {
+    const fim = +t.dataset.conta; if (!fim || reduz) return;
+    const t0 = performance.now(), dur = 1400;
+    const passo = x => { const p = Math.min(1, (x - t0) / dur); t.textContent = Math.round(fim * (1 - Math.pow(1 - p, 4))).toLocaleString("pt-BR"); if (p < 1) requestAnimationFrame(passo); };
+    requestAnimationFrame(passo);
+  }
+  window.mv.letras = letras;
 
   /* ---------- 2) menu ---------- */
   const burger = $(".burger"), menu = $("#menu");
@@ -43,6 +72,7 @@
     document.body.classList.toggle("menu-aberto", on);
     burger?.setAttribute("aria-expanded", on);
     burger?.setAttribute("aria-label", on ? "Fechar menu" : "Abrir menu");
+    on ? window.mvLenis?.stop() : window.mvLenis?.start();
   };
   burger?.addEventListener("click", () => abre(!document.body.classList.contains("menu-aberto")));
   menu?.addEventListener("click", e => { if (e.target.closest("a")) abre(false); });
@@ -64,17 +94,23 @@
 
   /* ---------- 4) aparecer ao rolar, uma vez por bloco ---------- */
   let io;
+  const marcar = x => { x.classList.add("visto"); if (x.matches("[data-letras]")) x.classList.add("entra"); if (x.matches("[data-conta]")) conta(x); };
   const revelar = (raiz = document) => {
-    const itens = $$("[data-surge]:not(.visto)", raiz);
-    if (reduz || !("IntersectionObserver" in window)) { itens.forEach(x => x.classList.add("visto")); return; }
-    io ||= new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visto"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px", threshold: .1 });
+    $$("[data-palavras]", raiz).forEach(palavras);
+    $$("[data-letras]", raiz).forEach(letras);
+    const itens = $$("[data-surge]:not(.visto), [data-letras]:not(.visto), [data-conta]:not(.visto)", raiz)
+      .filter(x => !(x.closest(".album") && H.classList.contains("mv-abre")));   // o topo espera a capa abrir
+    if (reduz || !("IntersectionObserver" in window)) { itens.forEach(marcar); return; }
+    io ||= new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { marcar(e.target); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px", threshold: .1 });
     itens.forEach(x => io.observe(x));
   };
   revelar();
+  document.addEventListener("mv:abriu", () => revelar(document));
+  if (H.classList.contains("mv-abre")) setTimeout(() => revelar(document), 3600);
   // os módulos avisam quando o conteúdo do Firebase chegou
   document.addEventListener("mv:conteudo", e => revelar(e.detail || document));
   // nada fica escondido se algo falhar
-  setTimeout(() => $$("[data-surge]:not(.visto)").forEach(x => { if (x.getBoundingClientRect().top < innerHeight) x.classList.add("visto"); }), 2500);
+  setTimeout(() => $$("[data-surge]:not(.visto), [data-letras]:not(.visto)").forEach(x => { if (x.getBoundingClientRect().top < innerHeight && !H.classList.contains("mv-abre")) marcar(x); }), 2500);
 
   /* ---------- 5) botão flutuante do WhatsApp ---------- */
   if (!$(".zap")) {
