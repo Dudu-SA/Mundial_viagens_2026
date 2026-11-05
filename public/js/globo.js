@@ -65,27 +65,30 @@ function iniciar() {
 
   let cena = null;
   atual = -1; escolher(0);
-  import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js")
+  // a biblioteca 3D (600 KB) só entra depois que a página terminou de carregar, para não atrasar o resto
+  const carregar3D = () => import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js")
     .then(m => { THREE = m; cena = montar(THREE); cena.ir(DESTINOS[atual]); box.classList.add("pronto"); })
     .catch(e => console.warn("[globo]", e));
+  const quandoOcioso = fn => ("requestIdleCallback" in window ? requestIdleCallback(fn, { timeout: 2500 }) : setTimeout(fn, 800));
+  if (document.readyState === "complete") quandoOcioso(carregar3D); else addEventListener("load", () => quandoOcioso(carregar3D), { once: true });
 
   function montar(T) {
     const cv = box.querySelector("canvas");
     const r = new T.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
-    r.setPixelRatio(Math.min(devicePixelRatio, 2));
+    r.setPixelRatio(Math.min(devicePixelRatio, 1.5));
     const sc = new T.Scene(), cam = new T.PerspectiveCamera(32, 1, .1, 20); cam.position.set(0, 0, 4.5);
     const g = new T.Group(); sc.add(g);
     const xyz = (lat, lon, h = 1) => new T.Vector3(Math.cos(rad(lat)) * Math.sin(rad(lon)), Math.sin(rad(lat)), Math.cos(rad(lat)) * Math.cos(rad(lon))).multiplyScalar(h);
 
     // oceano
-    g.add(new T.Mesh(new T.SphereGeometry(.992, 64, 48), new T.MeshBasicMaterial({ color: COR.oceano })));
+    g.add(new T.Mesh(new T.SphereGeometry(.992, 40, 28), new T.MeshBasicMaterial({ color: COR.oceano })));
 
     // terra em pontos (espiral de Fibonacci filtrada pela máscara)
     const bin = atob(MASK), land = (lat, lon) => {
       const x = Math.min(MW - 1, Math.floor((lon + 180) / 360 * MW)), y = Math.min(MH - 1, Math.floor((90 - lat) / 180 * MH)), k = y * MW + x;
       return (bin.charCodeAt(k >> 3) >> (k & 7)) & 1;
     };
-    const pts = [], N = 9000;
+    const pts = [], N = 6500;
     for (let i = 0; i < N; i++) {
       const lat = Math.asin(1 - 2 * (i + .5) / N) * 180 / Math.PI, lon = ((i * 137.508) % 360) - 180;
       if (land(lat, lon)) pts.push(xyz(lat, lon, 1));
@@ -138,11 +141,17 @@ function iniciar() {
       cam.position.z = w / h < 1 ? 4.5 / Math.min(1, w / h * 1.15) : 4.5; };
     new ResizeObserver(ajustar).observe(cv.parentElement); ajustar();
 
-    let vis = true; new IntersectionObserver(([e]) => { vis = e.isIntersecting; if (vis) loop(); }).observe(cv.parentElement);
-    const aponta = new T.Vector3(), tg = new T.Vector3(); let t0 = performance.now();
-    function loop() {
-      if (!vis) return; requestAnimationFrame(loop);
-      const t = performance.now(), dt = Math.min(.05, (t - t0) / 1000); t0 = t;
+    let vis = true, rodando = false;
+    const acordar = () => { if (vis && !document.hidden && !rodando) { rodando = true; t0 = performance.now(); requestAnimationFrame(loop); } };
+    new IntersectionObserver(([e]) => { vis = e.isIntersecting; acordar(); }).observe(cv.parentElement);
+    document.addEventListener("visibilitychange", acordar);
+    const aponta = new T.Vector3(), tg = new T.Vector3(); let t0 = performance.now(), ultimoQuadro = 0;
+    function loop(agora) {
+      if (!vis || document.hidden) { rodando = false; return; }
+      requestAnimationFrame(loop);
+      if (agora - ultimoQuadro < 31) return;                 // no máximo ~30 quadros por segundo: metade do trabalho
+      ultimoQuadro = agora;
+      const t = performance.now(), dt = Math.min(.08, (t - t0) / 1000); t0 = t;
       const k = reduce ? 1 : 1 - Math.pow(.0025, dt);                                       // suavização independente do fps
       let dy = alvo.y - cur.y; dy -= Math.round(dy / (2 * Math.PI)) * 2 * Math.PI;
       cur.y += dy * k; cur.x += (alvo.x - cur.x) * k;
@@ -159,7 +168,7 @@ function iniciar() {
       if (!reduce) { const s = (t / 1800) % 1; [ro, rd].forEach(m => { m.scale.setScalar(1 + s * 2.2); m.material.opacity = 1 - s; }); }
       r.render(sc, cam);
     }
-    loop();
+    acordar();
     return { ir: (d, imediato) => { rota(d); mirar(d, imediato); if (imediato || reduce) { cur = { ...alvo }; } } };
   }
 }

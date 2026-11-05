@@ -26,6 +26,7 @@
   if (!gsap || !ST || reduz) { liberar(); return; }
 
   gsap.registerPlugin(ST);
+  let refreshT = 0;
   H.classList.add("mv-anim");
   const mm = gsap.matchMedia();
   const COMPUTADOR = "(min-width: 901px)";
@@ -87,29 +88,23 @@
     }, { passive: true });
   }
 
-  /* ---------- 4) topo: as letras engordam e se esticam perto do mouse ---------- */
+  /* ---------- 4) topo: as letras perto do mouse crescem (só quando o mouse se mexe; nada roda por quadro) ---------- */
   const tituloTopo = $(".hero h1");
   if (tituloTopo && fino) {
-    let mx = -1e4, my = -1e4, ativo = true, centros = [];
-    const chs = () => $$(".ch", tituloTopo);
-    const medir = () => { centros = chs().map(ch => { ch.style.removeProperty("--wd"); const r = ch.getBoundingClientRect(); return [r.left + r.width / 2, r.top + scrollY + r.height / 2]; }); };
-    const atual = [];
-    addEventListener("pointermove", e => { mx = e.clientX; my = e.clientY + scrollY; }, { passive: true });
-    ST.create({ trigger: ".hero", start: "top bottom", end: "bottom top", onToggle: s => ativo = s.isActive });
-    addEventListener("resize", () => setTimeout(medir, 100));
-    document.fonts?.ready.then(() => setTimeout(medir, 1500));
-    gsap.ticker.add(() => {
-      if (!ativo || !centros.length) return;
-      chs().forEach((ch, i) => {
-        const [cx, cy] = centros[i] || [0, 0];
-        const t = Math.max(0, 1 - Math.hypot(mx - cx, my - cy) / 300);
-        const alvo = t * t * (3 - 2 * t);
-        atual[i] = (atual[i] || 0) + (alvo - (atual[i] || 0)) * .12;
-        if (Math.abs(atual[i]) < .001 && !alvo) return;
-        ch.style.setProperty("--wd", (100 + 25 * atual[i]).toFixed(1));
-        ch.style.setProperty("--wg", (820 + 80 * atual[i]).toFixed(0));
+    let centros = null, pedido = 0, ativo = true, ultimo = { x: -1e4, y: -1e4 };
+    const chs = $$(".ch", tituloTopo);
+    const medir = () => { centros = chs.map(ch => { const r = ch.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }); };
+    const aplicar = () => {
+      pedido = 0; if (!centros) medir();
+      chs.forEach((ch, i) => {
+        const [cx, cy] = centros[i], t = Math.max(0, 1 - Math.hypot(ultimo.x - cx, ultimo.y - cy) / 260), e = t * t * (3 - 2 * t);
+        ch.style.transform = e > .01 ? `translateY(${(-6 * e).toFixed(1)}px) scale(${(1 + .14 * e).toFixed(3)})` : "";
       });
-    });
+    };
+    addEventListener("pointermove", e => { if (!ativo) return; ultimo = { x: e.clientX, y: e.clientY }; if (!pedido) pedido = requestAnimationFrame(aplicar); }, { passive: true });
+    addEventListener("scroll", () => { centros = null; }, { passive: true });
+    addEventListener("resize", () => { centros = null; });
+    ST.create({ trigger: ".hero", start: "top bottom", end: "bottom top", onToggle: s => { ativo = s.isActive; if (!ativo) { ultimo = { x: -1e4, y: -1e4 }; aplicar(); } } });
   }
 
   /* topo: ao rolar, o texto de apoio sobe e some; o anel do globo gira junto */
@@ -127,7 +122,7 @@
   /* ---------- 5) destaques: a moldura cresce até ocupar a largura ---------- */
   function destaques(sec) {
     const m = $(".destaques__moldura", sec); if (!m || m.dataset.mv) return; m.dataset.mv = 1;
-    gsap.fromTo(m, { clipPath: "inset(10% 9% 10% 9% round 32px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none",
+    gsap.fromTo(m, { scale: .84, borderRadius: 32 }, { scale: 1, borderRadius: 0, ease: "none",
       scrollTrigger: { trigger: m, start: "top 92%", end: "top 18%", scrub: true } });
     gsap.fromTo($(".destaques__slides", m), { scale: 1.18 }, { scale: 1, ease: "none",
       scrollTrigger: { trigger: m, start: "top 92%", end: "top 18%", scrub: true } });
@@ -213,14 +208,15 @@
   const cards = $$(".depo__card");
   cards.forEach((c, i) => {
     const prox = cards[i + 1]; if (!prox) return;
-    gsap.fromTo(c, { scale: 1, filter: "brightness(1)" }, { scale: .9 + i * .025, filter: "brightness(.86)", ease: "none",
+    gsap.fromTo(c, { scale: 1, opacity: 1 }, { scale: .9 + i * .025, opacity: .7, ease: "none",
       scrollTrigger: { trigger: prox, start: "top 95%", end: "top 30%", scrub: true } });
   });
 
   /* ---------- 11) títulos gigantes que se esticam ao entrar ---------- */
   const esticar = (alvo, de, ate, gatilho) => {
     const el = typeof alvo === "string" ? $(alvo) : alvo; if (!el) return;
-    gsap.fromTo(el, { "--wd": de + "%" }, { "--wd": ate + "%", ease: "none",
+    // esticar a fonte (font-stretch) refaz o layout a cada quadro; scaleX é feito pela placa de vídeo
+    gsap.fromTo(el, { scaleX: de / ate, transformOrigin: "0 50%" }, { scaleX: 1, ease: "none",
       scrollTrigger: { trigger: gatilho || el, start: "top bottom", end: "top 35%", scrub: true } });
   };
   esticar(".contato__tit", 70, 118);
@@ -249,12 +245,13 @@
     const s = raiz.matches?.(".saidas") ? raiz : $(".saidas", raiz); if (s) saidas(s);
     const lp = raiz.matches?.("#lp") ? raiz : $("#lp", raiz); if (lp) promocao(lp);
     paralaxe(raiz);
-    requestAnimationFrame(() => ST.refresh());
+    clearTimeout(refreshT); refreshT = setTimeout(() => ST.refresh(), 150);
   };
   document.addEventListener("mv:conteudo", e => novo(e.detail));
   novo(document.body);
 
   // fontes e imagens mudam as alturas: recalcula tudo quando terminarem de chegar
-  document.fonts?.ready.then(() => ST.refresh());
-  addEventListener("load", () => ST.refresh());
+  const refrescar = () => { clearTimeout(refreshT); refreshT = setTimeout(() => ST.refresh(), 150); };
+  document.fonts?.ready.then(refrescar);
+  addEventListener("load", refrescar);
 })();
