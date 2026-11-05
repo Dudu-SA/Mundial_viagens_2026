@@ -3,58 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0a1c44">
-<meta name="description" content="Viagem à venda na Mundial Viagens. Veja roteiro, datas e valores e peça pelo WhatsApp.">
+<meta name="theme-color" content="#1b468f">
+<meta name="description" content="Detalhes da viagem, preço por pessoa e pedido pelo WhatsApp. Mundial Viagens, Crateús (CE).">
 <title>Viagem | Mundial Viagens</title>
 <link rel="icon" type="image/png" href="imgs/logo-azul.png">
 <link rel="apple-touch-icon" href="imgs/logo-azul.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
-<script>
-  (function (h) {
-    h.classList.add("js");
-    setTimeout(function () { if (!h.classList.contains("mv-pronto")) h.classList.add("mv-solta"); }, 3500);
-  })(document.documentElement);
-</script>
+<script>document.documentElement.classList.add("js");</script>
 </head>
-<body data-sem-zap>
+<body>
 
 <header class="topo">
   <div class="wrap topo__in">
-    <a class="marca" href="index.html" aria-label="Mundial Viagens, página inicial"><img class="marca__branca" src="imgs/logo-branco.png" alt="" width="39" height="40"><img class="marca__azul" src="imgs/logo-azul.png" alt="" width="39" height="40"><span>Mundial Viagens</span></a>
+    <a class="marca" href="index.html" aria-label="Mundial Viagens, página inicial"><img src="imgs/logo-branco.png" alt="" width="39" height="40"><span>Mundial Viagens</span></a>
     <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
     <nav class="menu" id="menu" aria-label="Principal">
-      <a href="index.html#destinos">Destinos</a>
-      <a href="promocoes.html">Vendas</a>
-      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#saidas">Próximas saídas</a>
+      <a href="promocoes.html">Todas as viagens</a>
+      <a href="index.html#porque">Por que a Mundial</a>
       <a href="index.html#como-funciona">Como funciona</a>
-      <a class="menu__extra" href="index.html#depoimentos">Depoimentos</a>
       <a href="index.html#duvidas">Dúvidas</a>
       <a href="index.html#contato">Contato</a>
     </nav>
-    <a class="btn btn--azul topo__cta" href="promocoes.html">Ver outras viagens</a>
+    <a class="btn btn--linha-clara topo__cta" href="promocoes.html">Ver outras viagens</a>
   </div>
 </header>
 
-<main class="lp" id="lp">
-  <div class="lp__carrega escuro"><p>Carregando a viagem…</p></div>
+<main class="lp wrap" id="lp">
+  <div class="lp__carrega"><p>Carregando a viagem…</p></div>
 </main>
 
-<footer class="rodape escuro">
+<footer class="rodape">
   <div class="wrap rodape__grade">
     <div>
       <a class="marca" href="index.html"><img src="imgs/logo-branco.png" alt="" width="51" height="52"><span>Mundial Viagens</span></a>
-      <p class="rodape__sobre">Agência de viagens de Crateús que transforma sonhos em destinos inesquecíveis, com compromisso, segurança e atendimento personalizado em passagens, hospedagens e pacotes.</p>
+      <p class="rodape__sobre">Agência de viagens de Crateús há 14 anos: passagens, hospedagens, pacotes, grupos e peregrinações, com atendimento personalizado.</p>
     </div>
     <nav aria-label="Rodapé">
       <h2>Navegação</h2>
       <ul>
-        <li><a href="index.html#destinos">Destinos</a></li>
-        <li><a href="promocoes.html">Vendas</a></li>
-        <li><a href="index.html#sobre">Sobre</a></li>
+        <li><a href="index.html#saidas">Próximas saídas</a></li>
+        <li><a href="promocoes.html">Todas as viagens</a></li>
+        <li><a href="index.html#porque">Por que a Mundial</a></li>
+        <li><a href="index.html#como-funciona">Como funciona</a></li>
+        <li><a href="index.html#duvidas">Dúvidas</a></li>
         <li><a href="index.html#contato">Contato</a></li>
       </ul>
     </nav>
@@ -67,17 +62,13 @@
       </ul>
     </div>
   </div>
-  <p class="rodape__nome" aria-hidden="true"><span>Mundial Viagens</span></p>
   <div class="wrap rodape__legal"><span>© 2026 Mundial Viagens. Todos os direitos reservados.</span><span>Valores sujeitos a alteração e disponibilidade.</span></div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
 <script src="js/site.js" defer></script>
-<script src="js/motion.js" defer></script>
 <script type="module">
-/* Página de uma viagem: lê promocoes/{id} e monta capa em tela cheia, ficha, blocos de conteúdo e reserva. */
+/* Página de uma viagem: lê promocoes/{id} e monta a página dupla do álbum:
+   fotos impressas à esquerda, ficha à direita, blocos do painel e o pedido no WhatsApp. */
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, WHATSAPP } from "./js/conexao.js";
@@ -85,41 +76,37 @@ import { firebaseConfig, WHATSAPP } from "./js/conexao.js";
 const box = document.getElementById("lp");
 const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+const TIPO = { grupo: "Saída em grupo", pacote: "Pacote", peregrinacao: "Peregrinação", promocao: "Promoção" };
 const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
 const dia = s => { const [y, m, d] = s.split("-"); return `${+d} de ${MESES[+m-1]} de ${y}`; };
 const brl = n => "R$ " + Number(n).toLocaleString("pt-BR", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
-const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
 const fotoOk = u => /^(data:image\/|https:\/\/)/i.test(u || "");
-const svgRoseta = () => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.dataset.roseta = "cheio"; return s; };
-const VOLTAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>';
-const zapLink = (txt, msg, cls = "btn btn--azul") => {
-  const a = el("a", cls); a.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`; a.target = "_blank"; a.rel = "noopener"; a.dataset.ima = "";
-  a.innerHTML = window.mvIconeZap || ""; a.append(txt); return a;
+const { el, foto } = window.mv;
+const VOLTAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>';
+const zapLink = (txt, msg, cls = "btn btn--zap") => {
+  const a = el("a", cls); a.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`; a.target = "_blank"; a.rel = "noopener";
+  a.innerHTML = window.mv.iconeZap; a.append(txt); return a;
 };
 const pronto = () => document.dispatchEvent(new CustomEvent("mv:conteudo", { detail: box }));
 
 function estado(titulo, texto) {
   document.title = titulo + " | Mundial Viagens";
-  const s = el("section", "lp__estado escuro");
-  const h = el("h1", "", titulo); h.dataset.letras = "";
+  const s = el("section", "lp__estado");
   const acoes = el("div", "acoes");
-  const a = el("a", "btn btn--claro", "Ver viagens à venda"); a.href = "promocoes.html";
-  acoes.append(a, zapLink("Falar no WhatsApp", "Olá! Vi o site e gostaria de informações sobre viagens.", "btn btn--vazado"));
-  s.append(h, el("p", "", texto), acoes);
+  const a = el("a", "btn", "Ver viagens à venda"); a.href = "promocoes.html";
+  acoes.append(a, zapLink("Falar no WhatsApp", "Olá! Vi o site e gostaria de informações sobre viagens.", "btn btn--linha"));
+  s.append(el("h1", "", titulo), el("p", "", texto), acoes);
   box.replaceChildren(s);
   pronto();
 }
 
 function bloco(b, fotoN) {
   if (b.tipo === "foto") {
-    const f = el("figure", "bloco bloco--foto" + (fotoN % 2 ? " inverte" : "")); f.dataset.surge = "";
-    const w = el("div", "bloco__img");
-    if (fotoOk(b.foto)) { const im = el("img"); im.src = b.foto; im.alt = b.titulo || ""; im.loading = "lazy"; w.append(im); w.dataset.paralaxe = ""; }
-    else w.append(svgRoseta());
-    const cap = el("figcaption");
+    const f = el("div", "bloco bloco--foto" + (fotoN % 2 ? " inverte" : "")); f.dataset.surge = "";
+    const cap = el("div");
     if (b.titulo) cap.append(el("h2", "", b.titulo));
     if (b.texto) cap.append(el("p", "", b.texto));
-    f.append(w, cap); return f;
+    f.append(foto({ src: fotoOk(b.foto) ? b.foto : "", alt: b.titulo || "", lazy: true }), cap); return f;
   }
   const s = el("section", "bloco"); s.dataset.surge = "";
   if (b.icone || b.titulo) {
@@ -142,47 +129,37 @@ function montar(p) {
   const msg = `Olá! Vi a viagem ${p.lugar} no site e tenho interesse${periodo ? " (" + periodo + ")" : ""}, a partir de ${brl(p.preco)}. Pode me passar mais informações?`;
   const noites = p.dataSaida && p.dataVolta ? Math.round((Date.parse(p.dataVolta) - Date.parse(p.dataSaida)) / 864e5) : 0;
 
-  /* capa em tela cheia: as fotos se alternam devagar e o título sobe letra por letra */
-  const capa = el("section", "lp__capa escuro");
+  const voltar = el("a", "lp__voltar"); voltar.href = "promocoes.html"; voltar.innerHTML = VOLTAR; voltar.append("Todas as viagens");
+
+  /* página dupla: fotos à esquerda (alternam devagar), ficha à direita */
+  const dupla = el("div", "lp__dupla");
   const fotosBox = el("div", "lp__fotos");
   const fotos = (p.fotos || []).filter(fotoOk);
-  if (!fotos.length) fotosBox.append(svgRoseta());
-  const imgs = fotos.map((src, i) => { const im = el("img"); im.src = src; im.alt = i ? "" : "Foto de " + p.lugar; fotosBox.append(im); return im; });
-  capa.append(fotosBox);
-  const dentro = el("div", "lp__capa-in");
-  const voltar = el("a", "lp__voltar"); voltar.href = "promocoes.html"; voltar.innerHTML = VOLTAR; voltar.append("Todas as viagens");
-  const h1 = el("h1", "", p.lugar); h1.dataset.letras = "";
-  dentro.append(voltar, el("span", "lp__tag", p.etiqueta || ({ grupo: "Saída em grupo", pacote: "Pacote", peregrinacao: "Peregrinação" }[p.categoria] || "Promoção")), h1);
-  if (p.descricao) dentro.append(el("p", "lp__desc", p.descricao));
-  const fatos = el("dl", "lp__fatos");
-  const fato = (t, v) => { const d = el("div"); d.append(el("dt", "", t), el("dd", "", v)); fatos.append(d); };
-  if (p.dataSaida) fato("Saída", dia(p.dataSaida));
-  if (p.dataVolta) fato("Volta", dia(p.dataVolta));
-  if (noites > 0) fato("Duração", noites + (noites > 1 ? " noites" : " noite"));
-  fato("A partir de", brl(p.preco));
-  dentro.append(fatos);
-  capa.append(dentro);
+  const fig = foto({ src: fotos[0] || "", alt: "Foto de " + p.lugar, data: p.dataSaida, fita: "topo", legenda: periodo ? periodo.replace(/ de \d{4}/g, "") : p.lugar });
+  const cont = fig.querySelector(".foto__img");
+  const imgs = fotos.map((src, i) => { if (!i) return cont.querySelector("img"); const im = el("img"); im.src = src; im.alt = ""; im.loading = "lazy"; cont.append(im); return im; });
+  fotosBox.append(fig);
   if (imgs.length) {
     let atual = 0, timer;
     const pontos = el("div", "lp__pontos");
     const ir = i => { atual = i; imgs.forEach((im, k) => im.classList.toggle("on", k === i)); [...pontos.children].forEach((d, k) => d.setAttribute("aria-current", k === i)); };
     imgs.forEach((_, i) => { const d = el("button"); d.type = "button"; d.setAttribute("aria-label", "Ver foto " + (i + 1)); d.onclick = () => { ir(i); clearInterval(timer); }; pontos.append(d); });
     ir(0);
-    if (imgs.length > 1) { capa.append(pontos); if (!reduz) timer = setInterval(() => ir((atual + 1) % imgs.length), 6000); }
+    if (imgs.length > 1) { fotosBox.append(pontos); if (!reduz) timer = setInterval(() => ir((atual + 1) % imgs.length), 6000); }
   }
 
-  /* conteúdo: apresentação + blocos montados no painel */
-  const corpo = el("div", "lp__corpo wrap"), conteudo = el("div", "lp__conteudo");
-  if (p.sobre) { const sb = el("section", "lp__sobre"); sb.dataset.surge = ""; sb.append(el("h2", "", "Sobre a viagem"), el("p", "", p.sobre)); conteudo.append(sb); }
-  let fn = 0;
-  (p.blocos || []).filter(b => b && (b.titulo || b.texto || b.foto)).forEach(b => conteudo.append(bloco(b, b.tipo === "foto" ? fn++ : 0)));
-
-  /* reserva: preço e pedido, com canhoto destacável */
-  const reserva = el("aside", "reserva"); reserva.setAttribute("aria-label", "Pedir esta viagem");
-  const preco = el("div", "reserva__preco");
-  preco.append(el("span", "", "A partir de"), el("strong", "", brl(p.preco)), el("span", "", "por pessoa, em quarto duplo"));
-  const acoes = el("div", "reserva__acoes");
-  const share = el("button", "btn btn--vazado", "Compartilhar"); share.type = "button";
+  const txt = el("div", "lp__txt");
+  txt.append(el("span", "mao", p.etiqueta || TIPO[p.categoria] || TIPO.promocao), el("h1", "", p.lugar));
+  if (p.descricao) txt.append(el("p", "lp__desc", p.descricao));
+  const fatos = el("dl", "lp__fatos");
+  const fato = (t, v, cls) => { const d = el("div"); d.append(el("dt", "", t), el("dd", cls, v)); fatos.append(d); };
+  if (p.dataSaida) fato("Saída", dia(p.dataSaida));
+  if (p.dataVolta) fato("Volta", dia(p.dataVolta));
+  if (noites > 0) fato("Duração", noites + (noites > 1 ? " noites" : " noite"));
+  fato("A partir de", brl(p.preco), "preco");
+  txt.append(fatos);
+  const acoes = el("div", "lp__acoes");
+  const share = el("button", "btn btn--linha", "Compartilhar"); share.type = "button";
   share.onclick = async () => {
     const url = location.href;
     try {
@@ -190,28 +167,33 @@ function montar(p) {
       else { await navigator.clipboard.writeText(url); share.textContent = "Link copiado"; setTimeout(() => share.textContent = "Compartilhar", 2200); }
     } catch {}
   };
-  acoes.append(zapLink("Pedir no WhatsApp", msg, "btn btn--claro"), share, el("p", "reserva__valida", `Oferta válida até ${dia(p.exibirAte)}. Valores sujeitos a alteração e disponibilidade.`));
-  reserva.append(preco, acoes);
-  corpo.append(conteudo, reserva);
+  acoes.append(zapLink("Pedir no WhatsApp", msg), share);
+  txt.append(acoes, el("p", "lp__valida", `Por pessoa, em quarto duplo. Oferta válida até ${dia(p.exibirAte)}. Valores sujeitos a alteração e disponibilidade.`));
+  dupla.append(fotosBox, txt);
+
+  /* conteúdo: apresentação + blocos montados no painel */
+  const corpo = el("div", "lp__corpo");
+  if (p.sobre) { const sb = el("section", "lp__sobre"); sb.dataset.surge = ""; sb.append(el("h2", "", "Sobre a viagem"), el("p", "", p.sobre)); corpo.append(sb); }
+  let fn = 0;
+  (p.blocos || []).filter(b => b && (b.titulo || b.texto || b.foto)).forEach(b => corpo.append(bloco(b, b.tipo === "foto" ? fn++ : 0)));
 
   /* fechamento */
-  const fim = el("section", "lp__fim escuro"), fimIn = el("div", "wrap");
-  const fh = el("h2", "", "Gostou? Garanta o seu lugar."); fh.dataset.letras = "";
-  fimIn.append(fh, zapLink("Falar com a gente", msg, "btn btn--claro"));
-  fim.append(fimIn);
+  const fim = el("section", "lp__fim"), fimTxt = el("div");
+  fimTxt.append(el("span", "mao", "Gostou?"), el("h2", "", "Garanta o seu lugar nesta viagem."));
+  fim.append(fimTxt, zapLink("Falar com a gente", msg, "btn btn--claro"));
 
-  /* barra fixa no celular: aparece quando o quadro de reserva sai da tela */
+  /* barra fixa no celular: aparece quando os botões saem da tela */
   const barra = el("div", "lp__barra");
-  const bp = el("div"); bp.append(el("span", "", "A partir de"), el("strong", "", brl(p.preco)));
-  barra.append(bp, zapLink("Pedir no WhatsApp", msg, "btn btn--claro"));
+  const bp = el("div"); bp.append(el("span", "", "A partir de"), el("b", "", brl(p.preco)));
+  barra.append(bp, zapLink("Pedir no WhatsApp", msg));
 
-  box.replaceChildren(capa, corpo, fim, barra);
+  box.replaceChildren(voltar, dupla, corpo, fim, barra);
   pronto();
 
-  let fimVisivel = false;
+  let fimVisivel = false, pedido = 0;
+  const checar = () => { pedido = 0; barra.classList.toggle("mostra", acoes.getBoundingClientRect().bottom < 0 && !fimVisivel); };
   if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { fimVisivel = e.isIntersecting; checar(); }).observe(fim);
-  const checar = () => barra.classList.toggle("mostra", reserva.getBoundingClientRect().bottom < 0 && !fimVisivel);
-  addEventListener("scroll", checar, { passive: true });
+  addEventListener("scroll", () => { if (!pedido) pedido = requestAnimationFrame(checar); }, { passive: true });
 }
 
 try {
