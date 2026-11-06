@@ -86,6 +86,7 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, WHATSAPP } from "./js/conexao.js";
+import { precoDe, precoFrase } from "./js/preco.js";
 
 const box = document.getElementById("lp");
 const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -93,7 +94,6 @@ const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","ag
 const TIPO = { grupo: "Saída em grupo", pacote: "Pacote", peregrinacao: "Peregrinação", promocao: "Promoção" };
 const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
 const dia = s => { const [y, m, d] = s.split("-"); return `${+d} de ${MESES[+m-1]} de ${y}`; };
-const brl = n => "R$ " + Number(n).toLocaleString("pt-BR", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
 const fotoOk = u => /^(data:image\/|https:\/\/)/i.test(u || "");
 const { el, foto } = window.mv;
 const VOLTAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>';
@@ -140,7 +140,7 @@ function bloco(b, fotoN) {
 function montar(p) {
   document.title = `${p.lugar} | Mundial Viagens`;
   const periodo = p.dataSaida ? (p.dataVolta ? `${dia(p.dataSaida)} a ${dia(p.dataVolta)}` : `saída em ${dia(p.dataSaida)}`) : "";
-  const msg = `Olá! Vi a viagem ${p.lugar} no site e tenho interesse${periodo ? " (" + periodo + ")" : ""}, a partir de ${brl(p.preco)}. Pode me passar mais informações?`;
+  const msg = `Olá! Vi a viagem ${p.lugar} no site e tenho interesse${periodo ? " (" + periodo + ")" : ""}${precoFrase(p)}. Pode me passar mais informações?`;
   const noites = p.dataSaida && p.dataVolta ? Math.round((Date.parse(p.dataVolta) - Date.parse(p.dataSaida)) / 864e5) : 0;
 
   const voltar = el("a", "lp__voltar"); voltar.href = "promocoes.html"; voltar.innerHTML = VOLTAR; voltar.append("Todas as viagens");
@@ -170,19 +170,20 @@ function montar(p) {
   if (p.dataSaida) fato("Saída", dia(p.dataSaida));
   if (p.dataVolta) fato("Volta", dia(p.dataVolta));
   if (noites > 0) fato("Duração", noites + (noites > 1 ? " noites" : " noite"));
-  fato("A partir de", brl(p.preco), "preco");
+  const pr = precoDe(p);
+  fato(pr.numero ? "A partir de" : "Valor", pr.valor, "preco" + (pr.numero ? "" : " preco--texto"));
   txt.append(fatos);
   const acoes = el("div", "lp__acoes");
   const share = el("button", "btn btn--linha", "Compartilhar"); share.type = "button";
   share.onclick = async () => {
     const url = location.href;
     try {
-      if (navigator.share) await navigator.share({ title: `${p.lugar} | Mundial Viagens`, text: `${p.lugar}, a partir de ${brl(p.preco)}`, url });
+      if (navigator.share) await navigator.share({ title: `${p.lugar} | Mundial Viagens`, text: `${p.lugar}${precoFrase(p)}`, url });
       else { await navigator.clipboard.writeText(url); share.textContent = "Link copiado"; setTimeout(() => share.textContent = "Compartilhar", 2200); }
     } catch {}
   };
   acoes.append(zapLink("Pedir no WhatsApp", msg), share);
-  txt.append(acoes, el("p", "lp__valida", `Por pessoa, em quarto duplo. Oferta válida até ${dia(p.exibirAte)}. Valores sujeitos a alteração e disponibilidade.`));
+  txt.append(acoes, el("p", "lp__valida", `${pr.numero ? "Por pessoa, em quarto duplo. " : ""}Oferta válida até ${dia(p.exibirAte)}. Valores sujeitos a alteração e disponibilidade.`));
   dupla.append(fotosBox, txt);
 
   /* conteúdo: apresentação + blocos montados no painel */
@@ -198,7 +199,7 @@ function montar(p) {
 
   /* barra fixa no celular: aparece quando os botões saem da tela */
   const barra = el("div", "lp__barra");
-  const bp = el("div"); bp.append(el("span", "", "A partir de"), el("b", "", brl(p.preco)));
+  const bp = el("div"); bp.append(el("span", "", pr.numero ? "A partir de" : "Valor"), el("b", "", pr.valor));
   barra.append(bp, zapLink("Pedir no WhatsApp", msg));
 
   box.replaceChildren(voltar, dupla, corpo, fim, barra);

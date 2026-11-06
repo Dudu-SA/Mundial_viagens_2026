@@ -193,6 +193,8 @@ strong,b{font-weight:650}
 .saida__preco{text-align:right;white-space:nowrap}
 .saida__preco span{display:block;font-size:.78rem;color:var(--tinta-2)}
 .saida__preco b{font:800 1.35rem/1 var(--fonte);font-stretch:108%;letter-spacing:-.03em;color:var(--capa);font-variant-numeric:lining-nums}
+.saida__preco--texto b{font-size:1.05rem;letter-spacing:-.01em;white-space:normal;max-width:12ch;display:block;text-align:right}
+.lp__fatos dd.preco--texto{font-size:1.3rem}
 .saidas__vazio{color:var(--tinta-2);max-width:52ch}
 .saidas__vazio .btn{margin-top:1.4rem}
 .esqueleto{padding:14px 0 0}
@@ -311,6 +313,7 @@ strong,b{font-weight:650}
 .bilhetes .saida--destaque .saida__desc{margin-top:.8rem;color:var(--tinta-2)}
 .bilhetes .saida--destaque .saida__preco{text-align:left;margin-top:1.2rem}
 .bilhetes .saida--destaque .saida__preco b{font-size:2rem}
+.bilhetes .saida--destaque .saida__preco--texto b{font-size:1.5rem;text-align:left;max-width:none}
 .bilhetes .saida--destaque .btn{margin-top:1.4rem}
 @media (max-width:760px){.bilhetes .saida--destaque{grid-template-columns:1fr}}
 

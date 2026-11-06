@@ -4,6 +4,7 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig } from "./conexao.js";
+import { precoDe } from "./preco.js";
 
 const box = document.getElementById("lista-promos");
 const abas = document.querySelector(".vtabs"), desc = document.getElementById("abas-desc");
@@ -15,7 +16,6 @@ const CATS = [
 ];
 const ZAP = "https://wa.me/558888870400?text=" + encodeURIComponent("Olá! Quero montar um roteiro de viagem. Pode me ajudar?");
 const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
-const brl = n => "R$ " + Number(n).toLocaleString("pt-BR", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
 const noites = p => p.dataSaida && p.dataVolta ? Math.round((Date.parse(p.dataVolta) - Date.parse(p.dataSaida)) / 864e5) : 0;
 const fotoOk = u => /^(data:image\/|https:\/\/)/i.test(u || "");
 const { el, foto } = window.mv;
@@ -30,8 +30,9 @@ function cartao(p, cat, i) {
   const nt = noites(p);
   if (p.destaque && p.descricao) txt.append(el("p", "saida__desc", p.descricao));
   else if (nt > 0) txt.append(el("small", "", nt + (nt > 1 ? " noites" : " noite")));
-  const preco = el("div", "saida__preco");
-  preco.append(el("span", "", "a partir de" + (p.destaque ? ", por pessoa" : "")), el("b", "", brl(p.preco)));
+  const pr = precoDe(p);
+  const preco = el("div", "saida__preco" + (pr.numero ? "" : " saida__preco--texto"));
+  preco.append(el("span", "", pr.rotulo + (p.destaque && pr.numero ? ", por pessoa" : "")), el("b", "", pr.valor));
   if (p.destaque) { txt.append(preco, el("span", "btn", "Ver a viagem")); info.append(txt); }
   else info.append(txt, preco);
   a.append(info);

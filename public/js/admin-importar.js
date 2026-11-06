@@ -8,6 +8,7 @@ import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, ADMIN_EMAIL } from "./conexao.js";
+import { lerNumero } from "./preco.js";
 
 const app = getApps()[0] || initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
 const $ = id => document.getElementById(id);
@@ -68,6 +69,16 @@ export function lerPreco(v) {
   return isNaN(x) ? NaN : Math.round(x * 100) / 100;
 }
 
+/* valor da planilha/foto: número quando der ("R$ 8.640", "a partir de 1.290"); senão o texto ("A definir", "Sob consulta") */
+export function lerValorPlanilha(v) {
+  if (typeof v === "number") return v;
+  const t = String(v ?? "").trim().replace(/\s+/g, " ");
+  if (!t) return "A definir";
+  if (lerNumero(t) >= 0) return lerNumero(t);
+  if (/^(a partir de|desde|por)?\s*(r\$)?\s*[\d.,]+(\s*(por pessoa|p\/ ?pessoa|pp))?$/i.test(t)) { const n = lerPreco(t); if (n >= 0) return n; }
+  return t.slice(0, 40);
+}
+
 const lerBool = v => /^(s|sim|x|1|true|verdadeiro|yes|ok)$/.test(limpo(v));
 const lerCategoria = v => { const s = limpo(v); return s.startsWith("pereg") || s.startsWith("roma") ? "peregrinacao" : s.startsWith("grup") ? "grupo" : s.startsWith("pac") ? "pacote" : "promocao"; };
 const linhas = v => String(v ?? "").split(/\r?\n|;|•|\|/).map(x => x.replace(/^[-*✓]\s*/, "").trim()).filter(Boolean);
@@ -105,7 +116,7 @@ export function montarViagem(d) {
     categoria: lerCategoria(d.categoria), lugar: String(d.lugar ?? "").trim(), etiqueta: String(d.etiqueta ?? "").trim(),
     descricao: String(d.descricao ?? "").trim(), sobre: String(d.sobre ?? "").trim(),
     dataSaida: lerData(d.dataSaida), dataVolta: lerData(d.dataVolta), exibirAte: lerData(d.exibirAte),
-    preco: lerPreco(d.preco), destaque: lerBool(d.destaque), fotos: [], blocos: []
+    preco: lerValorPlanilha(d.preco), destaque: lerBool(d.destaque), fotos: [], blocos: []
   };
   const bloco = (tipo, icone, titulo, texto) => { if (texto) v.blocos.push({ tipo, icone, titulo, texto, foto: "" }); };
   bloco("texto", "🗺️", "Roteiro", String(d.roteiro ?? "").trim());
@@ -119,7 +130,6 @@ export function montarViagem(d) {
   else if (v.dataSaida < hoje()) avisos.push("A data de saída já passou.");
   if (d.dataVolta && !v.dataVolta) avisos.push(`Não entendi a data de volta "${d.dataVolta}".`);
   if (v.dataVolta && v.dataSaida && v.dataVolta < v.dataSaida) avisos.push("A volta está antes da saída.");
-  if (!(v.preco >= 0)) avisos.push(d.preco ? `Não entendi o preço "${d.preco}".` : "Sem preço.");
   if (v.exibirAte && v.exibirAte < hoje()) avisos.push("A data de exibição já passou: não apareceria no site.");
   return { v, avisos };
 }
@@ -187,7 +197,7 @@ Extraia os dados e responda SOMENTE com JSON: um array de objetos, um por viagem
 lugar (nome do destino/viagem), categoria ("promocao", "grupo", "pacote" ou "peregrinacao"; peregrinacao quando for viagem religiosa (Fátima, Aparecida, Terra Santa, romaria); grupo quando for saída em grupo/excursão),
 etiqueta (continente, país ou região), descricao (uma linha curta, ex.: "7 noites · Aéreo e hotel"),
 dataSaida e dataVolta (formato AAAA-MM-DD; se só houver dia e mês, use o próximo ano em que a data ainda não passou; hoje é ${hoje()}),
-preco (número, valor "a partir de" por pessoa em reais, sem texto; se houver parcelas e total, use o total),
+preco (número, valor "a partir de" por pessoa em reais; se houver parcelas e total, use o total; se não houver valor na imagem, use o texto "A definir"),
 incluso (array de strings com o que está incluso), roteiro (texto, se houver), hotel (texto, se houver), dicas (texto com condições, parcelamento, observações).
 Use "" ou [] quando não houver a informação. Não invente dados.`;
 
@@ -291,12 +301,12 @@ function cartao(it, i) {
     const d = el("div"), l = el("label", "", lab); let e;
     if (opts) { e = el("select"); opts.forEach(([val, txt]) => e.append(new Option(txt, val))); e.value = v[k]; }
     else { e = el(tipo === "area" ? "textarea" : "input"); if (tipo !== "area") e.type = tipo; else e.rows = 3; e.value = v[k] ?? ""; }
-    e.onchange = () => { v[k] = tipo === "number" ? parseFloat(e.value) : e.value; if (k === "dataSaida" && !$("imp-ate-" + i).dataset.manual) { v.exibirAte = v.dataSaida; $("imp-ate-" + i).value = v.dataSaida; } };
+    e.onchange = () => { v[k] = k === "preco" ? lerValorPlanilha(e.value) : tipo === "number" ? parseFloat(e.value) : e.value; if (k === "dataSaida" && !$("imp-ate-" + i).dataset.manual) { v.exibirAte = v.dataSaida; $("imp-ate-" + i).value = v.dataSaida; } };
     if (k === "exibirAte") { e.id = "imp-ate-" + i; e.oninput = () => e.dataset.manual = "1"; }
     d.append(l, e); return d;
   };
   g.append(campo("Lugar", "lugar"), campo("Seção", "categoria", null, Object.entries(CATS)), campo("Etiqueta", "etiqueta"), campo("Detalhes", "descricao"),
-    campo("Saída", "dataSaida", "date"), campo("Volta", "dataVolta", "date"), campo("Exibir até", "exibirAte", "date"), campo("Preço (R$)", "preco", "number"));
+    campo("Saída", "dataSaida", "date"), campo("Volta", "dataVolta", "date"), campo("Exibir até", "exibirAte", "date"), campo("Valor (número ou texto)", "preco"));
   const sobre = campo("Apresentação", "sobre", "area"); sobre.className = "full"; g.append(sobre);
   const dest = el("div", "chk full"); const cb = el("input"); cb.type = "checkbox"; cb.checked = !!v.destaque; cb.id = "imp-dest-" + i; cb.onchange = () => v.destaque = cb.checked;
   const cl = el("label", "", "Destacar (card em largura total)"); cl.htmlFor = cb.id; dest.append(cb, cl); g.append(dest);
@@ -342,7 +352,7 @@ $("impPublicar").onclick = async () => {
   let ok = 0;
   for (const it of [...prontos]) {
     try {
-      const dados = { ...it.v, preco: Number(it.v.preco), criadoEm: serverTimestamp() };
+      const dados = { ...it.v, preco: lerValorPlanilha(it.v.preco), criadoEm: serverTimestamp() };
       await addDoc(collection(db, "promocoes"), dados); ok++; itens.splice(itens.indexOf(it), 1);
     } catch (e) { console.error("[importar] publicar:", e); aviso(`Erro ao publicar "${it.v.lugar}": ${e.code || e.message}. As anteriores foram publicadas.`, "err"); break; }
   }

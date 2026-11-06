@@ -84,7 +84,7 @@
           <div><label for="saida">Data de saída *</label><input id="saida" type="date" required></div>
           <div><label for="volta">Data de volta</label><input id="volta" type="date"></div>
           <div><label for="ate">Exibir no site até *</label><input id="ate" type="date" required><small class="hint">Depois desta data a viagem some sozinha do site. Por padrão é a data de saída.</small></div>
-          <div><label for="preco">Valor a partir de (R$) *</label><input id="preco" type="number" min="0" step="0.01" required placeholder="8640"></div>
+          <div><label for="preco">Valor</label><input id="preco" type="text" inputmode="text" maxlength="40" placeholder="8640  ou  A definir" list="preco-sugestoes"><datalist id="preco-sugestoes"><option value="A definir"><option value="Sob consulta"></datalist><small class="hint">Número vira "a partir de R$ 8.640" no site. Também aceita texto, como "A definir" ou "Sob consulta". Vazio = "A definir".</small></div>
           <div class="full"><label for="fotos">Fotos (até 3)</label><input id="fotos" type="file" accept="image/*" multiple><small class="hint">As imagens são reduzidas automaticamente. Com mais de uma foto, elas se alternam no card.</small><div class="thumbs" id="thumbs"></div></div>
           <div class="full">
             <label>Blocos de conteúdo</label>
@@ -171,6 +171,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, ADMIN_EMAIL } from "./js/conexao.js";
+import { lerValor, precoDe } from "./js/preco.js";
 
 const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
 const $ = id => document.getElementById(id);
@@ -279,7 +280,7 @@ function editar(id, p) {
   editId = id;
   $("categoria").value = p.categoria || "promocao"; $("lugar").value = p.lugar || ""; $("etiqueta").value = p.etiqueta || ""; $("descricao").value = p.descricao || "";
   $("sobre").value = p.sobre || ""; $("saida").value = p.dataSaida || ""; $("volta").value = p.dataVolta || "";
-  $("ate").value = p.exibirAte || ""; $("preco").value = p.preco ?? ""; $("destaque").checked = !!p.destaque;
+  $("ate").value = p.exibirAte || ""; $("preco").value = typeof p.preco === "number" ? String(p.preco).replace(".", ",") : (p.preco ?? ""); $("destaque").checked = !!p.destaque;
   fotos = [...(p.fotos || [])]; blocos = (p.blocos || []).map(b => ({ ...b }));
   ateManual = true; desenharThumbs(); desenharBlocos();
   $("formTitulo").textContent = "Editando: " + p.lugar; $("salvar").textContent = "Salvar alterações"; $("cancelar").hidden = false;
@@ -315,8 +316,7 @@ $("form").onsubmit = async e => {
   if (!saida) return aviso("Preencha a data de saída.", "err");
   if (volta && volta < saida) return aviso("A data de volta não pode ser antes da saída.", "err");
   if (ate < hoje()) return aviso("A data de exibição já passou; a promoção não apareceria no site.", "err");
-  const preco = parseFloat($("preco").value);
-  if (!(preco >= 0)) return aviso("Informe o valor a partir de (R$).", "err");
+  const preco = lerValor($("preco").value);       // número (8640) ou texto ("A definir")
   if (!auth.currentUser) return aviso("Sessão expirada. Saia e entre novamente.", "err");
 
   const dados = {
@@ -372,7 +372,7 @@ async function carregar() {
     const tag = document.createElement("span"); tag.className = "tag " + (ativa ? "on" : "off"); tag.textContent = ativa ? "No site" : "Expirada";
     s.append(tag);
     const sp = document.createElement("span");
-    sp.textContent = `${{promocao:"Promoção",grupo:"Grupo",pacote:"Pacote",peregrinacao:"Peregrinação"}[p.categoria || "promocao"]} · ${br(p.dataSaida)}${p.dataVolta ? " a " + br(p.dataVolta) : ""} · R$ ${Number(p.preco).toLocaleString("pt-BR")} · visível até ${br(p.exibirAte)}`;
+    sp.textContent = `${{promocao:"Promoção",grupo:"Grupo",pacote:"Pacote",peregrinacao:"Peregrinação"}[p.categoria || "promocao"]} · ${br(p.dataSaida)}${p.dataVolta ? " a " + br(p.dataVolta) : ""} · ${precoDe(p).valor} · visível até ${br(p.exibirAte)}`;
     info.append(s, sp);
     const acoes = document.createElement("div"); acoes.style.cssText = "display:flex;gap:.5rem;flex-wrap:wrap";
     const abrir = document.createElement("a"); abrir.className = "del"; abrir.style.cssText = "text-decoration:none;color:#1d4a9f;border-color:#1d4a9f"; abrir.textContent = "Abrir página";
