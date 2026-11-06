@@ -2,116 +2,124 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1b468f">
-<meta name="description" content="Mundial Viagens: veja suas promoções e cadastre seus alertas de passagens.">
+<meta name="description" content="Links da Mundial Viagens: sorteio de Aparecida do Norte, site de viagens, cadastro de alertas de promoções e WhatsApp.">
 <title>Mundial Viagens · Links</title>
 <link rel="icon" type="image/png" href="imgs/logo-azul.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <style>
-/* Página de links: identidade do MVO (azul #1B468F, laranja #FF914D) */
-:root{--azul:#1b468f;--azul-escuro:#12326a;--azul-noite:#0c2252;--laranja:#ff914d;--laranja-escuro:#e0702e;--azul-claro:#e7eef9;--tinta:#13234a;--tinta-2:#5a6782;--papel:#fff;
-  --titulo:"Nunito","Plus Jakarta Sans",system-ui,sans-serif;--texto:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--suave:cubic-bezier(.2,.75,.25,1)}
-*{box-sizing:border-box;margin:0;padding:0}
-html{height:100%}
-body{min-height:100%;font-family:var(--texto);color:#fff;background:var(--azul);display:grid;place-items:center;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:2.5rem;overflow-x:hidden;position:relative;isolation:isolate;-webkit-font-smoothing:antialiased}
-/* fundo: degradê + anéis de guilhoché girando devagar + granulado */
-body::before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(80% 60% at 50% 0%,#2a5cb4,var(--azul) 55%,var(--azul-noite))}
-.anel{position:fixed;left:50%;top:50%;z-index:-1;width:min(140vw,980px);aspect-ratio:1;translate:-50% -50%;color:rgba(169,193,234,.35);pointer-events:none;animation:gira 180s linear infinite}
-.anel path{fill:none;stroke:currentColor;stroke-width:.8;vector-effect:non-scaling-stroke}
-.grao{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .09 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-@keyframes gira{to{rotate:360deg}}
+/* A página de links no mesmo mundo do site: capa azul, página de papel,
+   e o sorteio como a foto grande colada com fita no topo do álbum. */
+:root{--capa:#1b468f;--tinta:#12326a;--tinta-2:#4f5f85;--papel:#fbfbf8;--papel-2:#f1f3f6;--fita:#ff914d;--fita-tinta:#b84d14;--zap:#13783f;--linha:#dde3ee;
+  --fonte:'Archivo',system-ui,sans-serif;--mao:'Caveat','Segoe Print',cursive;--sai:cubic-bezier(.16,1,.3,1);
+  --sombra:0 1px 2px rgba(18,50,106,.12),0 14px 28px -12px rgba(18,50,106,.35)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--capa);overflow-x:clip}
+body{overflow-x:clip;min-height:100svh;font:400 1.0625rem/1.5 var(--fonte);color:var(--tinta);background:var(--capa);display:grid;place-items:start center;padding:clamp(.75rem,3vw,2rem) clamp(.6rem,3vw,1.5rem);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--fita);outline-offset:3px}
+.pagina{position:relative;width:100%;max-width:520px;background:var(--papel);padding:clamp(1.5rem,5vw,2.5rem) clamp(1.1rem,4vw,1.8rem) 1.5rem;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);animation:abre .9s var(--sai) both}
+.pagina::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:linear-gradient(90deg,rgba(18,50,106,.18),rgba(18,50,106,0))}
+@keyframes abre{from{opacity:0;translate:0 24px}}
 
-.caixa{width:min(440px,100%);display:grid;gap:1.1rem;text-align:center}
-.marca{display:grid;justify-items:center;gap:.9rem}
-.marca img{width:96px;height:auto;filter:drop-shadow(0 14px 30px rgba(6,18,44,.45))}
-.marca h1{font:900 clamp(1.7rem,6vw,2.2rem)/1.05 var(--titulo);letter-spacing:-.02em}
-.marca p{color:#c9d7ee;font-size:.98rem;max-width:32ch}
-.selo{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:.25rem .7rem;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#dbe5f5}
-.selo::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--laranja);box-shadow:0 0 0 0 rgba(255,145,77,.6);animation:bip 2.2s infinite}
-@keyframes bip{70%,100%{box-shadow:0 0 0 10px rgba(255,145,77,0)}}
+/* marca */
+.marca{display:flex;align-items:center;gap:.8rem}
+.marca img{width:54px;height:auto}
+.marca h1{font:800 1.5rem/1 var(--fonte);font-stretch:112%;letter-spacing:-.03em}
+.marca small{display:block;margin-top:.3rem;font:500 1.15rem/1 var(--mao);color:var(--fita-tinta)}
 
-.links{display:grid;gap:.85rem;margin-top:.6rem}
-.link{position:relative;display:grid;grid-template-columns:52px 1fr 28px;align-items:center;gap:.9rem;padding:1rem 1.1rem;border-radius:18px;background:var(--papel);color:var(--tinta);text-decoration:none;text-align:left;
-  box-shadow:0 1px 2px rgba(6,18,44,.2),0 16px 34px -18px rgba(6,18,44,.6);overflow:hidden;isolation:isolate;transition:transform .25s var(--suave),box-shadow .25s}
-.link::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);translate:-120% 0;transition:translate .8s var(--suave)}
-.link:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(6,18,44,.2),0 24px 44px -18px rgba(6,18,44,.7)}
-.link:hover::after{translate:120% 0}
-.link:active{transform:translateY(-1px) scale(.99)}
-.link:focus-visible{outline:3px solid var(--laranja);outline-offset:3px}
-.link i{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:var(--azul-claro);color:var(--azul);font-style:normal}
-.link i svg{width:26px;height:26px}
-.link.laranja i{background:#fff0e6;color:var(--laranja-escuro)}
-.link b{display:block;font:800 1.05rem/1.2 var(--titulo);color:var(--azul-escuro)}
-.link span{display:block;font-size:.84rem;color:var(--tinta-2);margin-top:.15rem}
-.link .seta{color:var(--tinta-2);transition:translate .25s var(--suave),color .25s}
-.link:hover .seta{translate:4px 0;color:var(--laranja-escuro)}
+/* a foto do sorteio, em destaque */
+.sorteio{position:relative;display:block;margin:2.2rem auto 1.6rem;background:#fff;padding:10px 10px 12px;box-shadow:var(--sombra);rotate:-2deg;
+  transition:rotate .5s var(--sai),translate .5s var(--sai),box-shadow .5s var(--sai);animation:cai .9s var(--sai) .2s both}
+.sorteio:hover,.sorteio:focus-visible{rotate:0deg;translate:0 -6px;box-shadow:0 2px 4px rgba(18,50,106,.12),0 24px 40px -14px rgba(18,50,106,.45)}
+@keyframes cai{from{opacity:0;translate:0 -60px;rotate:-12deg}}
+.sorteio .img{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--papel-2)}
+.sorteio img{width:100%;height:100%;object-fit:cover;display:block}
+.canto{position:absolute;width:22px;height:22px;background:var(--capa);clip-path:polygon(0 0,100% 0,0 100%);z-index:2}
+.canto:nth-of-type(1){left:-3px;top:-3px}.canto:nth-of-type(2){right:-3px;top:-3px;rotate:90deg}.canto:nth-of-type(3){left:-3px;bottom:-3px;rotate:-90deg}.canto:nth-of-type(4){right:-3px;bottom:-3px;rotate:180deg}
+.fita{position:absolute;z-index:3;left:50%;top:-12px;width:120px;height:28px;translate:-50% 0;rotate:-3deg;background:rgba(255,145,77,.85);animation:cola .5s var(--sai) 1.1s both;
+  -webkit-mask:linear-gradient(90deg,transparent 0 3px,#000 3px calc(100% - 3px),transparent calc(100% - 3px));mask:linear-gradient(90deg,transparent 0 3px,#000 3px calc(100% - 3px),transparent calc(100% - 3px))}
+@keyframes cola{from{opacity:0;scale:1.4}}
+.carimbo{position:absolute;z-index:3;right:-4px;top:-16px;display:grid;place-content:center;width:96px;height:96px;border:3px solid var(--fita-tinta);border-radius:50%;color:var(--fita-tinta);
+  font:800 .7rem/1.05 var(--fonte);font-stretch:108%;text-align:center;text-transform:uppercase;letter-spacing:.06em;rotate:12deg;background:rgba(251,251,248,.85);animation:carimba .5s var(--sai) 1.3s both}
+.carimbo b{display:block;font-size:.95rem;font-stretch:90%;letter-spacing:-.01em;margin-block:.1rem}
+@keyframes carimba{from{opacity:0;scale:1.8;rotate:0deg}}
+.sorteio .leg{margin-top:.6rem;text-align:center}
+.sorteio .leg .mao{display:block;font:500 1.6rem/1.1 var(--mao);color:var(--tinta)}
+.sorteio .leg .cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:.6rem;padding:.75rem 1.3rem;border-radius:999px;background:var(--fita-tinta);color:#fff;font:700 1rem/1 var(--fonte);transition:background-color .25s,gap .3s var(--sai)}
+.sorteio:hover .cta{gap:.8rem;background:#9c3f0e}
+.sorteio .cta svg{width:1.1em;height:1.1em}
+
+/* os outros links: linhas do índice do álbum */
+.links{display:grid;gap:.7rem;margin-top:1.8rem}
+.link{display:grid;grid-template-columns:46px 1fr 24px;align-items:center;gap:.9rem;padding:.9rem 1rem;border:1.5px solid var(--linha);background:#fff;box-shadow:0 1px 2px rgba(18,50,106,.06);
+  transition:transform .35s var(--sai),box-shadow .35s var(--sai),border-color .25s;animation:abre .8s var(--sai) both}
+.link:nth-child(1){animation-delay:.5s}.link:nth-child(2){animation-delay:.6s}
+.link:hover,.link:focus-visible{transform:translateY(-3px);box-shadow:var(--sombra);border-color:var(--capa)}
+.link .ic{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--capa);color:#fff}
+.link .ic svg{width:22px;height:22px}
+.link.laranja .ic{background:var(--papel-2);color:var(--fita-tinta)}
+.link strong{display:block;font:700 1.05rem/1.2 var(--fonte);letter-spacing:-.01em;color:var(--tinta)}
+.link span span{display:block;font-size:.85rem;color:var(--tinta-2);margin-top:.15rem}
+.link .seta{color:var(--capa);transition:translate .3s var(--sai)}
 .link .seta svg{width:22px;height:22px}
+.link:hover .seta{translate:4px 0}
 
-.sociais{display:flex;justify-content:center;gap:.6rem;margin-top:.4rem}
-.sociais a{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;transition:background .2s,transform .25s var(--suave)}
-.sociais a:hover{background:var(--laranja);border-color:var(--laranja);transform:translateY(-3px)}
-.sociais svg{width:20px;height:20px}
-.pe{color:#aec2e4;font-size:.78rem;margin-top:.4rem}
-.pe a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35)}
-
-/* entrada em cascata; o avião cruza a tela uma vez */
-@media (prefers-reduced-motion:no-preference){
-  .caixa>*{animation:subir .6s var(--suave) backwards}
-  .caixa>:nth-child(2){animation-delay:.08s}.caixa>:nth-child(3){animation-delay:.16s}.caixa>:nth-child(4){animation-delay:.28s}.caixa>:nth-child(5){animation-delay:.36s}
-  .links .link:nth-child(2){animation:subir .6s var(--suave) .22s backwards}
-  .marca img{animation:surgir .9s ease-out backwards,flutua 6s ease-in-out 1s infinite}
-  .aviao{position:fixed;top:14%;left:-80px;width:34px;height:34px;color:var(--laranja);pointer-events:none;opacity:0;animation:voa 7s var(--suave) 1.2s both;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35))}
-  .aviao svg{width:100%;height:100%}
-  .aviao::before{content:"";position:absolute;right:100%;top:50%;width:140px;height:1.5px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6));translate:0 -50%}
-}
-@keyframes subir{from{opacity:0;transform:translateY(14px)}}
-@keyframes surgir{from{opacity:0;transform:scale(.8)}}
-@keyframes flutua{50%{transform:translateY(-6px)}}
-@keyframes voa{0%{opacity:0;translate:0 0;rotate:-8deg}8%{opacity:1}92%{opacity:1}100%{opacity:0;translate:calc(100vw + 120px) -60px;rotate:6deg}}
+/* sociais e pé */
+.sociais{display:flex;justify-content:center;gap:.7rem;margin-top:1.8rem;animation:abre .8s var(--sai) .75s both}
+.sociais a{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;border:1.5px solid var(--linha);color:var(--capa);transition:background-color .25s,color .25s,transform .35s var(--sai)}
+.sociais a:hover{background:var(--capa);color:#fff;transform:translateY(-3px)}
+.sociais a.zap{background:var(--zap);border-color:var(--zap);color:#fff}
+.sociais a.zap:hover{background:#0f6132}
+.sociais svg{width:24px;height:24px}
+.pe{margin-top:1.5rem;text-align:center;font:500 1.2rem/1.2 var(--mao);color:var(--tinta-2)}
+.pe a{text-decoration:underline;text-decoration-color:var(--fita);text-underline-offset:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<svg class="anel" id="anel" viewBox="-250 -250 500 500" aria-hidden="true"></svg>
-<div class="grao" aria-hidden="true"></div>
-<div class="aviao" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z" transform="rotate(90 12 12)"/></svg></div>
 
-<main class="caixa">
+<main class="pagina">
   <header class="marca">
-    <img src="data:image/png;base64,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" alt="Mundial Viagens" width="96" height="99">
-    <h1>Mundial Viagens</h1>
-    <p>Promoções de passagens e pacotes direto no seu WhatsApp, saindo de Fortaleza e Crateús.</p>
-    <span class="selo">Há 14 anos realizando viagens</span>
+    <img src="imgs/logo-azul.png" alt="" width="54" height="55">
+    <div><h1>Mundial Viagens</h1><small>há 14 anos realizando viagens</small></div>
   </header>
+
+  <!-- SORTEIO: a foto grande colada no álbum -->
+  <a class="sorteio" href="https://forms.gle/55N7iv8jXGYD92Xw9" target="_blank" rel="noopener" aria-label="Participe do sorteio de uma viagem para Aparecida do Norte">
+    <i class="canto"></i><i class="canto"></i><i class="canto"></i><i class="canto"></i>
+    <span class="fita" aria-hidden="true"></span>
+    <span class="carimbo" aria-hidden="true">Sorteio<b>Aparecida</b>do Norte</span>
+    <span class="img"><img src="imgs/aparecida.jpg" alt="Basílica de Nossa Senhora Aparecida vista da passarela" width="678" height="452" fetchpriority="high"></span>
+    <span class="leg">
+      <span class="mao">Concorra a uma viagem para Aparecida do Norte</span>
+      <span class="cta">Quero participar do sorteio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+    </span>
+  </a>
 
   <nav class="links" aria-label="Links">
     <a class="link" href="https://clientes.mundialviagens.com/" target="_blank" rel="noopener">
-      <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 9.5 14 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M8 13h8M8 17h5"/><path d="m16 3 5 5-5 2z"/></svg></i>
-      <div><b>Minhas promoções</b><span>Veja as ofertas que combinam com os seus destinos</span></div>
-      <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></span>
+      <span><strong>Viagens à venda</strong><span>Promoções, grupos, pacotes e peregrinações</span></span>
+      <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
     </a>
     <a class="link laranja" href="https://forms.gle/6Vud1hrtp9vtR1jR6" target="_blank" rel="noopener">
-      <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h8M8 8h4"/></svg></i>
-      <div><b>Cadastrar meus alertas</b><span>Diga para onde quer ir e receba as promoções primeiro</span></div>
-      <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+      <span><strong>Receber alertas de promoções</strong><span>Cadastre-se e saiba antes de todo mundo</span></span>
+      <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
     </a>
   </nav>
 
   <div class="sociais">
-    <a href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.4Z"/></svg></a>
-    <a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
-    <a href="https://www.facebook.com/mundialmilhas/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8Z"/></svg></a>
+    <a class="zap" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.4Z"/></svg></a>
+    <a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+    <a href="https://www.facebook.com/mundialmilhas/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8Z"/></svg></a>
   </div>
+
   <p class="pe"><a href="https://www.mundialviagens.com/" target="_blank" rel="noopener">mundialviagens.com</a> · Crateús, CE</p>
 </main>
-
-<script>
-/* anéis de guilhoché (como no site) */
-(function(){var svg=document.getElementById("anel"),NS="http://www.w3.org/2000/svg";
- [{n:10,r0:205,a:16,k:18,seg:14},{n:1,r0:182,a:0,k:1,seg:180},{n:1,r0:230,a:0,k:1,seg:180},{n:14,r0:110,a:48,k:9,seg:16}].forEach(function(c){
-  var passos=c.k*c.seg;for(var j=0;j<c.n;j++){var fase=j/c.n*Math.PI*2,d="";for(var s=0;s<passos;s++){var t=s/passos*Math.PI*2,r=c.r0+c.a*Math.sin(c.k*t+fase);d+=(s?"L":"M")+(r*Math.cos(t)).toFixed(1)+" "+(r*Math.sin(t)).toFixed(1)}
-   var p=document.createElementNS(NS,"path");p.setAttribute("d",d+"Z");svg.appendChild(p)}});})();
-</script>
 </body>
 </html>
