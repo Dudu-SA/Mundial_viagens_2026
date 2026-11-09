@@ -13,7 +13,7 @@ web
 - A maioria chega pelo celular, vindo do WhatsApp ou do Instagram da agência, e decide conversando com uma pessoa.
 
 ## Product Purpose
-Site público da Mundial Viagens (clientes.mundialviagens.com): mostrar as viagens à venda (promoções, grupos, pacotes, peregrinações) cadastradas no painel pela equipe e levar a pessoa a pedir pelo WhatsApp. Sucesso = conversa iniciada no WhatsApp sobre uma viagem específica, ou cadastro nos alertas de promoção.
+Site público da Mundial Viagens (mundialviagens.com; clientes.mundialviagens.com redireciona para lá): mostrar as viagens à venda (promoções, grupos, pacotes, peregrinações) cadastradas no painel pela equipe e levar a pessoa a pedir pelo WhatsApp. Sucesso = conversa iniciada no WhatsApp sobre uma viagem específica, ou cadastro nos alertas de promoção.
 
 ## Positioning
 Atendimento humano no WhatsApp do orçamento ao retorno, parcelamento em até 12x com tarifas negociadas, e grupos com acompanhamento da agência saindo de Fortaleza. Agência física há 14 anos em Crateús; não é um buscador nem uma OTA.
