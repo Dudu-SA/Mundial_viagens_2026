@@ -16,7 +16,7 @@ web
 Site público da Mundial Viagens (mundialviagens.com; clientes.mundialviagens.com redireciona para lá): mostrar as viagens à venda (promoções, grupos, pacotes, peregrinações) cadastradas no painel pela equipe e levar a pessoa a pedir pelo WhatsApp. Sucesso = conversa iniciada no WhatsApp sobre uma viagem específica, ou cadastro nos alertas de promoção.
 
 ## Positioning
-Atendimento humano no WhatsApp do orçamento ao retorno, parcelamento em até 12x com tarifas negociadas, e grupos com acompanhamento da agência saindo de Fortaleza. Agência física há 14 anos em Crateús; não é um buscador nem uma OTA.
+Atendimento humano no WhatsApp do orçamento ao retorno, parcelamento em até 12x com tarifas negociadas, e grupos com acompanhamento da agência saindo de Fortaleza. Agência física em Crateús desde 2014; não é um buscador nem uma OTA.
 
 ## Operating Context
 - Conteúdo vem do Firestore (coleções `promocoes`, `destaques`), cadastrado em `admin.html` (manual, planilha ou foto lida por IA).
@@ -41,7 +41,7 @@ Atendimento humano no WhatsApp do orçamento ao retorno, parcelamento em até 12
 - 13 promoções reais da operadora Foco (Gramado, Bariloche, Santiago, Mendoza, Buenos Aires) em `/home/claude/entrega/promocoes-foco-out-2026.xlsx` e suas artes.
 - O usuário tem fotos reais de viagens e grupos (não enviadas ainda).
 - Depoimentos do site atual (Camila e Rafael, Marcos Andrade, Família Nogueira) NÃO são confirmados: não usar como reais; pedir depoimentos verdadeiros ou omitir a seção.
-- Números "12+ anos, 50+ países, 5 mil viajantes" vêm do site antigo; "14 anos" é o dado do rodapé e do MVO. Usar 14 anos; os demais só se confirmados.
+- Números "12+ anos, 50+ países, 5 mil viajantes" vêm do site antigo; Fundação confirmada pelo dono: 2014 (o site calcula os anos sozinho). Os demais números só se confirmados.
 
 ## Product Principles
 1. A viagem é o produto: foto grande, preço claro, data e um botão de WhatsApp sempre à mão.

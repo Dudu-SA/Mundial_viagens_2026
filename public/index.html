@@ -54,7 +54,7 @@
   <!-- O ÁLBUM ABERTO: página esquerda com o texto, página direita com três fotos impressas -->
   <section class="wrap album" aria-labelledby="album-tit">
     <div class="album__txt">
-      <span class="mao">Crateús · desde 2012</span>
+      <span class="mao">Crateús · desde 2014</span>
       <h1 id="album-tit" data-letras>O álbum de quem viajou com a Mundial</h1>
       <p class="album__lead lead">Grupos saindo de Fortaleza, peregrinações com acompanhamento e pacotes parcelados em até 12x. Tudo combinado com uma pessoa de verdade, no WhatsApp.</p>
       <div class="album__acoes">
@@ -63,10 +63,11 @@
       </div>
       <p class="album__nota"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Agência física na BR-404, 1646, Crateús (CE). Seg a sex, 8h às 18h; sábado, 8h às 12h.</p>
     </div>
-    <div class="album__pag" aria-label="Fotos de viagens em grupo">
-      <figure class="foto"><span class="canto"></span><span class="fita"></span><div class="foto__img"><img src="imgs/exemplo-1.svg" alt="" width="800" height="600" fetchpriority="high"></div><figcaption class="foto__leg">Gramado com o grupo<small>julho de 2025</small></figcaption></figure>
-      <figure class="foto"><span class="canto"></span><div class="foto__img" style="--ar:1/1"><img src="imgs/exemplo-2.svg" alt="" width="800" height="600"></div><figcaption class="foto__leg">Peregrinação a Aparecida<small>outubro de 2025</small></figcaption></figure>
-      <figure class="foto"><span class="canto"></span><span class="fita fita--dir"></span><div class="foto__img"><img src="imgs/exemplo-3.svg" alt="" width="800" height="600"></div><figcaption class="foto__leg">Praias do Nordeste<small>janeiro de 2026</small></figcaption></figure>
+    <!-- as três fotos são as promoções à venda (preenchidas pelo js/saidas.js com os dados do painel) -->
+    <div class="album__pag" id="album-fotos" aria-label="Promoções disponíveis">
+      <a class="foto" href="#saidas"><span class="canto"></span><span class="fita"></span><span class="foto__img"></span><span class="foto__leg">&nbsp;<small>&nbsp;</small></span></a>
+      <a class="foto" href="#saidas"><span class="canto"></span><span class="foto__img" style="--ar:1/1"></span><span class="foto__leg">&nbsp;<small>&nbsp;</small></span></a>
+      <a class="foto" href="#saidas"><span class="canto"></span><span class="fita fita--dir"></span><span class="foto__img"></span><span class="foto__leg">&nbsp;<small>&nbsp;</small></span></a>
     </div>
   </section>
 
@@ -108,8 +109,8 @@
     <div class="wrap">
       <div data-surge>
         <h2 id="porque-tit" data-letras>Uma agência de verdade, com gente de verdade</h2>
-        <p class="lead" data-palavras>Não somos um buscador. Somos a Mundial, em Crateús, há 14 anos combinando viagem por viagem com cada cliente.</p>
-        <p class="porque__anos">há <b data-conta="14">14</b> anos em Crateús — equipe Mundial Viagens</p>
+        <p class="lead" data-palavras>Não somos um buscador. Somos a Mundial, em Crateús desde 2014, combinando viagem por viagem com cada cliente.</p>
+        <p class="porque__anos">há <b data-desde="2014">12</b> anos em Crateús — equipe Mundial Viagens</p>
       </div>
       <ul class="porque__lista">
         <li data-surge><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M24 6a17 17 0 0 0-14.7 25.6L6.5 41l9.6-2.6A17 17 0 1 0 24 6Z"/><path d="M17 20c0 6 5 11 11 11l3-3-4-3-2 2a7 7 0 0 1-4-4l2-2-3-4-3 3Z" fill="currentColor" stroke="none"/></svg><div><h3>Atendimento humano no WhatsApp</h3><p>Do orçamento ao retorno, você fala com a mesma pessoa. Durante a viagem, o suporte funciona 24 horas.</p></div></li>
@@ -193,7 +194,7 @@
   <div class="wrap rodape__grade">
     <div>
       <a class="marca" href="index.html"><img src="imgs/logo-branco.png" alt="" width="51" height="52"><span>Mundial Viagens</span></a>
-      <p class="rodape__sobre">Agência de viagens de Crateús há 14 anos: passagens, hospedagens, pacotes, grupos e peregrinações, com atendimento personalizado.</p>
+      <p class="rodape__sobre">Agência de viagens em Crateús desde 2014: passagens, hospedagens, pacotes, grupos e peregrinações, com atendimento personalizado.</p>
     </div>
     <nav aria-label="Rodapé">
       <h2>Navegação</h2>

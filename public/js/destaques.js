@@ -2,7 +2,7 @@
    Lê a coleção "destaques" (cadastrada no painel admin) e mostra cada item como uma página
    marcada do álbum: foto impressa com fita laranja, etiqueta, título, texto e link. */
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, query, orderBy, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig } from "./conexao.js";
 
 const sec = document.getElementById("novidades");
@@ -18,6 +18,16 @@ try {
   const snap = await getDocs(query(collection(db, "destaques"), orderBy("ordem", "asc")));
   const lista = snap.docs.map(d => ({ id: d.id, ...d.data() }))
     .filter(x => x.ativo !== false && (!x.exibirAte || x.exibirAte >= hoje()));
+
+  /* destaque que aponta para uma viagem (promo.html?id=...) some junto com ela:
+     se a viagem foi apagada ou o "exibir até" dela já passou, o destaque não aparece */
+  const idDe = x => (String(x.link || "").match(/promo\.html\?id=([^&#]+)/) || [])[1];
+  const ids = [...new Set(lista.map(idDe).filter(Boolean))];
+  const viva = new Map(await Promise.all(ids.map(async id => {
+    try { const d = await getDoc(doc(db, "promocoes", decodeURIComponent(id))); return [id, d.exists() && (d.data().exibirAte || "") >= hoje()]; }
+    catch { return [id, true]; }                                   // na dúvida (falha de rede), mostra
+  })));
+  lista.splice(0, lista.length, ...lista.filter(x => !idDe(x) || viva.get(idDe(x))));
   if (!lista.length) throw new Error("vazio");
 
   const caixa = sec.querySelector(".destaques__lista");

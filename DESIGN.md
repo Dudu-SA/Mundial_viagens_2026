@@ -38,7 +38,7 @@ O site é o álbum de fotos de quem viajou com a Mundial. Cada viagem é uma pá
 - Topo: as fotos fogem de leve do mouse e se espalham ao rolar.
 - Fotos das listas "pousam" ao entrar (mais inclinadas → repouso) e a imagem dentro tem profundidade.
 - Faixa de destinos: duas linhas que correm sozinhas e aceleram/entortam com a velocidade da rolagem.
-- "Por que a Mundial": as palavras acendem com a rolagem; "14 anos" conta.
+- "Por que a Mundial": as palavras acendem com a rolagem; os anos desde 2014 contam (calculados pela data atual).
 - Como funciona (computador): o avião percorre a rota tracejada e acende cada passo.
 - Rodapé: o nome gigante se estica ao chegar.
 - Sem bibliotecas ou com `prefers-reduced-motion`, nada fica escondido: a página solta tudo em 3,5 s. Sem três.js.

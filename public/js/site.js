@@ -65,6 +65,8 @@
     requestAnimationFrame(passo);
   }
   window.mv.letras = letras;
+  // [data-desde="2014"] → anos completos desde a fundação, sempre atualizado
+  $$("[data-desde]").forEach(b => { const n = new Date().getFullYear() - +b.dataset.desde; b.textContent = n; b.dataset.conta = n; });
 
   /* ---------- 2) menu ---------- */
   const burger = $(".burger"), menu = $("#menu");

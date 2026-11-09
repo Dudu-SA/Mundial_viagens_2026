@@ -34,16 +34,43 @@ function cartao(p, i) {
   return a;
 }
 
+/* topo do álbum: as três fotos viram as promoções à venda (destaques primeiro, depois as que saem antes) */
+function topo(ativas) {
+  const fotos = [...document.querySelectorAll("#album-fotos .foto")]; if (!fotos.length) return;
+  const escolha = ativas.filter(p => (p.fotos || []).some(fotoOk))
+    .sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0) || (a.dataSaida || "9").localeCompare(b.dataSaida || "9"))
+    .slice(0, fotos.length);
+  if (!escolha.length) {                                         // nada à venda com foto: uma foto da agência
+    escolha.push({ lugar: "Aparecida do Norte", foto: "imgs/aparecida.jpg", sub: "peregrinações com a Mundial", href: "promocoes.html#peregrinacao" });
+  }
+  fotos.forEach((f, i) => {
+    const p = escolha[i];
+    if (!p) { f.hidden = true; return; }
+    const pr = p.foto ? null : precoDe(p);
+    f.href = p.href || "promo.html?id=" + encodeURIComponent(p.id);
+    f.setAttribute("aria-label", p.lugar + (pr ? `, ${pr.rotulo} ${pr.valor}` : ""));
+    const im = el("img"); im.alt = ""; im.decoding = "async"; if (!i) im.fetchPriority = "high";
+    im.onload = () => im.classList.add("carregou"); im.src = p.foto || p.fotos.find(fotoOk);
+    if (im.complete) im.classList.add("carregou");
+    f.querySelector(".foto__img").replaceChildren(im);
+    const leg = f.querySelector(".foto__leg");
+    leg.replaceChildren(p.lugar || "Viagem", el("small", "", p.sub || `${pr.rotulo} ${pr.valor}`.replace(/^valor /, "")));
+  });
+}
+
 try {
   const db = getFirestore(getApps()[0] || initializeApp(firebaseConfig));
   const snap = await getDocs(query(collection(db, "promocoes"), where("exibirAte", ">=", hoje()), orderBy("exibirAte", "asc")));
-  const itens = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+  const ativas = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  topo(ativas);
+  const itens = ativas
     .filter(p => p.dataSaida && p.dataSaida >= hoje())
     .sort((a, b) => a.dataSaida.localeCompare(b.dataSaida))
     .slice(0, QUANTAS);
   if (!itens.length) throw new Error("vazio");
   lista.replaceChildren(...itens.map(cartao));
 } catch (e) {
+  if (!document.querySelector("#album-fotos img")) topo([]);
   if (e.message !== "vazio") {
     console.warn("[saidas]", e);
     vazio.querySelector("p").textContent = "Não foi possível carregar as saídas agora. Tente de novo em instantes ou fale com a gente no WhatsApp.";
