@@ -296,7 +296,7 @@ strong,b{font-weight:650}
 .js [data-surge].visto{opacity:1;translate:0 0}
 
 /* ---------- 16. Página de vendas ---------- */
-.vendas__topo{padding:clamp(2.5rem,6vw,5rem) 0 0}
+.vendas__topo{padding-block:clamp(2.5rem,6vw,5rem) 0}
 .vendas__topo .mao{display:block;color:var(--fita-tinta);margin-bottom:.6rem}
 .vendas__topo h1{font-size:clamp(2.6rem,6vw,5rem)}
 .vendas__topo .lead{margin-top:1.2rem}
@@ -507,3 +507,69 @@ a.saida:focus-visible,a.destaque:focus-visible{outline:none}
 a.saida:focus-visible .foto,a.destaque:focus-visible .foto{outline:3px solid var(--fita);outline-offset:6px}
 /* barras de rolagem e seleção na cor da marca */
 html{scrollbar-color:var(--capa) var(--papel-2)}
+
+
+/* ============================================================
+   21. Ajustes da análise de UX (10/11)
+   ============================================================ */
+/* mais contraste no texto de apoio */
+:root{--tinta-2:#3e4d73}
+.lead{color:var(--tinta-2)}
+/* ícones do topo: busca sempre; WhatsApp só no celular (no computador há o botão) */
+.topo__icones{display:flex;align-items:center;gap:.25rem}
+.topo__icone{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;color:#fff;transition:background-color .25s}
+.topo__icone svg{width:22px;height:22px}
+.topo__icone:hover{background:rgba(255,255,255,.12)}
+.topo__icone--zap{display:none;background:var(--zap)}
+.topo__icone--zap:hover{background:var(--zap-2)}
+@media (max-width:900px){
+  .topo__in{gap:.5rem}
+  .marca{min-width:0}
+  .topo__icones{order:2;margin-left:auto;flex:none}
+  .burger{order:3;margin-left:0;flex:none}
+  .topo__icone--zap{display:grid}
+}
+/* faixa de confiança logo abaixo do topo */
+.confianca{border-block:1px solid var(--linha);background:#fff}
+.confianca__lista{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem 2rem;padding-block:1.4rem}
+.confianca__lista li{display:flex;align-items:center;gap:.75rem;font-size:.95rem;line-height:1.35;color:var(--tinta-2)}
+.confianca__lista b{color:var(--tinta);font-weight:700}
+.confianca__lista svg{flex:none;width:30px;height:30px;color:var(--capa)}
+@media (max-width:960px){.confianca__lista{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.confianca__lista{grid-template-columns:1fr;gap:.85rem}}
+/* cadastro de promoções */
+.alertas{background:var(--capa);color:#fff;padding-block:clamp(3rem,6vw,4.5rem)}
+.alertas__in{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:1.5rem 3rem;align-items:center}
+.alertas h2{font-size:clamp(1.8rem,3.6vw,2.8rem);max-width:18ch}
+.alertas .lead{color:#d3def2;margin-top:.9rem}
+.alertas__acoes{display:grid;justify-items:start;gap:.6rem}
+.alertas__acoes .btn{min-height:3.5rem;font-size:1.05rem}
+.alertas__acoes small{color:#c2d2ee;font-size:.88rem}
+@media (max-width:760px){.alertas__in{grid-template-columns:1fr}.alertas__acoes .btn{width:100%}}
+/* selos de prazo e novidade sobre a foto */
+.selos{position:absolute;z-index:3;left:18px;top:18px;display:flex;flex-wrap:wrap;gap:.35rem}
+.selo{padding:.32rem .6rem;border-radius:999px;font:700 .75rem/1 var(--fonte);letter-spacing:.02em;color:#fff;box-shadow:0 2px 6px rgba(18,50,106,.25)}
+.selo--urgente{background:#b3261e}
+.selo--novo{background:var(--capa)}
+/* busca na página de vendas */
+.busca{position:relative;max-width:640px;margin-top:1.6rem}
+.busca svg{position:absolute;left:1.05rem;top:50%;translate:0 -50%;width:22px;height:22px;color:var(--tinta-2);pointer-events:none}
+.busca input{width:100%;min-height:3.4rem;padding:.8rem 3rem .8rem 3.1rem;border:1.5px solid var(--linha);border-radius:999px;background:#fff;font-size:1.05rem;color:var(--tinta);outline:0;transition:border-color .25s,box-shadow .25s}
+.busca input::placeholder{color:#6a7898}
+.busca input:focus{border-color:var(--capa);box-shadow:0 0 0 4px rgba(27,70,143,.12)}
+.busca input::-webkit-search-cancel-button{display:none}
+.busca__limpar{position:absolute;right:.6rem;top:50%;translate:0 -50%;width:36px;height:36px;border:0;border-radius:50%;background:var(--papel-2);color:var(--tinta);font-size:1.3rem;line-height:1;cursor:pointer}
+/* aviso de privacidade no formulário e no rodapé */
+.form__lgpd{margin-top:.9rem;font-size:.85rem;color:var(--tinta-2)}
+.form__lgpd a,.rodape__legal a{text-decoration:underline;text-underline-offset:3px}
+.rodape__legal a{color:#fff}
+/* página de texto (privacidade) */
+.texto-legal{max-width:760px;padding-block:clamp(2.5rem,6vw,4.5rem) var(--sec)}
+.texto-legal h1{font-size:clamp(2.2rem,5vw,3.6rem)}
+.texto-legal .lead{margin-top:1rem}
+.texto-legal h2{font-size:1.5rem;margin-top:2.4rem}
+.texto-legal p,.texto-legal li{margin-top:.8rem;color:var(--tinta-2);max-width:68ch}
+.texto-legal ul{padding-left:1.2rem;list-style:disc}
+.texto-legal b{color:var(--tinta)}
+.texto-legal a{color:var(--capa);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:380px){.marca span{font-size:1rem}}
