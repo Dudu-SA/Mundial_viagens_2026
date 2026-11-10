@@ -34,7 +34,7 @@
       <span class="secao">Viagens</span>
       <a data-pagina="viagens">Viagens cadastradas <span class="contador" id="nMenu"></span></a>
       <a data-pagina="nova">Nova viagem</a>
-      <a data-pagina="importar">Por planilha ou foto</a>
+      <a data-pagina="importar">Por foto ou planilha</a>
       <span class="secao">Página inicial</span>
       <a data-pagina="destaques">Em destaque</a>
       <span class="secao">Configuração</span>
@@ -50,7 +50,7 @@
   <main class="conteudo">
 
     <section class="pagina" data-pagina="inicio">
-      <div class="topo"><div><h1>Início</h1><p class="sub">O que está no ar agora.</p></div><a class="btn primario" data-ir="nova">+ Nova viagem</a></div>
+      <div class="topo"><div><h1>Início</h1><p class="sub">O que está no ar agora.</p></div><div class="acoes" style="margin:0"><a class="btn" href="#" data-foto-rapida>📷 Por foto</a><a class="btn primario" data-ir="nova">+ Nova viagem</a></div></div>
       <div class="numeros">
         <a class="numero destaque" data-ir="viagens"><b id="nAtivas">…</b><span>viagens no site</span></a>
         <a class="numero" data-ir="viagens"><b id="nDestaque">…</b><span>em destaque nas vendas</span></a>
@@ -60,7 +60,8 @@
       <div class="cartao">
         <h2>Atalhos</h2>
         <div class="acoes" style="margin-top:0">
-          <a class="btn" data-ir="importar">Cadastrar por planilha ou foto</a>
+          <a class="btn primario" href="#" data-foto-rapida>📷 Nova promoção por foto</a>
+          <a class="btn" data-ir="importar">Várias por planilha</a>
           <a class="btn" data-ir="nova">Cadastrar uma viagem</a>
           <a class="btn" data-ir="destaques">Mudar o bloco "Em destaque"</a>
         </div>
@@ -68,7 +69,7 @@
     </section>
 
     <section class="pagina" data-pagina="viagens" hidden>
-      <div class="topo"><div><h1>Viagens cadastradas</h1><p class="sub">Promoções, grupos, pacotes e peregrinações. As expiradas somem do site sozinhas.</p></div><a class="btn primario" data-ir="nova">+ Nova viagem</a></div>
+      <div class="topo"><div><h1>Viagens cadastradas</h1><p class="sub">Promoções, grupos, pacotes e peregrinações. As expiradas somem do site sozinhas.</p></div><div class="acoes" style="margin:0"><a class="btn" href="#" data-foto-rapida>📷 Por foto</a><a class="btn primario" data-ir="nova">+ Nova viagem</a></div></div>
       <div id="lista" class="cartao muted">Carregando…</div>
     </section>
 
@@ -107,18 +108,18 @@
     </section>
 
     <section class="pagina" data-pagina="importar" hidden>
-      <div class="topo"><div><h1>Cadastrar por planilha ou foto</h1><p class="sub">Envie uma planilha com várias viagens, ou a arte de uma promoção. O painel lê os dados, mostra para conferir e só pede as fotos.</p></div></div>
+      <div class="topo"><div><h1>Cadastrar por foto ou planilha</h1><p class="sub">Envie a arte da promoção: o painel lê lugar, datas, valor e o que está incluso, usa a própria arte como foto e mostra um resumo. É só clicar em Confirmar.</p></div></div>
       <div class="cartao" id="importar">
         <div class="zona" id="impZona">
-          <strong>Arraste aqui a planilha ou a foto</strong>
-          <p>Planilha: xlsx ou csv (<a href="#" id="impModelo">baixar o modelo</a>). Foto: a arte da promoção, print do Instagram ou do WhatsApp. Também dá para colar uma imagem com Ctrl+V.</p>
-          <label class="btn primario" for="impArquivo">Escolher arquivo</label>
+          <strong>📷 Envie a arte da promoção</strong>
+          <p>Foto, print do Instagram ou do WhatsApp (pode mandar várias de uma vez). Também dá para arrastar aqui ou colar com Ctrl+V.<br>Várias viagens numa planilha? xlsx ou csv (<a href="#" id="impModelo">baixar o modelo</a>).</p>
+          <label class="btn primario" for="impArquivo">Escolher fotos</label>
           <input id="impArquivo" type="file" accept=".xlsx,.xls,.xlsm,.csv,.ods,image/*" multiple>
         </div>
         <p class="msg" id="impMsg"></p>
         <div id="impLista" hidden>
           <div id="impItens"></div>
-          <div class="acoes"><button class="btn primario" id="impPublicar" type="button">Publicar</button></div>
+          <div class="acoes"><button class="btn primario" id="impPublicar" type="button" hidden>Confirmar e publicar todas</button></div>
         </div>
         <p class="hint" style="margin-top:1rem">Leitura de fotos desligada? <a data-ir="config" href="#">Configure a chave do Google AI</a>.</p>
       </div>

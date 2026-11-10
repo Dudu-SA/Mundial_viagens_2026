@@ -8,7 +8,7 @@ import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, ADMIN_EMAIL } from "./conexao.js";
-import { lerNumero } from "./preco.js";
+import { lerNumero, precoDe } from "./preco.js";
 
 const app = getApps()[0] || initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
 const $ = id => document.getElementById(id);
@@ -123,16 +123,19 @@ export function montarViagem(d) {
   const inc = linhas(d.incluso); if (inc.length) v.blocos.push({ tipo: "lista", icone: "✅", titulo: "O que está incluso", texto: inc.join("\n"), foto: "" });
   bloco("texto", "🏨", "Hospedagem", String(d.hotel ?? "").trim());
   bloco("texto", "💡", "Dicas", String(d.dicas ?? "").trim());
-  if (!v.exibirAte) v.exibirAte = v.dataSaida;
-  const avisos = [];
+  const notas = [];                                                 // informativo: não impede publicar
+  if (!v.exibirAte) v.exibirAte = v.dataSaida || maisDias(30);
+  if (!v.dataSaida) notas.push(`Sem data de saída na arte: fica no site até ${br(v.exibirAte)}.`);
+  const avisos = [];                                                // impedem publicar até corrigir
   if (!v.lugar) avisos.push("Sem lugar/destino.");
-  if (!v.dataSaida) avisos.push(d.dataSaida ? `Não entendi a data de saída "${d.dataSaida}".` : "Sem data de saída.");
-  else if (v.dataSaida < hoje()) avisos.push("A data de saída já passou.");
+  if (!v.dataSaida && d.dataSaida) avisos.push(`Não entendi a data de saída "${d.dataSaida}".`);
+  else if (v.dataSaida && v.dataSaida < hoje()) avisos.push("A data de saída já passou.");
   if (d.dataVolta && !v.dataVolta) avisos.push(`Não entendi a data de volta "${d.dataVolta}".`);
   if (v.dataVolta && v.dataSaida && v.dataVolta < v.dataSaida) avisos.push("A volta está antes da saída.");
   if (v.exibirAte && v.exibirAte < hoje()) avisos.push("A data de exibição já passou: não apareceria no site.");
-  return { v, avisos };
+  return { v, avisos, notas };
 }
+const maisDias = n => { const d = new Date(Date.now() + n * 864e5); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 
 /* ---------- planilha ---------- */
 async function lerPlanilha(file) {
@@ -176,9 +179,9 @@ function baixarModelo() {
     ["Seção", "Promoção, Grupo, Pacote ou Peregrinação (vazio = Promoção)."],
     ["Etiqueta", "Continente, país ou tipo (ex.: Europa)."],
     ["Detalhes", "Uma linha curta (ex.: 9 noites · Aéreo e hotel)."],
-    ["Saída / Volta", "Obrigatória a saída. Datas como 12/11/2026 ou 12/11."],
+    ["Saída / Volta", "Datas como 12/11/2026 ou 12/11. Sem saída (ex.: saídas diárias), a viagem fica 30 dias no site."],
     ["Exibir até", "Até quando aparece no site. Vazio = data de saída."],
-    ["Preço", "Obrigatório. Valor a partir de, por pessoa. Só número (8640) ou R$ 8.640,00."],
+    ["Preço", "Valor a partir de, por pessoa (8640 ou R$ 8.640,00) ou texto: A definir, Sob consulta."],
     ["Destaque", "sim = card grande, aparece primeiro."],
     ["Apresentação", "Texto de abertura da página da viagem."],
     ["O que está incluso", "Itens separados por ; ou por linha (vira lista com ✓)."],
@@ -198,8 +201,10 @@ lugar (nome do destino/viagem), categoria ("promocao", "grupo", "pacote" ou "per
 etiqueta (continente, país ou região), descricao (uma linha curta, ex.: "7 noites · Aéreo e hotel"),
 dataSaida e dataVolta (formato AAAA-MM-DD; se só houver dia e mês, use o próximo ano em que a data ainda não passou; hoje é ${hoje()}),
 preco (número, valor "a partir de" por pessoa em reais; se houver parcelas e total, use o total; se não houver valor na imagem, use o texto "A definir"),
+exibirAte (AAAA-MM-DD: data limite da oferta se a arte disser "válido até", "promoção até", "vendas até"; senão ""),
+sobre (2 ou 3 frases simples de apresentação da viagem para o site, usando só o que está na arte, sem exageros),
 incluso (array de strings com o que está incluso), roteiro (texto, se houver), hotel (texto, se houver), dicas (texto com condições, parcelamento, observações).
-Use "" ou [] quando não houver a informação. Não invente dados.`;
+Use "" ou [] quando não houver a informação. Não invente dados: datas, preços e itens só se estiverem na imagem.`;
 
 async function lerFoto(file, chave) {
   const dataUrl = await reduzir(file, 1600, 0.85);
@@ -224,9 +229,9 @@ async function lerFoto(file, chave) {
   if (!Array.isArray(lista)) lista = [lista];
   const foto = await reduzir(file, 1100, 0.72);
   return lista.map(x => {
-    const { v, avisos } = montarViagem({ ...x, incluso: Array.isArray(x.incluso) ? x.incluso.join("\n") : x.incluso });
-    v.fotos = [foto];
-    return { v, avisos, origem: "foto" };
+    const { v, avisos, notas } = montarViagem({ ...x, incluso: Array.isArray(x.incluso) ? x.incluso.join("\n") : x.incluso });
+    v.fotos = [foto];                                              // a própria arte vira a foto da viagem
+    return { v, avisos, notas, origem: "foto" };
   });
 }
 
@@ -276,7 +281,8 @@ async function receber(files) {
     } catch (e) { console.error("[importar]", e); erros.push(`${f.name}: ${e.message}`); }
   }
   itens.push(...novos);
-  aviso((novos.length ? `${novos.length} viagem(ns) lida(s). Confira abaixo, escolha as fotos e publique. ` : "Nenhuma viagem lida. ") + erros.join(" "), erros.length && !novos.length ? "err" : "");
+  aviso((novos.length ? `${novos.length} viagem(ns) lida(s). Confira o resumo e clique em Confirmar. ` : "Nenhuma viagem lida. ") + erros.join(" "), erros.length && !novos.length ? "err" : "");
+  if (novos.length) $("impLista").scrollIntoView({ behavior: "smooth", block: "start" });
   desenhar();
 }
 
@@ -284,81 +290,128 @@ function desenhar() {
   const box = $("impItens"); box.replaceChildren();
   $("impLista").hidden = !itens.length;
   itens.forEach((it, i) => box.append(cartao(it, i)));
-  $("impPublicar").textContent = `Publicar ${itens.filter(x => x.ok !== false).length} viagem(ns)`;
+  const n = itens.length;
+  $("impPublicar").hidden = n < 2;
+  $("impPublicar").textContent = `Confirmar e publicar todas (${n})`;
+}
+
+/* revalida com o que está nos campos agora */
+const checar = v => montarViagem({ ...v, incluso: "", roteiro: "", hotel: "", dicas: "" });
+
+/* publica uma viagem; devolve o id criado */
+async function publicar(it) {
+  const dados = { ...it.v, preco: lerValorPlanilha(it.v.preco), criadoEm: serverTimestamp() };
+  const ref = await addDoc(collection(db, "promocoes"), dados);
+  return ref.id;
 }
 
 function cartao(it, i) {
   const v = it.v, w = el("div", "bloco imp"); w.dataset.i = i;
-  const top = el("div", "bloco__top");
-  const t = el("strong", "", `${i + 1}. ${v.lugar || "(sem lugar)"}`);
-  const tag = el("span", "tag " + (it.avisos.length ? "off" : "on"), it.avisos.length ? "Conferir" : "Pronta"); t.append(" ", tag);
-  const rem = el("button", "btn mini fantasma", "×"); rem.type = "button"; rem.title = "Tirar da lista"; rem.onclick = () => { itens.splice(i, 1); desenhar(); };
-  top.append(t, rem); w.append(top);
-  if (it.avisos.length) { const ul = el("ul", "imp__avisos"); it.avisos.forEach(a => ul.append(el("li", "", a))); w.append(ul); }
+  const { avisos, notas } = checar(v);
+  const editando = it.editando || avisos.length > 0;
 
-  const g = el("div", "grid imp__grid");
-  const campo = (lab, k, tipo = "text", opts) => {
-    const d = el("div"), l = el("label", "", lab); let e;
-    if (opts) { e = el("select"); opts.forEach(([val, txt]) => e.append(new Option(txt, val))); e.value = v[k]; }
-    else { e = el(tipo === "area" ? "textarea" : "input"); if (tipo !== "area") e.type = tipo; else e.rows = 3; e.value = v[k] ?? ""; }
-    e.onchange = () => { v[k] = k === "preco" ? lerValorPlanilha(e.value) : tipo === "number" ? parseFloat(e.value) : e.value; if (k === "dataSaida" && !$("imp-ate-" + i).dataset.manual) { v.exibirAte = v.dataSaida; $("imp-ate-" + i).value = v.dataSaida; } };
-    if (k === "exibirAte") { e.id = "imp-ate-" + i; e.oninput = () => e.dataset.manual = "1"; }
-    d.append(l, e); return d;
+  /* resumo: é o que a pessoa confere */
+  const res = el("div", "imp__resumo");
+  const capa = el("div", "imp__capa");
+  if (v.fotos[0]) { const im = el("img"); im.src = v.fotos[0]; im.alt = ""; capa.append(im); } else capa.append(el("span", "", "sem foto"));
+  const txt = el("div", "imp__txt");
+  txt.append(el("span", "imp__secao", (CATS[v.categoria] || "Promoção") + (v.etiqueta ? " · " + v.etiqueta : "")), el("strong", "imp__lugar", v.lugar || "(sem lugar)"));
+  const pr = precoDe(v);
+  const linhaInfo = (rot, val) => { if (!val) return; const p = el("p"); p.append(el("b", "", rot + ": "), val); txt.append(p); };
+  linhaInfo("Valor", pr.numero ? `a partir de ${pr.valor}` : pr.valor);
+  linhaInfo("Datas", v.dataSaida ? br(v.dataSaida) + (v.dataVolta ? " a " + br(v.dataVolta) : "") : "");
+  linhaInfo("No site até", br(v.exibirAte));
+  linhaInfo("Detalhes", v.descricao);
+  if (v.blocos.length) linhaInfo("Na página", v.blocos.map(b => b.titulo + (b.tipo === "lista" ? ` (${b.texto.split("\n").length})` : "")).join(" · "));
+  if (v.sobre) { const p = el("p", "imp__sobre", v.sobre); txt.append(p); }
+  res.append(capa, txt);
+  w.append(res);
+
+  if (avisos.length) { const ul = el("ul", "imp__avisos"); avisos.forEach(a => ul.append(el("li", "", a))); w.append(ul); }
+  if (notas.length) { const ul = el("ul", "imp__notas"); notas.forEach(a => ul.append(el("li", "", a))); w.append(ul); }
+
+  /* ações */
+  const acoes = el("div", "imp__acoes");
+  const ok = el("button", "btn primario", "✓ Confirmar e publicar"); ok.type = "button";
+  ok.disabled = avisos.length > 0; if (avisos.length) ok.title = "Corrija os itens em vermelho";
+  ok.onclick = async () => {
+    if (!auth.currentUser) return aviso("Sessão expirada. Saia e entre novamente.", "err");
+    if (checar(v).avisos.length) { desenhar(); return; }
+    ok.disabled = true; ok.textContent = "Publicando…";
+    try {
+      const id = await publicar(it);
+      itens.splice(itens.indexOf(it), 1); desenhar();
+      $("impMsg").replaceChildren(`"${v.lugar}" publicada no site. `);
+      const a = el("a", "", "Ver no site"); a.href = "promo.html?id=" + encodeURIComponent(id); a.target = "_blank"; a.rel = "noopener";
+      $("impMsg").append(a); $("impMsg").className = "msg ok";
+      window.mvAdmin?.carregar();
+    } catch (e) { console.error("[importar] publicar:", e); ok.disabled = false; ok.textContent = "✓ Confirmar e publicar"; aviso(`Erro ao publicar "${v.lugar}": ${e.code || e.message}`, "err"); }
   };
-  g.append(campo("Lugar", "lugar"), campo("Seção", "categoria", null, Object.entries(CATS)), campo("Etiqueta", "etiqueta"), campo("Detalhes", "descricao"),
-    campo("Saída", "dataSaida", "date"), campo("Volta", "dataVolta", "date"), campo("Exibir até", "exibirAte", "date"), campo("Valor (número ou texto)", "preco"));
-  const sobre = campo("Apresentação", "sobre", "area"); sobre.className = "full"; g.append(sobre);
-  const dest = el("div", "chk full"); const cb = el("input"); cb.type = "checkbox"; cb.checked = !!v.destaque; cb.id = "imp-dest-" + i; cb.onchange = () => v.destaque = cb.checked;
-  const cl = el("label", "", "Destacar (card em largura total)"); cl.htmlFor = cb.id; dest.append(cb, cl); g.append(dest);
-  w.append(g);
+  const corr = el("button", "btn", editando ? "Fechar correção" : "Corrigir algo"); corr.type = "button";
+  corr.onclick = () => { it.editando = !editando; desenhar(); };
+  const rem = el("button", "btn fantasma", "Descartar"); rem.type = "button"; rem.onclick = () => { itens.splice(i, 1); desenhar(); };
+  acoes.append(ok, corr, rem);
 
-  if (v.blocos.length) {
-    const bl = el("p", "hint", "Blocos da página: " + v.blocos.map(b => b.titulo + (b.tipo === "lista" ? ` (${b.texto.split("\n").length} itens)` : "")).join(" · ") + ". Para editar os blocos, use \"Abrir no formulário\".");
-    w.append(bl);
+  /* campos: só quando for corrigir */
+  if (editando) {
+    const g = el("div", "grid imp__grid");
+    const campo = (lab, k, tipo = "text", opts) => {
+      const d = el("div"), l = el("label", "", lab); let e;
+      if (opts) { e = el("select"); opts.forEach(([val, txt]) => e.append(new Option(txt, val))); e.value = v[k]; }
+      else { e = el(tipo === "area" ? "textarea" : "input"); if (tipo !== "area") e.type = tipo; else e.rows = 3; e.value = v[k] ?? ""; }
+      e.onchange = () => {
+        v[k] = k === "preco" ? lerValorPlanilha(e.value) : e.value;
+        if (k === "dataSaida" && !it.ateManual) v.exibirAte = v.dataSaida || v.exibirAte;
+        if (k === "exibirAte") it.ateManual = true;
+        it.editando = true; desenhar();
+      };
+      d.append(l, e); return d;
+    };
+    g.append(campo("Lugar", "lugar"), campo("Seção", "categoria", null, Object.entries(CATS)), campo("Etiqueta", "etiqueta"), campo("Detalhes", "descricao"),
+      campo("Saída", "dataSaida", "date"), campo("Volta", "dataVolta", "date"), campo("No site até", "exibirAte", "date"), campo("Valor (número ou texto)", "preco"));
+    const sobre = campo("Apresentação", "sobre", "area"); sobre.className = "full"; g.append(sobre);
+    const dest = el("div", "chk full"); const cb = el("input"); cb.type = "checkbox"; cb.checked = !!v.destaque; cb.id = "imp-dest-" + i; cb.onchange = () => v.destaque = cb.checked;
+    const cl = el("label", "", "Destacar (aparece primeiro e no topo do site)"); cl.htmlFor = cb.id; dest.append(cb, cl); g.append(dest);
+
+    const fw = el("div", "full"); fw.append(el("label", "", "Fotos (até 3; a primeira é a capa)"));
+    const inp = el("input"); inp.type = "file"; inp.accept = "image/*"; inp.multiple = true;
+    const thumbs = el("div", "thumbs");
+    const desenharFotos = () => {
+      thumbs.replaceChildren(...v.fotos.map((src, k) => {
+        const d = el("div"), im = el("img"), b = el("button", "", "×"); im.src = src; b.type = "button"; b.title = "Tirar foto"; b.onclick = () => { v.fotos.splice(k, 1); desenhar(); };
+        d.append(im, b); return d;
+      }));
+    };
+    inp.onchange = async () => { for (const f of inp.files) { if (v.fotos.length >= 3) break; try { v.fotos.push(await reduzir(f, 1100, 0.72)); } catch {} } inp.value = ""; it.editando = true; desenhar(); };
+    fw.append(inp, thumbs); desenharFotos(); g.append(fw);
+
+    const abrir = el("button", "btn mini fantasma", "Abrir no formulário completo (blocos da página)"); abrir.type = "button";
+    abrir.onclick = () => { window.mvAdmin?.preencher(v); itens.splice(i, 1); desenhar(); window.mvAdmin?.irPara("nova"); };
+    const fim = el("div", "full"); fim.append(abrir); g.append(fim);
+    w.append(g);
   }
-
-  /* fotos */
-  const fw = el("div", "full"); fw.append(el("label", "", "Fotos (até 3)"));
-  const inp = el("input"); inp.type = "file"; inp.accept = "image/*"; inp.multiple = true;
-  const thumbs = el("div", "thumbs");
-  const desenharFotos = () => {
-    thumbs.replaceChildren(...v.fotos.map((src, k) => {
-      const d = el("div"), im = el("img"), b = el("button", "", "×"); im.src = src; b.type = "button"; b.onclick = () => { v.fotos.splice(k, 1); desenharFotos(); };
-      d.append(im, b); return d;
-    }));
-  };
-  inp.onchange = async () => { for (const f of inp.files) { if (v.fotos.length >= 3) break; try { v.fotos.push(await reduzir(f, 1100, 0.72)); } catch {} } inp.value = ""; desenharFotos(); };
-  fw.append(inp, thumbs); desenharFotos(); w.append(fw);
-
-  const acoes = el("div", "addrow");
-  const abrir = el("button", "btn mini", "Abrir no formulário completo"); abrir.type = "button";
-  abrir.onclick = () => { window.mvAdmin?.preencher(v); itens.splice(i, 1); desenhar(); window.mvAdmin?.irPara("nova"); };
-  acoes.append(abrir); w.append(acoes);
+  w.append(acoes);
   return w;
 }
 
 $("impPublicar").onclick = async () => {
   if (!auth.currentUser) return aviso("Sessão expirada. Saia e entre novamente.", "err");
-  const prontos = [], problemas = [];
-  itens.forEach((it, i) => {
-    const v = it.v, { avisos } = montarViagem({ ...v, incluso: "", roteiro: "", hotel: "", dicas: "" });
-    if (avisos.length) problemas.push(`${i + 1}. ${v.lugar || "(sem lugar)"}: ${avisos.join(" ")}`); else prontos.push(it);
-  });
-  if (problemas.length) return aviso("Corrija antes de publicar: " + problemas.join(" | "), "err");
-  if (!prontos.length) return aviso("Nada para publicar.", "err");
-  const semFoto = prontos.filter(it => !it.v.fotos.length).length;
-  if (semFoto && !confirm(`${semFoto} viagem(ns) sem foto (vão aparecer com o desenho padrão). Publicar mesmo assim?`)) return;
+  const problemas = itens.map((it, i) => [it, checar(it.v).avisos]).filter(([, a]) => a.length);
+  if (problemas.length) { problemas.forEach(([it]) => it.editando = true); desenhar(); return aviso(`Corrija ${problemas.length} viagem(ns) marcada(s) em vermelho antes de publicar todas.`, "err"); }
   $("impPublicar").disabled = true; aviso("Publicando…");
   let ok = 0;
-  for (const it of [...prontos]) {
-    try {
-      const dados = { ...it.v, preco: lerValorPlanilha(it.v.preco), criadoEm: serverTimestamp() };
-      await addDoc(collection(db, "promocoes"), dados); ok++; itens.splice(itens.indexOf(it), 1);
-    } catch (e) { console.error("[importar] publicar:", e); aviso(`Erro ao publicar "${it.v.lugar}": ${e.code || e.message}. As anteriores foram publicadas.`, "err"); break; }
+  for (const it of [...itens]) {
+    try { await publicar(it); ok++; itens.splice(itens.indexOf(it), 1); }
+    catch (e) { console.error("[importar] publicar:", e); aviso(`Erro ao publicar "${it.v.lugar}": ${e.code || e.message}. As anteriores foram publicadas.`, "err"); break; }
   }
   $("impPublicar").disabled = false; desenhar();
   if (ok) { aviso(`${ok} viagem(ns) publicada(s) no site.`, "ok"); window.mvAdmin?.carregar(); }
 };
+
+/* atalhos "Nova por foto" em outras telas: abrem a escolha de arquivo direto */
+document.querySelectorAll("[data-foto-rapida]").forEach(b => b.addEventListener("click", e => {
+  e.preventDefault(); window.mvAdmin?.irPara("importar"); $("impArquivo").click();
+}));
 
 /* ---------- entrada: botão, arrastar e soltar ---------- */
 $("impArquivo").onchange = e => { receber(e.target.files); e.target.value = ""; };
