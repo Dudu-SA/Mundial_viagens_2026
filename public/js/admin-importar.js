@@ -17,7 +17,27 @@ const hoje = () => { const d = new Date(); return `${d.getFullYear()}-${String(d
 const br = s => s ? s.split("-").reverse().join("/") : "";
 const MESES = ["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 const CATS = { promocao: "Promoção", grupo: "Grupo", pacote: "Pacote", peregrinacao: "Peregrinação" };
-const MODELO_IA = "gemini-2.5-flash";
+/* Modelo do Google AI: o Google desliga modelos antigos (o gemini-2.5-flash passou a dar 404 em 2026).
+   Por isso o painel tenta o apelido "mais recente" e, se não houver, escolhe o Flash mais novo
+   da lista da própria conta; o que funcionar fica guardado neste navegador. */
+const MODELOS_BASE = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-3-flash", "gemini-3-flash-preview"];
+const API_IA = "https://generativelanguage.googleapis.com/v1beta";
+async function modelosIA(chave) {
+  let guardado = ""; try { guardado = localStorage.getItem("mv-modelo-ia") || ""; } catch {}
+  let daConta = [];
+  try {
+    const r = await fetch(`${API_IA}/models?pageSize=200&key=${encodeURIComponent(chave)}`);
+    if (r.ok) {
+      const ver = n => (n.match(/gemini-(\d+(?:\.\d+)?)/) || [, "0"])[1] * 1;
+      daConta = ((await r.json()).models || [])
+        .filter(m => (m.supportedGenerationMethods || []).includes("generateContent"))
+        .map(m => m.name.replace(/^models\//, ""))
+        .filter(n => /^gemini-.*flash/.test(n) && !/lite|image|tts|audio|live|embed|thinking|exp/.test(n) && ver(n) >= 3)
+        .sort((a, b) => ver(b) - ver(a) || /preview/.test(a) - /preview/.test(b) || a.length - b.length);
+    }
+  } catch {}
+  return [...new Set([guardado, ...MODELOS_BASE, ...daConta].filter(Boolean))];
+}
 
 /* ---------- utilidades de texto ---------- */
 const limpo = s => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
@@ -210,21 +230,25 @@ async function lerFoto(file, chave) {
   const dataUrl = await reduzir(file, 1600, 0.85);
   const [meta, b64] = dataUrl.split(",");
   const mime = meta.match(/data:(.*?);/)[1];
-  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODELO_IA}:generateContent?key=${encodeURIComponent(chave)}`, {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: PROMPT }, { inline_data: { mime_type: mime, data: b64 } }] }],
-      generationConfig: { responseMimeType: "application/json", temperature: 0.1 }
-    })
+  const corpo = JSON.stringify({
+    contents: [{ parts: [{ text: PROMPT }, { inline_data: { mime_type: mime, data: b64 } }] }],
+    generationConfig: { responseMimeType: "application/json", temperature: 0.1 }
   });
+  let r;
+  for (const modelo of await modelosIA(chave)) {                // 404 = modelo desligado: tenta o próximo
+    r = await fetch(`${API_IA}/models/${modelo}:generateContent?key=${encodeURIComponent(chave)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: corpo });
+    if (r.status !== 404) { if (r.ok) try { localStorage.setItem("mv-modelo-ia", modelo); } catch {} break; }
+  }
   if (!r.ok) {
+    if (r.status === 404) throw new Error("Nenhum modelo de leitura do Google AI respondeu para esta chave. Avise o suporte do site.");
     const t = await r.text();
     if (r.status === 400 && /API key/i.test(t)) throw new Error("A chave do Google AI não foi aceita. Confira em Configurações da importação.");
     if (r.status === 429) throw new Error("O Google AI está ocupado (limite gratuito atingido). Espere um minuto e tente de novo.");
     throw new Error("O Google AI respondeu com erro " + r.status + ".");
   }
   const j = await r.json();
-  const texto = j.candidates?.[0]?.content?.parts?.map(p => p.text).join("") || "[]";
+  const texto = (j.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || "").join("")
+    .trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "") || "[]";
   let lista; try { lista = JSON.parse(texto); } catch { throw new Error("Não consegui entender a resposta do Google AI. Tente outra foto."); }
   if (!Array.isArray(lista)) lista = [lista];
   const foto = await reduzir(file, 1100, 0.72);
