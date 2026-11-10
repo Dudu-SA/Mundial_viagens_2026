@@ -27,7 +27,7 @@ Atendimento humano no WhatsApp do orçamento ao retorno, parcelamento em até 12
 
 ## Capabilities and Constraints
 - Sem servidor: tudo roda no navegador; dados públicos só de leitura.
-- WhatsApp: (88) 8887-0400 geral; (88) 8887-0800 nos continentes. E-mail mundialviagens2014@gmail.com. Endereço BR-404, 1646, São Vicente, Crateús (CE). Horário seg–sex 8h–18h, sáb 8h–12h.
+- WhatsApp: (88) 8887-0400 geral; (88) 8887-0800 nos continentes. E-mail mundialviagens2014@gmail.com. Endereço Av. Sargento Hermínio, 1646, São Vicente, Crateús (CE), 63700-310. Horário seg–sex 8h–18h, sáb 8h–12h.
 - Desempenho no celular importa (diagnóstico apontou thread principal pesada): nada que rode em laço por quadro sem necessidade; 3D só com moderação.
 - Deve funcionar parado se bibliotecas de animação falharem e com "reduzir movimento".
 - Terminologia: "viagem" (genérico), "promoção", "saída em grupo", "pacote", "peregrinação", "a partir de R$ X por pessoa, em quarto duplo", "exibir até".

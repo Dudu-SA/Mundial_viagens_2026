@@ -17,7 +17,7 @@ OWN-WORLD: Fundo = página do álbum, branco quente de papel fotográfico (#FBFB
 
 STORY: "Olha quem já foi com a gente" → "estas são as próximas páginas" → "a sua foto pode ser a próxima": a pessoa reconhece gente como ela, vê preço e data sem rodeio, e manda mensagem.
 
-FIRST VIEWPORT: Álbum aberto. Página esquerda (45%): título "O álbum de quem viajou com a Mundial", uma linha de apoio, botão verde "Falar no WhatsApp" e link "Ver próximas saídas". Página direita (55%): três fotos impressas sobrepostas, inclinadas, com legenda manuscrita (grupo, destino, mês) e um pedaço de fita laranja; aba-índice azul na borda direita com as seções. No celular: fotos primeiro (empilhadas), texto e botão logo abaixo, dentro da primeira tela.
+FIRST VIEWPORT: Álbum aberto. Página esquerda (45%): título "Seu sonho a poucos cliques" (pedido do dono em 10/11; antes "O álbum de quem viajou com a Mundial"), uma linha de apoio, botão verde "Falar no WhatsApp" e link "Ver próximas saídas". Página direita (55%): três fotos impressas sobrepostas, inclinadas, com legenda manuscrita (grupo, destino, mês) e um pedaço de fita laranja; aba-índice azul na borda direita com as seções. No celular: fotos primeiro (empilhadas), texto e botão logo abaixo, dentro da primeira tela.
 
 FORM: álbum de fotos de grupos (candidato 1 da lista ordenada; escolhido pelo usuário sobre o sorteado, o postal). seed:7d958103a6429443
 

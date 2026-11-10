@@ -47,7 +47,7 @@
   if (H.classList.contains("mv-abre") && album) {
     const ab = document.createElement("div");
     ab.className = "abertura"; ab.setAttribute("aria-hidden", "true");
-    ab.innerHTML = '<div class="abertura__pagina"></div><div class="abertura__capa"><div class="abertura__in"><img src="imgs/logo-branco.png" alt=""><div class="abertura__titulo">Mundial Viagens</div><div class="abertura__mao">o álbum de quem viajou com a gente</div><div class="abertura__num">0</div></div><i class="abertura__barra"></i></div>';
+    ab.innerHTML = '<div class="abertura__pagina"></div><div class="abertura__capa"><div class="abertura__in"><img src="imgs/logo-branco.png" alt=""><div class="abertura__titulo">Mundial Viagens</div><div class="abertura__mao">seu sonho a poucos cliques</div><div class="abertura__num">0</div></div><i class="abertura__barra"></i></div>';
     document.body.append(ab);
     H.classList.remove("mv-abre");
     lenis?.stop();
