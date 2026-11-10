@@ -30,9 +30,8 @@
     <a class="marca" href="index.html" aria-label="Mundial Viagens, página inicial"><img src="imgs/logo-branco.png" alt="" width="39" height="40"><span>Mundial Viagens</span></a>
     <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
     <nav class="menu" id="menu" aria-label="Principal">
+      <a href="promocoes.html">Viagens</a>
       <a href="#saidas">Próximas saídas</a>
-      <a href="promocoes.html">Todas as viagens</a>
-      <a href="#porque">Por que a Mundial</a>
       <a href="#como-funciona">Como funciona</a>
       <a href="#duvidas">Dúvidas</a>
       <a href="#contato">Contato</a>
@@ -54,14 +53,13 @@
   <!-- O ÁLBUM ABERTO: página esquerda com o texto, página direita com três fotos impressas -->
   <section class="wrap album" aria-labelledby="album-tit">
     <div class="album__txt">
-      <span class="mao">Crateús · desde 2014</span>
       <h1 id="album-tit" data-letras>Seu sonho a poucos cliques</h1>
       <p class="album__lead lead">Grupos saindo de Fortaleza, peregrinações com acompanhamento e pacotes parcelados em até 12x. Tudo combinado com uma pessoa de verdade, no WhatsApp.</p>
       <div class="album__acoes">
         <a class="btn btn--zap" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Vi%20o%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6a9.4 9.4 0 0 0-8.1 14.2L2.6 21.4l4.7-1.2A9.4 9.4 0 1 0 12 2.6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path transform="translate(7.1 7) scale(.42)" fill="currentColor" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.98.98 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99Z"/></svg>Falar no WhatsApp</a>
         <a class="link" href="#saidas">Ver próximas saídas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg></a>
       </div>
-      <p class="album__nota"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Agência física na Av. Sargento Hermínio, 1646, Crateús (CE). Seg a sex, 8h às 18h; sábado, 8h às 12h.</p>
+      <p class="album__nota"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Agência física em Crateús desde 2014: Av. Sargento Hermínio, 1646. Seg a sex, 8h às 18h; sábado, 8h às 12h.</p>
     </div>
     <!-- as três fotos são as promoções à venda (preenchidas pelo js/saidas.js com os dados do painel) -->
     <div class="album__pag" id="album-fotos" aria-label="Promoções disponíveis">
@@ -75,7 +73,7 @@
   <section id="novidades" class="destaques sec" aria-labelledby="dest-tit" hidden>
     <div class="wrap">
       <div class="cab" data-surge>
-        <div><span class="mao">Páginas marcadas</span><h2 id="dest-tit" data-letras>Em destaque</h2></div>
+        <div><h2 id="dest-tit" data-letras>Em destaque</h2></div>
       </div>
       <div class="destaques__lista"></div>
     </div>
@@ -85,7 +83,7 @@
   <section class="sec" id="saidas" aria-labelledby="saidas-tit">
     <div class="wrap">
       <div class="cab" data-surge>
-        <div><span class="mao">As próximas páginas</span><h2 id="saidas-tit" data-letras>Próximas saídas</h2><p class="lead">Promoções, grupos, pacotes e peregrinações, em ordem de embarque. Valores por pessoa, em quarto duplo.</p></div>
+        <div><h2 id="saidas-tit" data-letras>Próximas saídas</h2><p class="lead">Promoções, grupos, pacotes e peregrinações, em ordem de embarque. Valores por pessoa, em quarto duplo.</p></div>
         <a class="btn btn--linha" href="promocoes.html">Ver todas as viagens</a>
       </div>
       <div class="saidas__lista" id="saidas-lista">
@@ -123,7 +121,7 @@
   <!-- COMO FUNCIONA -->
   <section id="como-funciona" class="sec" aria-labelledby="passos-tit">
     <div class="wrap">
-      <div class="cab" data-surge><div><span class="mao">Passo a passo</span><h2 id="passos-tit" data-letras>Como funciona</h2></div></div>
+      <div class="cab" data-surge><div><h2 id="passos-tit" data-letras>Como funciona</h2></div></div>
       <div class="voo" aria-hidden="true">
         <svg class="voo__svg" viewBox="0 0 1200 200" preserveAspectRatio="none">
           <path class="voo__base" d="M20 170 C 130 170 200 50 320 50 S 510 160 620 160 S 810 40 920 40 S 1110 20 1180 20"/>
@@ -144,7 +142,6 @@
   <!-- DÚVIDAS -->
   <section id="duvidas" class="duvidas wrap sec">
     <div data-surge>
-      <span class="mao">Antes de fechar</span>
       <h2 data-letras>Perguntas frequentes</h2>
       <p class="lead">Não achou a sua? <a class="link" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Tenho%20uma%20d%C3%BAvida%20sobre%20viagens." target="_blank" rel="noopener">Pergunte no WhatsApp</a></p>
     </div>
@@ -160,7 +157,7 @@
   <!-- CONTATO -->
   <section id="contato" class="contato sec">
     <div class="wrap">
-      <div class="cab" data-surge><div><span class="mao">A última página</span><h2 data-letras>Vamos viajar?</h2></div></div>
+      <div class="cab" data-surge><div><h2 data-letras>Vamos viajar?</h2></div></div>
       <div class="contato__grade">
         <div data-surge>
           <p class="lead">Entre em contato para mais informações. Respondemos em até 24 horas.</p>

@@ -35,7 +35,12 @@ function cartao(p, cat, i) {
   preco.append(el("span", "", pr.rotulo + (p.destaque && pr.numero ? ", por pessoa" : "")), el("b", "", pr.valor));
   if (parcelasDe(p)) preco.append(el("small", "parc", parcelasDe(p)));
   if (p.destaque) { txt.append(preco, el("span", "btn", "Ver a viagem")); info.append(txt); }
-  else info.append(txt, preco);
+  else {                                                  // título em linha cheia; duração e preço embaixo
+    info.classList.add("saida__info--empilhada");
+    const meta = el("div", "saida__meta"), dur = txt.querySelector("small");
+    meta.append(dur || el("small", "", ""), preco);
+    info.append(txt, meta);
+  }
   a.append(info);
   return a;
 }

@@ -30,9 +30,8 @@
     <a class="marca" href="index.html" aria-label="Mundial Viagens, página inicial"><img src="imgs/logo-branco.png" alt="" width="39" height="40"><span>Mundial Viagens</span></a>
     <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
     <nav class="menu" id="menu" aria-label="Principal">
+      <a href="promocoes.html">Viagens</a>
       <a href="index.html#saidas">Próximas saídas</a>
-      <a href="promocoes.html">Todas as viagens</a>
-      <a href="index.html#porque">Por que a Mundial</a>
       <a href="index.html#como-funciona">Como funciona</a>
       <a href="index.html#duvidas">Dúvidas</a>
       <a href="index.html#contato">Contato</a>
@@ -163,7 +162,8 @@ function montar(p) {
   }
 
   const txt = el("div", "lp__txt");
-  txt.append(el("span", "mao", p.etiqueta || TIPO[p.categoria] || TIPO.promocao), el("h1", "", p.lugar));
+  const tipo = TIPO[p.categoria] || TIPO.promocao;
+  txt.append(el("h1", "", p.lugar), el("p", "lp__tipo", p.etiqueta && p.etiqueta !== tipo ? `${tipo} · ${p.etiqueta}` : tipo));
   if (p.descricao) txt.append(el("p", "lp__desc", p.descricao));
   const fatos = el("dl", "lp__fatos");
   const fato = (t, v, cls) => { const d = el("div"); d.append(el("dt", "", t), el("dd", cls, v)); fatos.append(d); };
@@ -195,7 +195,7 @@ function montar(p) {
 
   /* fechamento */
   const fim = el("section", "lp__fim"), fimTxt = el("div");
-  fimTxt.append(el("span", "mao", "Gostou?"), el("h2", "", "Garanta o seu lugar nesta viagem."));
+  fimTxt.append(el("h2", "", "Garanta o seu lugar nesta viagem."), el("p", "", "Tire as dúvidas e reserve com a gente pelo WhatsApp."));
   fim.append(fimTxt, zapLink("Falar com a gente", msg, "btn btn--claro"));
 
   /* barra fixa no celular: aparece quando os botões saem da tela */
