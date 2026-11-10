@@ -8,7 +8,7 @@ import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, ADMIN_EMAIL } from "./conexao.js";
-import { lerNumero, precoDe } from "./preco.js";
+import { lerNumero, precoDe, lerParcelas, parcelasDe } from "./preco.js";
 
 const app = getApps()[0] || initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
 const $ = id => document.getElementById(id);
@@ -114,6 +114,7 @@ const COLUNAS = {
   dataVolta: ["volta", "data de volta", "retorno", "chegada"],
   exibirAte: ["exibir ate", "exibir no site ate", "valido ate", "validade", "mostrar ate", "ate"],
   preco: ["preco", "valor", "a partir de", "valor a partir de", "preco a partir de", "r"],
+  parcelas: ["parcelas", "parcelamento", "vezes", "em ate", "x"],
   destaque: ["destaque", "destacar"],
   incluso: ["o que esta incluso", "incluso", "inclui", "o que inclui", "itens inclusos"],
   roteiro: ["roteiro", "roteiro dia a dia", "programacao", "itinerario"],
@@ -136,7 +137,7 @@ export function montarViagem(d) {
     categoria: lerCategoria(d.categoria), lugar: String(d.lugar ?? "").trim(), etiqueta: String(d.etiqueta ?? "").trim(),
     descricao: String(d.descricao ?? "").trim(), sobre: String(d.sobre ?? "").trim(),
     dataSaida: lerData(d.dataSaida), dataVolta: lerData(d.dataVolta), exibirAte: lerData(d.exibirAte),
-    preco: lerValorPlanilha(d.preco), destaque: lerBool(d.destaque), fotos: [], blocos: []
+    preco: lerValorPlanilha(d.preco), parcelas: lerParcelas(d.parcelas), destaque: lerBool(d.destaque), fotos: [], blocos: []
   };
   const bloco = (tipo, icone, titulo, texto) => { if (texto) v.blocos.push({ tipo, icone, titulo, texto, foto: "" }); };
   bloco("texto", "🗺️", "Roteiro", String(d.roteiro ?? "").trim());
@@ -184,7 +185,7 @@ async function lerPlanilha(file) {
 /* modelo para baixar */
 function baixarModelo() {
   const XLSX = window.XLSX; if (!XLSX) return aviso("A biblioteca de planilhas não carregou. Recarregue a página.", "err");
-  const cab = ["Lugar", "Seção", "Etiqueta", "Detalhes", "Saída", "Volta", "Exibir até", "Preço", "Destaque", "Apresentação", "O que está incluso", "Roteiro", "Hospedagem", "Dicas"];
+  const cab = ["Lugar", "Seção", "Etiqueta", "Detalhes", "Saída", "Volta", "Exibir até", "Preço", "Parcelas", "Destaque", "Apresentação", "O que está incluso", "Roteiro", "Hospedagem", "Dicas"];
   const ex = [
     ["Lisboa e Porto", "Promoção", "Europa", "9 noites · Aéreo, hotel e traslados", "12/11/2026", "21/11/2026", "10/11/2026", 8640, "sim",
       "Duas cidades à beira do rio, bondes amarelos e pastéis de nata.", "Passagem aérea ida e volta; Hospedagem com café da manhã; Traslados; Seguro viagem", "Dia 1: chegada em Lisboa...", "Hotéis 4 estrelas no centro", "Leve casaco: em novembro faz frio à noite."],
@@ -202,6 +203,7 @@ function baixarModelo() {
     ["Saída / Volta", "Datas como 12/11/2026 ou 12/11. Sem saída (ex.: saídas diárias), a viagem fica 30 dias no site."],
     ["Exibir até", "Até quando aparece no site. Vazio = data de saída."],
     ["Preço", "Valor a partir de, por pessoa (8640 ou R$ 8.640,00) ou texto: A definir, Sob consulta."],
+    ["Parcelas", "Opcional. Número de vezes (10 ou 10x): aparece \"em até 10x\" ao lado do valor. Não faz conta."],
     ["Destaque", "sim = card grande, aparece primeiro."],
     ["Apresentação", "Texto de abertura da página da viagem."],
     ["O que está incluso", "Itens separados por ; ou por linha (vira lista com ✓)."],
@@ -220,7 +222,8 @@ Extraia os dados e responda SOMENTE com JSON: um array de objetos, um por viagem
 lugar (nome do destino/viagem), categoria ("promocao", "grupo", "pacote" ou "peregrinacao"; peregrinacao quando for viagem religiosa (Fátima, Aparecida, Terra Santa, romaria); grupo quando for saída em grupo/excursão),
 etiqueta (continente, país ou região), descricao (uma linha curta, ex.: "7 noites · Aéreo e hotel"),
 dataSaida e dataVolta (formato AAAA-MM-DD; se só houver dia e mês, use o próximo ano em que a data ainda não passou; hoje é ${hoje()}),
-preco (número, valor "a partir de" por pessoa em reais; se houver parcelas e total, use o total; se não houver valor na imagem, use o texto "A definir"),
+preco (número, valor "a partir de" por pessoa em reais; se houver parcelas e total, use o total; se só houver o valor da parcela, use parcelas × valor da parcela; se não houver valor na imagem, use o texto "A definir"),
+parcelas (número máximo de parcelas que a arte anuncia, ex.: "em até 10x" → 10; 0 se não houver),
 exibirAte (AAAA-MM-DD: data limite da oferta se a arte disser "válido até", "promoção até", "vendas até"; senão ""),
 sobre (2 ou 3 frases simples de apresentação da viagem para o site, usando só o que está na arte, sem exageros),
 incluso (array de strings com o que está incluso), roteiro (texto, se houver), hotel (texto, se houver), dicas (texto com condições, parcelamento, observações).
@@ -353,7 +356,7 @@ function cartao(it, i) {
   txt.append(el("span", "imp__secao", (CATS[v.categoria] || "Promoção") + (v.etiqueta ? " · " + v.etiqueta : "")), el("strong", "imp__lugar", v.lugar || "(sem lugar)"));
   const pr = precoDe(v);
   const linhaInfo = (rot, val) => { if (!val) return; const p = el("p"); p.append(el("b", "", rot + ": "), val); txt.append(p); };
-  linhaInfo("Valor", pr.numero ? `a partir de ${pr.valor}` : pr.valor);
+  linhaInfo("Valor", (pr.numero ? `a partir de ${pr.valor}` : pr.valor) + (parcelasDe(v) ? " " + parcelasDe(v) : ""));
   linhaInfo("Datas", v.dataSaida ? br(v.dataSaida) + (v.dataVolta ? " a " + br(v.dataVolta) : "") : "");
   linhaInfo("No site até", br(v.exibirAte));
   linhaInfo("Detalhes", v.descricao);
@@ -393,9 +396,9 @@ function cartao(it, i) {
     const campo = (lab, k, tipo = "text", opts) => {
       const d = el("div"), l = el("label", "", lab); let e;
       if (opts) { e = el("select"); opts.forEach(([val, txt]) => e.append(new Option(txt, val))); e.value = v[k]; }
-      else { e = el(tipo === "area" ? "textarea" : "input"); if (tipo !== "area") e.type = tipo; else e.rows = 3; e.value = v[k] ?? ""; }
+      else { e = el(tipo === "area" ? "textarea" : "input"); if (tipo !== "area") e.type = tipo; else e.rows = 3; e.value = (k === "parcelas" && !v[k]) ? "" : (v[k] ?? ""); }
       e.onchange = () => {
-        v[k] = k === "preco" ? lerValorPlanilha(e.value) : e.value;
+        v[k] = k === "preco" ? lerValorPlanilha(e.value) : k === "parcelas" ? lerParcelas(e.value) : e.value;
         if (k === "dataSaida" && !it.ateManual) v.exibirAte = v.dataSaida || v.exibirAte;
         if (k === "exibirAte") it.ateManual = true;
         it.editando = true; desenhar();
@@ -403,7 +406,7 @@ function cartao(it, i) {
       d.append(l, e); return d;
     };
     g.append(campo("Lugar", "lugar"), campo("Seção", "categoria", null, Object.entries(CATS)), campo("Etiqueta", "etiqueta"), campo("Detalhes", "descricao"),
-      campo("Saída", "dataSaida", "date"), campo("Volta", "dataVolta", "date"), campo("No site até", "exibirAte", "date"), campo("Valor (número ou texto)", "preco"));
+      campo("Saída", "dataSaida", "date"), campo("Volta", "dataVolta", "date"), campo("No site até", "exibirAte", "date"), campo("Valor (número ou texto)", "preco"), campo("Parcelas (ex.: 10)", "parcelas", "number"));
     const sobre = campo("Apresentação", "sobre", "area"); sobre.className = "full"; g.append(sobre);
     const dest = el("div", "chk full"); const cb = el("input"); cb.type = "checkbox"; cb.checked = !!v.destaque; cb.id = "imp-dest-" + i; cb.onchange = () => v.destaque = cb.checked;
     const cl = el("label", "", "Destacar (aparece primeiro e no topo do site)"); cl.htmlFor = cb.id; dest.append(cb, cl); g.append(dest);

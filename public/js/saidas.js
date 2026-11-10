@@ -5,7 +5,7 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig } from "./conexao.js";
-import { precoDe } from "./preco.js";
+import { precoDe, parcelasDe } from "./preco.js";
 
 const QUANTAS = 8;
 const sec = document.getElementById("saidas"), lista = document.getElementById("saidas-lista"), vazio = document.getElementById("saidas-vazio");
@@ -29,6 +29,7 @@ function cartao(p, i) {
   if (nt > 0) txt.append(el("small", "", nt + (nt > 1 ? " noites" : " noite")));
   const preco = el("div", "saida__preco" + (pr.numero ? "" : " saida__preco--texto"));
   preco.append(el("span", "", pr.rotulo), el("b", "", pr.valor));
+  if (parcelasDe(p)) preco.append(el("small", "parc", parcelasDe(p)));
   info.append(txt, preco);
   a.append(info);
   return a;
@@ -54,7 +55,7 @@ function topo(ativas) {
     if (im.complete) im.classList.add("carregou");
     f.querySelector(".foto__img").replaceChildren(im);
     const leg = f.querySelector(".foto__leg");
-    leg.replaceChildren(p.lugar || "Viagem", el("small", "", p.sub || `${pr.rotulo} ${pr.valor}`.replace(/^valor /, "")));
+    leg.replaceChildren(p.lugar || "Viagem", el("small", "", p.sub || `${pr.rotulo} ${pr.valor}`.replace(/^valor /, "") + (parcelasDe(p) ? " · " + parcelasDe(p) : "")));
   });
 }
 

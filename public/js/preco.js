@@ -36,3 +36,14 @@ export function precoFrase(p) {
   const x = precoDe(p);
   return x.numero ? `, a partir de ${x.valor}` : `, valor: ${x.valor}`;
 }
+
+/* parcelas: só para mostrar ao lado do valor ("em até 10x"); não faz conta nenhuma.
+   Aceita 10, "10", "10x", "10 vezes". Guarda 2 a 24; qualquer outra coisa vira 0 (não mostra). */
+export function lerParcelas(v) {
+  const n = parseInt(String(v ?? "").replace(/\D/g, ""), 10);
+  return n >= 2 && n <= 24 ? n : 0;
+}
+export function parcelasDe(p) {
+  const n = lerParcelas(p?.parcelas);
+  return n ? `em até ${n}x` : "";
+}

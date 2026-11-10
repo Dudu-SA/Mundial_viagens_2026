@@ -86,7 +86,7 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig, WHATSAPP } from "./js/conexao.js";
-import { precoDe, precoFrase } from "./js/preco.js";
+import { precoDe, precoFrase, parcelasDe } from "./js/preco.js";
 
 const box = document.getElementById("lp");
 const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -172,6 +172,7 @@ function montar(p) {
   if (noites > 0) fato("Duração", noites + (noites > 1 ? " noites" : " noite"));
   const pr = precoDe(p);
   fato(pr.numero ? "A partir de" : "Valor", pr.valor, "preco" + (pr.numero ? "" : " preco--texto"));
+  if (parcelasDe(p)) fatos.lastElementChild.querySelector("dd").append(el("small", "parc", parcelasDe(p)));
   txt.append(fatos);
   const acoes = el("div", "lp__acoes");
   const share = el("button", "btn btn--linha", "Compartilhar"); share.type = "button";
@@ -200,6 +201,7 @@ function montar(p) {
   /* barra fixa no celular: aparece quando os botões saem da tela */
   const barra = el("div", "lp__barra");
   const bp = el("div"); bp.append(el("span", "", pr.numero ? "A partir de" : "Valor"), el("b", "", pr.valor));
+  if (parcelasDe(p)) bp.querySelector("b").append(el("small", "parc", parcelasDe(p)));
   barra.append(bp, zapLink("Pedir no WhatsApp", msg));
 
   box.replaceChildren(voltar, dupla, corpo, fim, barra);
