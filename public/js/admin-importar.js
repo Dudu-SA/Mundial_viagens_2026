@@ -226,7 +226,7 @@ sobre (2 ou 3 frases simples de apresentação da viagem para o site, usando só
 incluso (array de strings com o que está incluso), roteiro (texto, se houver), hotel (texto, se houver), dicas (texto com condições, parcelamento, observações).
 Use "" ou [] quando não houver a informação. Não invente dados: datas, preços e itens só se estiverem na imagem.`;
 
-async function lerFoto(file, chave) {
+async function lerFoto(file, chave, aoEsperar) {
   const dataUrl = await reduzir(file, 1600, 0.85);
   const [meta, b64] = dataUrl.split(",");
   const mime = meta.match(/data:(.*?);/)[1];
@@ -234,12 +234,22 @@ async function lerFoto(file, chave) {
     contents: [{ parts: [{ text: PROMPT }, { inline_data: { mime_type: mime, data: b64 } }] }],
     generationConfig: { responseMimeType: "application/json", temperature: 0.1 }
   });
+  /* 404 = modelo desligado; 429/500/503 = Google lotado: espera e tenta de novo,
+     depois passa para o próximo modelo da lista */
   let r;
-  for (const modelo of await modelosIA(chave)) {                // 404 = modelo desligado: tenta o próximo
-    r = await fetch(`${API_IA}/models/${modelo}:generateContent?key=${encodeURIComponent(chave)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: corpo });
-    if (r.status !== 404) { if (r.ok) try { localStorage.setItem("mv-modelo-ia", modelo); } catch {} break; }
+  const espera = ms => new Promise(ok => setTimeout(ok, ms));
+  modelos: for (const modelo of await modelosIA(chave)) {
+    for (let tentativa = 0; tentativa < 3; tentativa++) {
+      r = await fetch(`${API_IA}/models/${modelo}:generateContent?key=${encodeURIComponent(chave)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: corpo });
+      if (r.ok) { try { localStorage.setItem("mv-modelo-ia", modelo); } catch {} break modelos; }
+      if (r.status === 404) continue modelos;
+      if (![429, 500, 503].includes(r.status)) break modelos;
+      aoEsperar?.(tentativa + 1);
+      await espera([2500, 6000, 0][tentativa]);
+    }
   }
   if (!r.ok) {
+    if (r.status === 503 || r.status === 500) throw new Error("O Google AI está sobrecarregado agora. Tente de novo em alguns minutos.");
     if (r.status === 404) throw new Error("Nenhum modelo de leitura do Google AI respondeu para esta chave. Avise o suporte do site.");
     const t = await r.text();
     if (r.status === 400 && /API key/i.test(t)) throw new Error("A chave do Google AI não foi aceita. Confira em Configurações da importação.");
@@ -292,15 +302,16 @@ async function receber(files) {
   const lista = [...files]; if (!lista.length) return;
   aviso("Lendo…"); $("impLista").hidden = true;
   const novos = [], erros = [];
-  for (const f of lista) {
+  for (const [n, f] of lista.entries()) {
     try {
+      if (lista.length > 1) aviso(`Lendo ${n + 1} de ${lista.length}…`);
       if (/\.(xlsx|xls|xlsm|csv|ods)$/i.test(f.name)) {
         const { itens: its, faltam } = await lerPlanilha(f);
         if (faltam.length) erros.push(`${f.name}: não achei a coluna ${faltam.map(c => ({ lugar: "Lugar", dataSaida: "Saída", preco: "Preço" })[c]).join(", ")}.`);
         novos.push(...its);
       } else if (f.type.startsWith("image/")) {
         if (!chaveIA) { erros.push(`${f.name}: para ler fotos, salve a chave do Google AI no menu "Leitura de fotos".`); continue; }
-        novos.push(...await lerFoto(f, chaveIA));
+        novos.push(...await lerFoto(f, chaveIA, t => aviso(`Lendo ${n + 1} de ${lista.length}… o Google está ocupado, tentando de novo (${t})`)));
       } else erros.push(`${f.name}: envie uma planilha (xlsx ou csv) ou uma imagem.`);
     } catch (e) { console.error("[importar]", e); erros.push(`${f.name}: ${e.message}`); }
   }
