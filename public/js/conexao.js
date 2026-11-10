@@ -9,6 +9,6 @@ export const firebaseConfig = {
 };
 
 // E-mail do administrador (o mesmo cadastrado em Authentication > E-mail/senha)
-export const ADMIN_EMAIL = "admin@mundialviagens.com";
+export const ADMIN_EMAIL = "mundialviagens2014@gmail.com";
 
 export const WHATSAPP = "558888870400";

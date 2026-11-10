@@ -1,272 +1,231 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-abre>
 <head>
 <meta charset="UTF-8">
-<meta name="theme-color" content="#1d4a9f">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Mundial Viagens: pacotes nacionais e internacionais, roteiros personalizados e parcelamento em até 12x.">
-<title>Mundial Viagens</title>
-<link rel="icon" type="image/png" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
-<link rel="apple-touch-icon" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<meta name="theme-color" content="#1b468f">
+<meta name="description" content="Mundial Viagens, de Crateús (CE): pacotes nacionais e internacionais, saídas em grupo, peregrinações e parcelamento em até 12x. Atendimento humano no WhatsApp.">
+<title>Mundial Viagens | Agência de viagens em Crateús</title>
+<link rel="icon" type="image/png" href="imgs/logo-azul.png">
+<link rel="apple-touch-icon" href="imgs/logo-azul.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/destaques.css">
-<link rel="stylesheet" href="css/motion.css">
-<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<script>
+  /* marca que o JS está ligado; mostra a capa do álbum na primeira visita;
+     se algo falhar, solta tudo depois de 3,5 s para nada ficar escondido */
+  (function (h) {
+    h.classList.add("js");
+    try { if (h.dataset.abre != null && !sessionStorage.getItem("mv-abriu") && !matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("mv-abre"); } catch (e) {}
+    setTimeout(function () { if (!h.classList.contains("mv-anim")) { h.classList.add("mv-solta"); h.classList.remove("mv-abre"); } }, 3500);
+  })(document.documentElement);
+</script>
 </head>
 <body>
 
-<header class="header" id="topo">
-  <div class="wrap header__in">
-    <a class="logo" href="#topo"><img src="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png" alt=""><span>Mundial Viagens</span></a>
-    <button class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
-    <nav class="nav" id="menu">
-      <a href="#sobre">Sobre</a>
-      <a href="#destinos">Destinos</a>
-      <a href="promocoes.html">Vendas</a>
+<header class="topo">
+  <div class="wrap topo__in">
+    <a class="marca" href="index.html" aria-label="Mundial Viagens, página inicial"><img src="imgs/logo-branco.png" alt="" width="39" height="40"><span>Mundial Viagens</span></a>
+    <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <nav class="menu" id="menu" aria-label="Principal">
+      <a href="#saidas">Próximas saídas</a>
+      <a href="promocoes.html">Todas as viagens</a>
+      <a href="#porque">Por que a Mundial</a>
       <a href="#como-funciona">Como funciona</a>
-      <a href="#depoimentos">Depoimentos</a>
       <a href="#duvidas">Dúvidas</a>
       <a href="#contato">Contato</a>
     </nav>
+    <a class="btn btn--zap topo__cta" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Vi%20o%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener">Falar no WhatsApp</a>
   </div>
 </header>
 
+<!-- Abas-índice do álbum (só no computador; o site.js marca a seção atual) -->
+<nav class="abas" aria-label="Seções da página">
+  <a href="#saidas">Saídas</a>
+  <a href="#porque">A Mundial</a>
+  <a href="#como-funciona">Como funciona</a>
+  <a href="#contato">Contato</a>
+</nav>
+
 <main>
 
-  <!-- HERO -->
-  <section class="hero wrap">
-    <div class="hero__text">
-      <h1><span class="ln"><span>Viagens</span></span><span class="ln"><span>imperdíveis.</span></span></h1>
-      <p>Pacotes nacionais e internacionais com roteiro sob medida, atendimento humano do primeiro contato ao retorno e parcelamento em até 12x.</p>
-      <div class="hero__actions">
-        <a class="btn btn--dark" href="promocoes.html">Ver promoções</a>
-        <a class="btn btn--outline" href="#contato">Entre em contato</a>
+  <!-- O ÁLBUM ABERTO: página esquerda com o texto, página direita com três fotos impressas -->
+  <section class="wrap album" aria-labelledby="album-tit">
+    <div class="album__txt">
+      <span class="mao">Crateús · desde 2014</span>
+      <h1 id="album-tit" data-letras>Seu sonho a poucos cliques</h1>
+      <p class="album__lead lead">Grupos saindo de Fortaleza, peregrinações com acompanhamento e pacotes parcelados em até 12x. Tudo combinado com uma pessoa de verdade, no WhatsApp.</p>
+      <div class="album__acoes">
+        <a class="btn btn--zap" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Vi%20o%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6a9.4 9.4 0 0 0-8.1 14.2L2.6 21.4l4.7-1.2A9.4 9.4 0 1 0 12 2.6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path transform="translate(7.1 7) scale(.42)" fill="currentColor" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.98.98 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99Z"/></svg>Falar no WhatsApp</a>
+        <a class="link" href="#saidas">Ver próximas saídas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg></a>
       </div>
+      <p class="album__nota"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Agência física na Av. Sargento Hermínio, 1646, Crateús (CE). Seg a sex, 8h às 18h; sábado, 8h às 12h.</p>
     </div>
-    <div class="globo" id="globo">
-      <div class="globo__stage">
-        <div class="globo__fallback" aria-hidden="true"></div>
-        <canvas role="img" aria-label="Globo 3D com a rota de Crateús até o continente escolhido"></canvas>
-      </div>
-      <div class="globo__row">
-        <div class="globo__info" aria-live="polite"><span class="globo__nome"><span></span></span><span class="globo__dist"></span></div>
-        <a class="btn btn--dark btn--sm globo__cta" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
-      </div>
-      <div class="globo__sel" role="group" aria-label="Escolher continente"></div>
+    <!-- as três fotos são as promoções à venda (preenchidas pelo js/saidas.js com os dados do painel) -->
+    <div class="album__pag" id="album-fotos" aria-label="Promoções disponíveis">
+      <a class="foto" href="#saidas"><span class="canto"></span><span class="fita"></span><span class="foto__img"></span><span class="foto__leg">&nbsp;<small>&nbsp;</small></span></a>
+      <a class="foto" href="#saidas"><span class="canto"></span><span class="foto__img" style="--ar:1/1"></span><span class="foto__leg">&nbsp;<small>&nbsp;</small></span></a>
+      <a class="foto" href="#saidas"><span class="canto"></span><span class="fita fita--dir"></span><span class="foto__img"></span><span class="foto__leg">&nbsp;<small>&nbsp;</small></span></a>
     </div>
   </section>
 
-  <!-- DESTAQUES (editável no painel admin) -->
-  <section id="novidades" class="novidades wrap" aria-label="Em destaque" hidden>
-    <div class="dest">
-      <div class="section-head">
-        <div><small>Novidades e ofertas</small><h2>Aproveite agora</h2></div>
-        <div class="dest__ctrl"><span class="dest__count"></span><button class="prev" type="button" aria-label="Anterior">←</button><button class="next-s" type="button" aria-label="Próximo">→</button></div>
+  <!-- EM DESTAQUE (coleção "destaques" do painel; js/destaques.js) -->
+  <section id="novidades" class="destaques sec" aria-labelledby="dest-tit" hidden>
+    <div class="wrap">
+      <div class="cab" data-surge>
+        <div><span class="mao">Páginas marcadas</span><h2 id="dest-tit" data-letras>Em destaque</h2></div>
       </div>
-      <div class="dest__track"></div>
-      <div class="dest__dots"></div>
+      <div class="destaques__lista"></div>
     </div>
   </section>
 
-  <div class="marquee" aria-hidden="true"><div class="marquee__track"><span>América Central</span><span>América do Norte</span><span>América do Sul</span><span>Europa</span><span>Ásia</span><span>África</span><span>Oceania</span><span>América Central</span><span>América do Norte</span><span>América do Sul</span><span>Europa</span><span>Ásia</span><span>África</span><span>Oceania</span><span>América Central</span><span>América do Norte</span><span>América do Sul</span><span>Europa</span><span>Ásia</span><span>África</span><span>Oceania</span><span>América Central</span><span>América do Norte</span><span>América do Sul</span><span>Europa</span><span>Ásia</span><span>África</span><span>Oceania</span></div></div>
-
-  <!-- NÚMEROS -->
-  <section class="stats wrap" aria-label="Mundial Viagens em números">
-    <div><strong>12+</strong><span>anos de experiência</span></div>
-    <div><strong>50+</strong><span>países atendidos</span></div>
-    <div><strong>5 mil</strong><span>viajantes satisfeitos</span></div>
-  </section>
-
-  <!-- SOBRE -->
-  <section id="sobre" class="about wrap">
-    <div class="section-head">
-      <div>
-        <small>Sobre</small>
-        <h2>Visite o mundo<br>por menos</h2>
-        <p class="lead">Somos uma agência que cuida de tudo: passagens, hospedagem, traslados, seguro e passeios. Você escolhe o destino, nós cuidamos do resto.</p>
+  <!-- PRÓXIMAS SAÍDAS (coleção "promocoes"; js/saidas.js) -->
+  <section class="sec" id="saidas" aria-labelledby="saidas-tit">
+    <div class="wrap">
+      <div class="cab" data-surge>
+        <div><span class="mao">As próximas páginas</span><h2 id="saidas-tit" data-letras>Próximas saídas</h2><p class="lead">Promoções, grupos, pacotes e peregrinações, em ordem de embarque. Valores por pessoa, em quarto duplo.</p></div>
+        <a class="btn btn--linha" href="promocoes.html">Ver todas as viagens</a>
       </div>
-      <a class="btn btn--dark" href="#destinos">Vem conhecer</a>
-    </div>
-    <div class="cards">
-      <article class="card">
-        <span class="icon" aria-hidden="true">≡</span>
-        <h3>Preços justos</h3>
-        <p>Com a gente você conhece todo o globo por um preço acessível, com tarifas negociadas direto com companhias e hotéis parceiros.</p>
-      </article>
-      <article class="card card--active">
-        <span class="icon" aria-hidden="true">⚙</span>
-        <h3>Planos do seu jeito</h3>
-        <p>Diga onde quer ir que montamos seu roteiro personalizado, do orçamento ao ritmo da viagem.</p>
-        <a class="btn btn--outline btn--sm" href="#contato">Mande mensagem</a>
-      </article>
-      <article class="card">
-        <span class="icon" aria-hidden="true">▦</span>
-        <h3>Sonhos realizados</h3>
-        <p>Por que deixar seus sonhos de lado? Vem com a gente para que eles se realizem da melhor forma, com suporte 24 horas durante a viagem.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- PROMOÇÕES -->
-  <section id="destinos" class="promos wrap">
-    <div class="section-head">
-      <div>
-        <small>Destinos</small>
-        <h2>Para onde você quer ir?</h2>
-        <p class="lead">Escolha um continente e fale direto com a gente no WhatsApp.</p>
+      <div class="saidas__lista" id="saidas-lista">
+        <div class="esqueleto" aria-hidden="true"><i></i></div><div class="esqueleto" aria-hidden="true"><i></i></div><div class="esqueleto" aria-hidden="true"><i></i></div><div class="esqueleto" aria-hidden="true"><i></i></div>
+      </div>
+      <div class="saidas__vazio" id="saidas-vazio" hidden>
+        <p class="lead">No momento não há saídas publicadas. Conte para onde quer ir e montamos o seu roteiro.</p>
+        <a class="btn btn--zap" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Gostaria%20de%20montar%20um%20roteiro%20de%20viagem." target="_blank" rel="noopener">Conversar no WhatsApp</a>
       </div>
     </div>
-    <div class="gallery">
-      <a class="proj img-2" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20Am%C3%A9rica%20Central.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>América Central</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
-      <a class="proj img-3" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20Am%C3%A9rica%20do%20Norte.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>América do Norte</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
-      <a class="proj img-4" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20Am%C3%A9rica%20do%20Sul.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>América do Sul</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
-      <a class="proj img-5" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20%C3%81sia.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>Ásia</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
-      <a class="proj img-6" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20%C3%81frica.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>África</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
-      <a class="proj img-7" href="https://wa.me/558888870800?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20viajar%20para%20Europa.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener"><small>Continente</small><h3>Europa</h3><p>Fale com a gente no WhatsApp</p><span class="view">Chamar</span></a>
-    </div>
   </section>
 
-  <!-- DESTAQUE / NEXT -->
-  <section class="next">
-    <div class="next__img img-8"><span>Ofertas</span></div>
-    <h2>Página de<br>promoções</h2>
-    <div class="next__info">
-      <p>Veja pacotes com preço, noites e o que está incluso, e peça o seu direto pelo WhatsApp.</p>
-      <a class="btn btn--white btn--sm" href="promocoes.html">Ver promoções</a>
+  <!-- FAIXA DE DESTINOS: corre sozinha e acelera com a rolagem (motion.js) -->
+  <div class="faixa" aria-hidden="true">
+    <div class="faixa__linha faixa__linha--1"><div class="faixa__trilho" data-dir="-1"><span>Gramado</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Bariloche</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Lisboa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Fátima</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Aparecida</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Buenos Aires</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Cancún</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Santiago</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Jericoacoara</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Terra Santa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Porto</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Mendoza</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Gramado</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Bariloche</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Lisboa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Fátima</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Aparecida</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Buenos Aires</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Cancún</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Santiago</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Jericoacoara</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Terra Santa</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Porto</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>Mendoza</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></div></div>
+    <div class="faixa__linha faixa__linha--2"><div class="faixa__trilho" data-dir="1"><span>saindo de Fortaleza</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>em até 12x</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>com guia da agência</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>grupos de igreja</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>famílias e casais</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>suporte 24h na viagem</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>saindo de Fortaleza</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>em até 12x</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>com guia da agência</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>grupos de igreja</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>famílias e casais</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg><span>suporte 24h na viagem</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></div></div>
+  </div>
+
+  <!-- POR QUE A MUNDIAL -->
+  <section id="porque" class="porque sec" aria-labelledby="porque-tit">
+    <div class="wrap">
+      <div data-surge>
+        <h2 id="porque-tit" data-letras>Uma agência de verdade, com gente de verdade</h2>
+        <p class="lead" data-palavras>Não somos um buscador. Somos a Mundial, em Crateús desde 2014, combinando viagem por viagem com cada cliente.</p>
+        <p class="porque__anos">em Crateús desde 2014 — equipe Mundial Viagens</p>
+      </div>
+      <ul class="porque__lista">
+        <li data-surge><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M24 6a17 17 0 0 0-14.7 25.6L6.5 41l9.6-2.6A17 17 0 1 0 24 6Z"/><path d="M17 20c0 6 5 11 11 11l3-3-4-3-2 2a7 7 0 0 1-4-4l2-2-3-4-3 3Z" fill="currentColor" stroke="none"/></svg><div><h3>Atendimento humano no WhatsApp</h3><p>Do orçamento ao retorno, você fala com a mesma pessoa. Durante a viagem, o suporte funciona 24 horas.</p></div></li>
+        <li data-surge style="--atraso:.1s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="12" width="36" height="24" rx="3"/><path d="M6 20h36M12 29h8"/></svg><div><h3>Parcelamento em até 12x</h3><p>Tarifas negociadas com as operadoras, Pix e boleto com desconto. Sem surpresa no fim.</p></div></li>
+        <li data-surge style="--atraso:.2s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="17" cy="17" r="6"/><circle cx="32" cy="19" r="5"/><path d="M6 38a11 11 0 0 1 22 0M26 38a9 9 0 0 1 16 0"/></svg><div><h3>Grupos com acompanhamento</h3><p>Saídas de Fortaleza com guia da agência, inclusive nas peregrinações. Ninguém viaja sozinho.</p></div></li>
+      </ul>
     </div>
   </section>
 
   <!-- COMO FUNCIONA -->
-  <section id="como-funciona" class="steps wrap">
-    <div class="section-head">
-      <div>
-        <small>Como funciona</small>
-        <h2>Da ideia ao embarque em 4 passos</h2>
+  <section id="como-funciona" class="sec" aria-labelledby="passos-tit">
+    <div class="wrap">
+      <div class="cab" data-surge><div><span class="mao">Passo a passo</span><h2 id="passos-tit" data-letras>Como funciona</h2></div></div>
+      <div class="voo" aria-hidden="true">
+        <svg class="voo__svg" viewBox="0 0 1200 200" preserveAspectRatio="none">
+          <path class="voo__base" d="M20 170 C 130 170 200 50 320 50 S 510 160 620 160 S 810 40 920 40 S 1110 20 1180 20"/>
+          <path class="voo__linha" d="M20 170 C 130 170 200 50 320 50 S 510 160 620 160 S 810 40 920 40 S 1110 20 1180 20"/>
+          <circle class="voo__ponto" cx="20" cy="170" r="7"/><circle class="voo__ponto" cx="320" cy="50" r="7"/><circle class="voo__ponto" cx="620" cy="160" r="7"/><circle class="voo__ponto" cx="920" cy="40" r="7"/>
+          <g class="voo__aviao" transform="translate(1180 20) rotate(-20)"><path d="M16 0 -8 -10 -4 -1.5 -13 -1.5 -16 -6 -18 -6 -17 0 -18 6 -16 6 -13 1.5 -4 1.5 -8 10Z"/></g>
+        </svg>
       </div>
-    </div>
-    <ol class="steps__list">
-      <li><b>1</b><h3>Conversa inicial</h3><p>Você conta destino, datas e orçamento por WhatsApp, e-mail ou telefone.</p></li>
-      <li><b>2</b><h3>Proposta</h3><p>Em até 24 horas enviamos um roteiro com valores detalhados, sem taxas escondidas.</p></li>
-      <li><b>3</b><h3>Reserva</h3><p>Aprovado o roteiro, emitimos passagens e hospedagem. Parcelamos em até 12x.</p></li>
-      <li><b>4</b><h3>Viagem tranquila</h3><p>Você recebe os documentos organizados e conta com suporte 24 horas.</p></li>
-    </ol>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section id="depoimentos" class="reviews wrap">
-    <div class="section-head">
-      <div>
-        <small>Depoimentos</small>
-        <h2>Quem viajou com a gente</h2>
-      </div>
-    </div>
-    <div class="reviews__grid">
-      <blockquote><p>Montaram a lua de mel em Portugal exatamente como sonhamos, e ainda ficou abaixo do orçamento.</p><footer><strong>Camila e Rafael</strong><span>Lisboa e Porto</span></footer></blockquote>
-      <blockquote><p>Tive um problema com o voo em Tóquio e o suporte resolveu tudo em minutos. Viajo sempre com eles.</p><footer><strong>Marcos Andrade</strong><span>Tóquio e Kyoto</span></footer></blockquote>
-      <blockquote><p>Viajamos em família com duas crianças. Roteiro leve, traslados certos e nenhuma dor de cabeça.</p><footer><strong>Família Nogueira</strong><span>Cancún</span></footer></blockquote>
+      <ol class="passos__lista">
+        <li data-surge data-f="0"><h3>Escolha uma viagem</h3><p>Veja as próximas saídas ou conte para onde quer ir.</p></li>
+        <li data-surge data-f=".268" style="--atraso:.08s"><h3>Fale com a gente</h3><p>No WhatsApp, por telefone ou na loja. Tiramos as dúvidas e fechamos as datas.</p></li>
+        <li data-surge data-f=".528" style="--atraso:.16s"><h3>Reserve parcelado</h3><p>Até 12x no cartão. Cuidamos de passagens, hotel, seguro e documentos.</p></li>
+        <li data-surge data-f=".792" style="--atraso:.24s"><h3>Embarque acompanhado</h3><p>Suporte 24 horas durante a viagem. Depois, sua foto entra no álbum.</p></li>
+      </ol>
     </div>
   </section>
 
   <!-- DÚVIDAS -->
-  <section id="duvidas" class="faq wrap">
-    <div class="section-head">
-      <div>
-        <small>Dúvidas</small>
-        <h2>Perguntas frequentes</h2>
-      </div>
+  <section id="duvidas" class="duvidas wrap sec">
+    <div data-surge>
+      <span class="mao">Antes de fechar</span>
+      <h2 data-letras>Perguntas frequentes</h2>
+      <p class="lead">Não achou a sua? <a class="link" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Tenho%20uma%20d%C3%BAvida%20sobre%20viagens." target="_blank" rel="noopener">Pergunte no WhatsApp</a></p>
     </div>
-    <div class="faq__list">
-      <details><summary>Posso parcelar minha viagem?</summary><p>Sim. Parcelamos em até 12x no cartão de crédito. Também aceitamos Pix e boleto com desconto.</p></details>
-      <details><summary>Vocês ajudam com passaporte e visto?</summary><p>Orientamos todo o processo, informamos os documentos necessários por destino e indicamos despachantes de confiança.</p></details>
-      <details><summary>O seguro viagem está incluso?</summary><p>Nos pacotes internacionais o seguro com cobertura médica é incluso. Para roteiros nacionais ele é opcional.</p></details>
-      <details><summary>Posso alterar ou cancelar a reserva?</summary><p>Depende das regras de cada companhia e hotel. Avisamos as condições antes da compra e ajudamos com remarcações.</p></details>
-      <details><summary>Qual o horário de atendimento?</summary><p>De segunda a sexta, das 8h às 18h, e aos sábados das 8h às 12h. Durante a viagem, o suporte funciona 24 horas.</p></details>
+    <div class="faq" data-surge>
+      <details name="faq"><summary>Posso parcelar minha viagem?</summary><p>Sim. Parcelamos em até 12x no cartão de crédito. Também aceitamos Pix e boleto com desconto.</p></details>
+      <details name="faq"><summary>Vocês ajudam com passaporte e visto?</summary><p>Orientamos todo o processo, informamos os documentos necessários por destino e indicamos despachantes de confiança.</p></details>
+      <details name="faq"><summary>O seguro viagem está incluso?</summary><p>Nos pacotes internacionais o seguro com cobertura médica é incluso. Para roteiros nacionais ele é opcional.</p></details>
+      <details name="faq"><summary>Posso alterar ou cancelar a reserva?</summary><p>Depende das regras de cada companhia e hotel. Avisamos as condições antes da compra e ajudamos com remarcações.</p></details>
+      <details name="faq"><summary>Qual o horário de atendimento?</summary><p>De segunda a sexta, das 8h às 18h, e aos sábados das 8h às 12h. Durante a viagem, o suporte funciona 24 horas.</p></details>
     </div>
   </section>
 
   <!-- CONTATO -->
-  <section id="contato" class="contact wrap">
-    <div class="contact__side">
-      <small>Contato</small>
-      <h2>Entre em contato para mais informações</h2>
-      <ul class="contact__list">
-        <li><strong>WhatsApp</strong><a href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener">(88) 8887-0400</a></li>
-        <li><strong>E-mail</strong><a href="mailto:mundialviagens2014@gmail.com">mundialviagens2014@gmail.com</a></li>
-        <li><strong>Endereço</strong><span>BR-404, 1646 - São Vicente, Crateús - CE</span></li>
-        <li><strong>Horário</strong><span>Seg a sex, 8h às 18h · Sáb, 8h às 12h</span></li>
-      </ul>
+  <section id="contato" class="contato sec">
+    <div class="wrap">
+      <div class="cab" data-surge><div><span class="mao">A última página</span><h2 data-letras>Vamos viajar?</h2></div></div>
+      <div class="contato__grade">
+        <div data-surge>
+          <p class="lead">Entre em contato para mais informações. Respondemos em até 24 horas.</p>
+          <dl class="contato__lista">
+            <div><dt>WhatsApp</dt><dd><a href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener">(88) 8887-0400</a></dd></div>
+            <div><dt>E-mail</dt><dd><a href="mailto:mundialviagens2014@gmail.com">mundialviagens2014@gmail.com</a></dd></div>
+            <div><dt>Endereço</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Sargento+Herm%C3%ADnio,+1646,+S%C3%A3o+Vicente,+Crate%C3%BAs+-+CE,+63700-310" target="_blank" rel="noopener">Av. Sargento Hermínio, 1646<br>São Vicente, Crateús (CE)<br>CEP 63700-310</a></dd></div>
+            <div><dt>Horário</dt><dd>Segunda a sexta, das 8h às 18h<br>Sábado, das 8h às 12h</dd></div>
+          </dl>
+        </div>
+        <form class="contato__form" method="post" data-surge>
+          <span class="fita" aria-hidden="true"></span>
+          <div class="campos">
+            <div class="campo"><label for="nome">Nome</label><input id="nome" type="text" autocomplete="name" placeholder="Seu nome" required></div>
+            <div class="campo"><label for="tel">Telefone</label><input id="tel" type="tel" autocomplete="tel" placeholder="(88) 90000-0000"></div>
+            <div class="campo campo--todo"><label for="email">E-mail</label><input id="email" type="email" autocomplete="email" placeholder="voce@email.com" required></div>
+            <div class="campo"><label for="destino">Destino desejado</label><input id="destino" type="text" placeholder="Ex.: Lisboa"></div>
+            <div class="campo"><label for="data">Mês da viagem</label><input id="data" type="month"></div>
+            <div class="campo campo--todo"><label for="msg">Mensagem</label><textarea id="msg" rows="4" placeholder="Conte o que você procura"></textarea></div>
+          </div>
+          <button class="btn" type="submit">Enviar mensagem</button>
+          <p class="form__ok" role="status" hidden></p>
+        </form>
+      </div>
     </div>
-    <form class="contact__form img-1" method="POST">
-      <div class="row">
-        <div><label for="nome">Nome</label><input id="nome" type="text" placeholder="Seu nome" required></div>
-        <div><label for="tel">Telefone</label><input id="tel" type="tel" placeholder="(00) 00000-0000"></div>
-      </div>
-      <label for="email">E-mail</label>
-      <input id="email" type="email" placeholder="Seu e-mail" required>
-      <div class="row">
-        <div><label for="destino">Destino desejado</label><input id="destino" type="text" placeholder="Ex.: Lisboa"></div>
-        <div><label for="data">Mês da viagem</label><input id="data" type="month"></div>
-      </div>
-      <label for="msg">Mensagem</label>
-      <textarea id="msg" rows="4" placeholder="Conte o que você procura"></textarea>
-      <button class="btn btn--white" type="submit">Enviar mensagem</button>
-      <p class="form__ok" hidden>Mensagem enviada. Respondemos em até 24 horas.</p>
-    </form>
   </section>
 
 </main>
 
-<footer class="footer">
-  <div class="wrap footer__in">
-    <div class="footer__brand">
-      <a class="logo logo--big" href="#topo"><img src="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png" alt=""><span>Mundial Viagens</span></a>
-      <strong>Sobre nós</strong>
-      <span>Há 14 anos no mercado, nossa agência de viagens transforma sonhos em destinos inesquecíveis.
-         Trabalhamos com compromisso, segurança e atendimento personalizado para oferecer as melhores 
-         opções de passagens, hospedagens e pacotes de viagem. Nossa missão é proporcionar 
-         experiências únicas, tornando cada viagem especial do início ao fim.</span>
+<footer class="rodape">
+  <div class="wrap rodape__grade">
+    <div>
+      <a class="marca" href="index.html"><img src="imgs/logo-branco.png" alt="" width="51" height="52"><span>Mundial Viagens</span></a>
+      <p class="rodape__sobre">Agência de viagens em Crateús desde 2014: passagens, hospedagens, pacotes, grupos e peregrinações, com atendimento personalizado.</p>
     </div>
-    <div class="footer__col">
-      <small>Navegação</small>
+    <nav aria-label="Rodapé">
+      <h2>Navegação</h2>
       <ul>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#destinos">Destinos</a></li>
-        <li><a href="promocoes.html">Vendas</a></li>
+        <li><a href="#saidas">Próximas saídas</a></li>
+        <li><a href="promocoes.html">Todas as viagens</a></li>
+        <li><a href="#porque">Por que a Mundial</a></li>
         <li><a href="#como-funciona">Como funciona</a></li>
         <li><a href="#duvidas">Dúvidas</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
-    </div>
-    <div class="footer__col">
-      <small>Siga-nos</small>
+    </nav>
+    <div>
+      <h2>Siga-nos</h2>
       <ul>
-        <li><a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener"><i>◎</i> @mundial_viagens_ <b>→</b></a></li>
-        <li><a href="https://www.facebook.com/mundialmilhas/?locale=pt_BR" target="_blank" rel="noopener"><i>f</i> /mundialmilhas <b>→</b></a></li>
-        <li><a href="https://wa.me/558888870400" target="_blank" rel="noopener"><i>W</i> /mundialmilhas <b>→</b></a></li>
+        <li><a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener">Instagram @mundial_viagens_</a></li>
+        <li><a href="https://www.facebook.com/mundialmilhas/?locale=pt_BR" target="_blank" rel="noopener">Facebook /mundialmilhas</a></li>
+        <li><a href="https://wa.me/558888870400" target="_blank" rel="noopener">WhatsApp (88) 8887-0400</a></li>
       </ul>
     </div>
   </div>
-  <p class="wrap footer__legal">© 2026 Mundial Viagens. Todos os direitos reservados. Valores sujeitos a alteração e disponibilidade.</p>
+  <p class="rodape__nome" aria-hidden="true"><span>Mundial Viagens</span></p>
+  <div class="wrap rodape__legal"><span>© 2026 Mundial Viagens. Todos os direitos reservados.</span><span>Valores sujeitos a alteração e disponibilidade.</span></div>
 </footer>
 
-<script>
-  const burger=document.querySelector('.burger'),nav=document.querySelector('.nav');
-  const setMenu=o=>{document.body.classList.toggle('menu-open',o);burger.setAttribute('aria-expanded',o)};
-  burger.addEventListener('click',()=>setMenu(!document.body.classList.contains('menu-open')));
-  nav.addEventListener('click',e=>{if(e.target.tagName==='A')setMenu(false)});
-</script>
-<script src="js/main.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
+<script src="js/site.js" defer></script>
+<script src="js/motion.js" defer></script>
 <script type="module" src="js/destaques.js"></script>
-<script type="module" src="js/motion.js"></script>
-<link rel="stylesheet" href="css/motion3.css">
-<script type="module" src="js/motion3.js"></script>
-<link rel="stylesheet" href="css/motion2.css">
-<script type="module" src="js/motion2.js"></script>
-<link rel="stylesheet" href="css/pastel.css">
-<link rel="stylesheet" href="css/luxo.css">
-<script type="module" src="js/pastel.js"></script>
+<script type="module" src="js/saidas.js"></script>
 </body>
 </html>

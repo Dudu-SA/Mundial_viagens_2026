@@ -2,97 +2,101 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="theme-color" content="#1d4a9f">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Mundial Viagens: pacotes nacionais e internacionais, roteiros personalizados e parcelamento em até 12x.">
-<title>Vendas | Mundial Viagens</title>
-<link rel="icon" type="image/png" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
-<link rel="apple-touch-icon" href="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png">
+<meta name="theme-color" content="#1b468f">
+<meta name="description" content="Promoções, saídas em grupo, pacotes e peregrinações da Mundial Viagens, de Crateús (CE). Valores por pessoa, parcelados em até 12x.">
+<title>Viagens à venda | Mundial Viagens</title>
+<link rel="icon" type="image/png" href="imgs/logo-azul.png">
+<link rel="apple-touch-icon" href="imgs/logo-azul.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/vendas.css">
-<link rel="stylesheet" href="css/motion.css">
-<script>document.documentElement.classList.add("js")</script>
-<style>.proj--photo{background-size:cover;background-position:center}.proj--photo:hover{background-size:cover}</style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<script>
+  /* marca que o JS está ligado; mostra a capa do álbum na primeira visita;
+     se algo falhar, solta tudo depois de 3,5 s para nada ficar escondido */
+  (function (h) {
+    h.classList.add("js");
+    try { if (h.dataset.abre != null && !sessionStorage.getItem("mv-abriu") && !matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("mv-abre"); } catch (e) {}
+    setTimeout(function () { if (!h.classList.contains("mv-anim")) { h.classList.add("mv-solta"); h.classList.remove("mv-abre"); } }, 3500);
+  })(document.documentElement);
+</script>
 </head>
 <body>
 
-<header class="header" id="topo">
-  <div class="wrap header__in">
-    <a class="logo" href="index.html"><img src="imgs/Captura_de_tela_2026-09-22_144125-removebg-preview.png" alt=""><span>Mundial Viagens</span></a>
-    <button class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
-    <nav class="nav" id="menu">
-      <a href="index.html#sobre">Sobre</a>
-      <a href="index.html#destinos">Destinos</a>
-      <a href="promocoes.html">Vendas</a>
+<header class="topo">
+  <div class="wrap topo__in">
+    <a class="marca" href="index.html" aria-label="Mundial Viagens, página inicial"><img src="imgs/logo-branco.png" alt="" width="39" height="40"><span>Mundial Viagens</span></a>
+    <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <nav class="menu" id="menu" aria-label="Principal">
+      <a href="index.html#saidas">Próximas saídas</a>
+      <a href="promocoes.html">Todas as viagens</a>
+      <a href="index.html#porque">Por que a Mundial</a>
       <a href="index.html#como-funciona">Como funciona</a>
-      <a href="index.html#depoimentos">Depoimentos</a>
       <a href="index.html#duvidas">Dúvidas</a>
       <a href="index.html#contato">Contato</a>
     </nav>
+    <a class="btn btn--zap topo__cta" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Vi%20as%20viagens%20no%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener">Falar no WhatsApp</a>
   </div>
 </header>
 
 <main>
-  <section class="wrap promos-page">
-    <div class="section-head">
-      <div>
-        <small>Vendas</small>
-        <h1 class="page-title">Viagens à venda</h1>
-        <p class="lead">Escolha entre promoções, saídas em grupo e pacotes. Valores por pessoa, em quarto duplo. Clique em uma viagem para ver os detalhes e pedir no WhatsApp.</p>
-      </div>
-      <a class="btn btn--outline" href="index.html#destinos">Ver continentes</a>
+  <section class="vendas__topo wrap">
+    <span class="mao">Todas as páginas do álbum</span>
+    <h1 data-letras>Viagens à venda</h1>
+    <p class="lead">Promoções, saídas em grupo, pacotes e peregrinações. Valores por pessoa, em quarto duplo. Toque em uma viagem para ver os detalhes e pedir pelo WhatsApp.</p>
+    <!-- abas criadas pelo js/promos.js -->
+    <div class="vtabs" role="tablist" aria-label="Tipo de viagem" hidden></div>
+  </section>
+
+  <section class="vlista wrap">
+    <p class="vtabs__desc" id="abas-desc"></p>
+    <div class="bilhetes" id="lista-promos" role="tabpanel" aria-live="polite">
+      <div class="esqueleto" aria-hidden="true"><i></i></div>
+      <div class="esqueleto" aria-hidden="true"><i></i></div>
+      <div class="esqueleto" aria-hidden="true"><i></i></div>
+      <div class="esqueleto" aria-hidden="true"><i></i></div>
+      <p class="sr">Carregando viagens…</p>
     </div>
-    <div class="gallery" id="lista-promos"><p class="lead">Carregando promoções…</p></div>
   </section>
 </main>
 
-<footer class="footer">
-  <div class="wrap footer__in">
-    <div class="footer__brand">
-      <a class="logo logo--big" href="index.html"><img src="img/logo-branco.png" alt=""><span>Mundial Viagens</span></a>
-      <strong>Sobre nós</strong>
-      <span>Agência de viagens com mais de 15 anos de experiência em roteiros pelo Brasil e pelo mundo.</span>
+<footer class="rodape">
+  <div class="wrap rodape__grade">
+    <div>
+      <a class="marca" href="index.html"><img src="imgs/logo-branco.png" alt="" width="51" height="52"><span>Mundial Viagens</span></a>
+      <p class="rodape__sobre">Agência de viagens em Crateús desde 2014: passagens, hospedagens, pacotes, grupos e peregrinações, com atendimento personalizado.</p>
     </div>
-    <div class="footer__col">
-      <small>Navegação</small>
+    <nav aria-label="Rodapé">
+      <h2>Navegação</h2>
       <ul>
-        <li><a href="index.html#sobre">Sobre</a></li>
-        <li><a href="index.html#destinos">Destinos</a></li>
-        <li><a href="promocoes.html">Vendas</a></li>
+        <li><a href="index.html#saidas">Próximas saídas</a></li>
+        <li><a href="promocoes.html">Todas as viagens</a></li>
+        <li><a href="index.html#porque">Por que a Mundial</a></li>
         <li><a href="index.html#como-funciona">Como funciona</a></li>
         <li><a href="index.html#duvidas">Dúvidas</a></li>
         <li><a href="index.html#contato">Contato</a></li>
       </ul>
-    </div>
-    <div class="footer__col">
-      <small>Siga-nos</small>
+    </nav>
+    <div>
+      <h2>Siga-nos</h2>
       <ul>
-        <li><a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener"><i>◎</i> @mundial_viagens_ <b>→</b></a></li>
-        <li><a href="https://www.facebook.com/mundialmilhas/?locale=pt_BR" target="_blank" rel="noopener"><i>f</i> /mundialmilhas <b>→</b></a></li>
+        <li><a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener">Instagram @mundial_viagens_</a></li>
+        <li><a href="https://www.facebook.com/mundialmilhas/?locale=pt_BR" target="_blank" rel="noopener">Facebook /mundialmilhas</a></li>
+        <li><a href="https://wa.me/558888870400" target="_blank" rel="noopener">WhatsApp (88) 8887-0400</a></li>
       </ul>
     </div>
   </div>
-  <p class="wrap footer__legal">© 2026 Mundial Viagens. Todos os direitos reservados. Valores sujeitos a alteração e disponibilidade.</p>
+  <p class="rodape__nome" aria-hidden="true"><span>Mundial Viagens</span></p>
+  <div class="wrap rodape__legal"><span>© 2026 Mundial Viagens. Todos os direitos reservados.</span><span>Valores sujeitos a alteração e disponibilidade.</span></div>
 </footer>
 
-<script>
-  const burger=document.querySelector('.burger'),nav=document.querySelector('.nav');
-  const setMenu=o=>{document.body.classList.toggle('menu-open',o);burger.setAttribute('aria-expanded',o)};
-  burger.addEventListener('click',()=>setMenu(!document.body.classList.contains('menu-open')));
-  nav.addEventListener('click',e=>{if(e.target.tagName==='A')setMenu(false)});
-</script>
-<script src="js/main.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
+<script src="js/site.js" defer></script>
+<script src="js/motion.js" defer></script>
 <script type="module" src="js/promos.js"></script>
-<script type="module" src="js/motion.js"></script>
-<link rel="stylesheet" href="css/motion3.css">
-<script type="module" src="js/motion3.js"></script>
-<link rel="stylesheet" href="css/motion2.css">
-<script type="module" src="js/motion2.js"></script>
-<link rel="stylesheet" href="css/pastel.css">
-<link rel="stylesheet" href="css/luxo.css">
-<script type="module" src="js/pastel.js"></script>
 </body>
 </html>

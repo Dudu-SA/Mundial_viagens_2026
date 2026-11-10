@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1b468f">
+<meta name="description" content="Links da Mundial Viagens: sorteio de Aparecida do Norte, site de viagens, cadastro de alertas de promoções e WhatsApp.">
+<title>Mundial Viagens · Links</title>
+<link rel="icon" type="image/png" href="imgs/logo-azul.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* A página de links no mesmo mundo do site: capa azul, página de papel,
+   e o sorteio como a foto grande colada com fita no topo do álbum. */
+:root{--capa:#1b468f;--tinta:#12326a;--tinta-2:#4f5f85;--papel:#fbfbf8;--papel-2:#f1f3f6;--fita:#ff914d;--fita-tinta:#b84d14;--zap:#13783f;--linha:#dde3ee;
+  --fonte:'Archivo',system-ui,sans-serif;--mao:'Caveat','Segoe Print',cursive;--sai:cubic-bezier(.16,1,.3,1);
+  --sombra:0 1px 2px rgba(18,50,106,.12),0 14px 28px -12px rgba(18,50,106,.35)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--capa);overflow-x:clip}
+body{overflow-x:clip;min-height:100svh;font:400 1.0625rem/1.5 var(--fonte);color:var(--tinta);background:var(--capa);display:grid;place-items:start center;padding:clamp(.75rem,3vw,2rem) clamp(.6rem,3vw,1.5rem);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--fita);outline-offset:3px}
+.pagina{position:relative;width:100%;max-width:520px;background:var(--papel);padding:clamp(1.5rem,5vw,2.5rem) clamp(1.1rem,4vw,1.8rem) 1.5rem;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);animation:abre .9s var(--sai) both}
+.pagina::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:linear-gradient(90deg,rgba(18,50,106,.18),rgba(18,50,106,0))}
+@keyframes abre{from{opacity:0;translate:0 24px}}
+
+/* marca */
+.marca{display:flex;align-items:center;gap:.8rem}
+.marca img{width:54px;height:auto}
+.marca h1{font:800 1.5rem/1 var(--fonte);font-stretch:112%;letter-spacing:-.03em}
+.marca small{display:block;margin-top:.3rem;font:500 1.15rem/1 var(--mao);color:var(--fita-tinta)}
+
+/* a foto do sorteio, em destaque */
+.sorteio{position:relative;display:block;margin:2.2rem auto 1.6rem;background:#fff;padding:10px 10px 12px;box-shadow:var(--sombra);rotate:-2deg;
+  transition:rotate .5s var(--sai),translate .5s var(--sai),box-shadow .5s var(--sai);animation:cai .9s var(--sai) .2s both}
+.sorteio:hover,.sorteio:focus-visible{rotate:0deg;translate:0 -6px;box-shadow:0 2px 4px rgba(18,50,106,.12),0 24px 40px -14px rgba(18,50,106,.45)}
+@keyframes cai{from{opacity:0;translate:0 -60px;rotate:-12deg}}
+.sorteio .img{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--papel-2)}
+.sorteio img{width:100%;height:100%;object-fit:cover;display:block}
+.canto{position:absolute;width:22px;height:22px;background:var(--capa);clip-path:polygon(0 0,100% 0,0 100%);z-index:2}
+.canto:nth-of-type(1){left:-3px;top:-3px}.canto:nth-of-type(2){right:-3px;top:-3px;rotate:90deg}.canto:nth-of-type(3){left:-3px;bottom:-3px;rotate:-90deg}.canto:nth-of-type(4){right:-3px;bottom:-3px;rotate:180deg}
+.fita{position:absolute;z-index:3;left:50%;top:-12px;width:120px;height:28px;translate:-50% 0;rotate:-3deg;background:rgba(255,145,77,.85);animation:cola .5s var(--sai) 1.1s both;
+  -webkit-mask:linear-gradient(90deg,transparent 0 3px,#000 3px calc(100% - 3px),transparent calc(100% - 3px));mask:linear-gradient(90deg,transparent 0 3px,#000 3px calc(100% - 3px),transparent calc(100% - 3px))}
+@keyframes cola{from{opacity:0;scale:1.4}}
+.carimbo{position:absolute;z-index:3;right:-4px;top:-16px;display:grid;place-content:center;width:96px;height:96px;border:3px solid var(--fita-tinta);border-radius:50%;color:var(--fita-tinta);
+  font:800 .7rem/1.05 var(--fonte);font-stretch:108%;text-align:center;text-transform:uppercase;letter-spacing:.06em;rotate:12deg;background:rgba(251,251,248,.85);animation:carimba .5s var(--sai) 1.3s both}
+.carimbo b{display:block;font-size:.95rem;font-stretch:90%;letter-spacing:-.01em;margin-block:.1rem}
+@keyframes carimba{from{opacity:0;scale:1.8;rotate:0deg}}
+.sorteio .leg{margin-top:.6rem;text-align:center}
+.sorteio .leg .mao{display:block;font:500 1.6rem/1.1 var(--mao);color:var(--tinta)}
+.sorteio .leg .cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:.6rem;padding:.75rem 1.3rem;border-radius:999px;background:var(--fita-tinta);color:#fff;font:700 1rem/1 var(--fonte);transition:background-color .25s,gap .3s var(--sai)}
+.sorteio:hover .cta{gap:.8rem;background:#9c3f0e}
+.sorteio .cta svg{width:1.1em;height:1.1em}
+
+/* os outros links: linhas do índice do álbum */
+.links{display:grid;gap:.7rem;margin-top:1.8rem}
+.link{display:grid;grid-template-columns:46px 1fr 24px;align-items:center;gap:.9rem;padding:.9rem 1rem;border:1.5px solid var(--linha);background:#fff;box-shadow:0 1px 2px rgba(18,50,106,.06);
+  transition:transform .35s var(--sai),box-shadow .35s var(--sai),border-color .25s;animation:abre .8s var(--sai) both}
+.link:nth-child(1){animation-delay:.5s}.link:nth-child(2){animation-delay:.6s}
+.link:hover,.link:focus-visible{transform:translateY(-3px);box-shadow:var(--sombra);border-color:var(--capa)}
+.link .ic{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--capa);color:#fff}
+.link .ic svg{width:22px;height:22px}
+.link.laranja .ic{background:var(--papel-2);color:var(--fita-tinta)}
+.link strong{display:block;font:700 1.05rem/1.2 var(--fonte);letter-spacing:-.01em;color:var(--tinta)}
+.link span span{display:block;font-size:.85rem;color:var(--tinta-2);margin-top:.15rem}
+.link .seta{color:var(--capa);transition:translate .3s var(--sai)}
+.link .seta svg{width:22px;height:22px}
+.link:hover .seta{translate:4px 0}
+
+/* sociais e pé */
+.sociais{display:flex;justify-content:center;gap:.7rem;margin-top:1.8rem;animation:abre .8s var(--sai) .75s both}
+.sociais a{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;border:1.5px solid var(--linha);color:var(--capa);transition:background-color .25s,color .25s,transform .35s var(--sai)}
+.sociais a:hover{background:var(--capa);color:#fff;transform:translateY(-3px)}
+.sociais a.zap{background:var(--zap);border-color:var(--zap);color:#fff}
+.sociais a.zap:hover{background:#0f6132}
+.sociais svg{width:24px;height:24px}
+.pe{margin-top:1.5rem;text-align:center;font:500 1.2rem/1.2 var(--mao);color:var(--tinta-2)}
+.pe a{text-decoration:underline;text-decoration-color:var(--fita);text-underline-offset:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<main class="pagina">
+  <header class="marca">
+    <img src="imgs/logo-azul.png" alt="" width="54" height="55">
+    <div><h1>Mundial Viagens</h1><small>realizando viagens desde 2014</small></div>
+  </header>
+
+  <!-- SORTEIO: a foto grande colada no álbum -->
+  <a class="sorteio" href="https://forms.gle/55N7iv8jXGYD92Xw9" target="_blank" rel="noopener" aria-label="Participe do sorteio de uma viagem para Aparecida do Norte">
+    <i class="canto"></i><i class="canto"></i><i class="canto"></i><i class="canto"></i>
+    <span class="fita" aria-hidden="true"></span>
+    <span class="carimbo" aria-hidden="true">Sorteio<b>Aparecida</b>do Norte</span>
+    <span class="img"><img src="imgs/aparecida.jpg" alt="Basílica de Nossa Senhora Aparecida vista da passarela" width="678" height="452" fetchpriority="high"></span>
+    <span class="leg">
+      <span class="mao">Concorra a uma viagem para Aparecida do Norte</span>
+      <span class="cta">Quero participar do sorteio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+    </span>
+  </a>
+
+  <nav class="links" aria-label="Links">
+    <a class="link" href="https://mundialviagens.com/" target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></span>
+      <span><strong>Viagens à venda</strong><span>Promoções, grupos, pacotes e peregrinações</span></span>
+      <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+    </a>
+    <a class="link laranja" href="https://forms.gle/6Vud1hrtp9vtR1jR6" target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+      <span><strong>Receber alertas de promoções</strong><span>Cadastre-se e saiba antes de todo mundo</span></span>
+      <span class="seta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+    </a>
+  </nav>
+
+  <div class="sociais">
+    <a class="zap" href="https://wa.me/558888870400?text=Ol%C3%A1%21%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20viagens." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.4Z"/></svg></a>
+    <a href="https://www.instagram.com/mundial_viagens_/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+    <a href="https://www.facebook.com/mundialmilhas/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8Z"/></svg></a>
+  </div>
+
+  <p class="pe"><a href="https://mundialviagens.com/" target="_blank" rel="noopener">mundialviagens.com</a> · Crateús, CE</p>
+</main>
+</body>
+</html>
