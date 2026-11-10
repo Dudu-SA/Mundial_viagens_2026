@@ -470,3 +470,11 @@ strong,b{font-weight:650}
   .js [data-letras]{opacity:1}
   .mv-abre .album__txt>*{opacity:1}
 }
+
+/* parcelas ao lado do valor ("em até 10x"), em letra pequena */
+.parc{display:inline;margin-left:.35em;font:600 .72rem/1 var(--fonte);font-stretch:100%;letter-spacing:0;color:var(--tinta-2);white-space:nowrap;vertical-align:baseline}
+.saida__preco .parc{display:block;margin:.3rem 0 0}
+.bilhetes .saida--destaque .saida__preco .parc{display:inline;margin-left:.4em;font-size:.85rem}
+.lp__fatos dd .parc{font-size:.85rem}
+.lp__fatos div:has(> dd.preco){grid-column:1/-1}
+.lp__fatos dd.preco{white-space:nowrap}

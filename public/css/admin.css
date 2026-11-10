@@ -193,3 +193,8 @@ input[type=file] { font: inherit; font-size: .85rem; }
 .imp__acoes .btn[disabled] { opacity: .5; cursor: not-allowed; }
 .imp__grid { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--linha); }
 @media (max-width: 560px) { .imp__resumo { grid-template-columns: 96px 1fr; } .imp__lugar { font-size: 1.15rem; } }
+
+/* campo com "x" no fim (parcelas) */
+.sufixo { display: flex; align-items: center; gap: .4rem; }
+.sufixo input { max-width: 6.5rem; }
+.sufixo span { font-weight: 700; color: var(--tinta-2); }

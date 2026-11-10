@@ -4,7 +4,7 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig } from "./conexao.js";
-import { precoDe } from "./preco.js";
+import { precoDe, parcelasDe } from "./preco.js";
 
 const box = document.getElementById("lista-promos");
 const abas = document.querySelector(".vtabs"), desc = document.getElementById("abas-desc");
@@ -33,6 +33,7 @@ function cartao(p, cat, i) {
   const pr = precoDe(p);
   const preco = el("div", "saida__preco" + (pr.numero ? "" : " saida__preco--texto"));
   preco.append(el("span", "", pr.rotulo + (p.destaque && pr.numero ? ", por pessoa" : "")), el("b", "", pr.valor));
+  if (parcelasDe(p)) preco.append(el("small", "parc", parcelasDe(p)));
   if (p.destaque) { txt.append(preco, el("span", "btn", "Ver a viagem")); info.append(txt); }
   else info.append(txt, preco);
   a.append(info);
