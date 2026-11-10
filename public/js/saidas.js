@@ -24,13 +24,16 @@ function cartao(p, i) {
   const pr = precoDe(p);
   a.setAttribute("aria-label", `${p.lugar}, saída em ${+d} de ${MESES[+m - 1]}, ${pr.rotulo} ${pr.valor}`);
   a.append(foto({ src: (p.fotos || []).find(fotoOk), ar: "4/5", data: p.dataSaida, lazy: i > 3 }));
-  const info = el("div", "saida__info"), txt = el("div");
+  /* título em linha cheia; embaixo, duração à esquerda e preço à direita */
+  const info = el("div", "saida__info saida__info--empilhada"), txt = el("div");
   txt.append(el("span", "saida__tag", p.etiqueta || TIPO[p.categoria] || TIPO.promocao), el("h3", "", p.lugar || "Viagem"));
-  if (nt > 0) txt.append(el("small", "", nt + (nt > 1 ? " noites" : " noite")));
+  const meta = el("div", "saida__meta");
+  meta.append(el("small", "", nt > 0 ? nt + (nt > 1 ? " noites" : " noite") : ""));
   const preco = el("div", "saida__preco" + (pr.numero ? "" : " saida__preco--texto"));
   preco.append(el("span", "", pr.rotulo), el("b", "", pr.valor));
   if (parcelasDe(p)) preco.append(el("small", "parc", parcelasDe(p)));
-  info.append(txt, preco);
+  meta.append(preco);
+  info.append(txt, meta);
   a.append(info);
   return a;
 }

@@ -33,7 +33,8 @@ O site é o álbum de fotos de quem viajou com a Mundial. Cada viagem é uma pá
 
 ## Movimento (js/motion.js, GSAP + ScrollTrigger + Lenis)
 - Abertura (uma vez por visita): a capa azul do álbum com logo e contador 0–100 vira como um livro (`rotateY`), as três fotos caem uma a uma (`@keyframes cai`) e a fita cola por último.
-- Rolagem suave (Lenis). Cursor laranja que cresce ("ver") sobre fotos; botões magnéticos.
+- Rolagem suave (Lenis) e botões magnéticos (só com mouse). Sem cursor personalizado: o ponteiro do sistema fica.
+- Toque: botões e cartões respondem ao apertar (escala .97 / sobe 2px, 80 ms).
 - Títulos `[data-letras]`: letras sobem de dentro da linha ao entrar na tela. Blocos `[data-surge]`: aparecem uma vez.
 - Topo: as fotos fogem de leve do mouse e se espalham ao rolar.
 - Fotos das listas "pousam" ao entrar (mais inclinadas → repouso) e a imagem dentro tem profundidade.
@@ -49,7 +50,10 @@ O site é o álbum de fotos de quem viajou com a Mundial. Cada viagem é uma pá
 2. Verde é só WhatsApp; laranja é só marca física (fita, carimbo, aba ativa, etiqueta).
 3. Sem depoimentos inventados: a seção só entra com nomes reais.
 4. Sem hover obrigatório: tudo que o hover mostra também está visível sem ele.
-5. Texto nunca abaixo de 0.82rem; contraste AA em todo texto (verificado com o detector impeccable).
+5. Texto nunca abaixo de 0.78rem (rótulos) e 0.9rem (texto corrido); contraste AA em todo texto (verificado com o detector impeccable).
 
 ## Dados
 As páginas são alimentadas pelo painel (`admin.html`): `saidas.js`, `destaques.js`, `promos.js` e o módulo de `promo.html` montam as `.foto` a partir do Firestore. Fotos de exemplo (`imgs/exemplo-*.svg`) marcam onde entram as fotos reais dos grupos.
+6. Sem sobretítulo manuscrito acima dos títulos de seção: o título fala sozinho. Caveat só nas legendas das fotos e na assinatura.
+7. Menu do topo em uma linha: Viagens, Próximas saídas, Como funciona, Dúvidas, Contato + WhatsApp.
+8. Cartões de viagem: título em linha cheia; embaixo, duração à esquerda e preço (com parcelas) à direita. 4 por linha no computador; foto deitada (4:3) no celular.

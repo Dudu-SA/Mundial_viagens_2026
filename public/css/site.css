@@ -421,15 +421,6 @@ strong,b{font-weight:650}
 .abertura__barra{position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--fita);transform-origin:left;transform:scaleX(0)}
 .abertura__pagina{position:absolute;inset:0;background:var(--papel);opacity:0}
 
-/* cursor (só com mouse) */
-.cursor{position:fixed;left:0;top:0;z-index:150;pointer-events:none;display:grid;place-items:center;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;
-  background:var(--fita);opacity:0;transition:width .5s var(--sai),height .5s var(--sai),margin .5s var(--sai),opacity .3s,background-color .3s}
-.cursor span{font:500 1.1rem/1 var(--mao);color:#fff;opacity:0;transition:opacity .3s}
-.cursor.on{opacity:1}
-.cursor.grande{width:84px;height:84px;margin:-42px 0 0 -42px;background:var(--fita)}
-.cursor.grande span{opacity:1}
-.cursor.mira{width:40px;height:40px;margin:-20px 0 0 -20px;background:rgba(255,145,77,.35)}
-@media (hover:none),(pointer:coarse){.cursor{display:none}}
 
 /* faixa de destinos: corre sozinha; o motion.js a acelera com a rolagem */
 .faixa{padding-block:clamp(2rem,4vw,3rem);overflow:hidden;user-select:none;border-block:1px solid var(--linha);background:var(--papel-2)}
@@ -478,3 +469,41 @@ strong,b{font-weight:650}
 .lp__fatos dd .parc{font-size:.85rem}
 .lp__fatos div:has(> dd.preco){grid-column:1/-1}
 .lp__fatos dd.preco{white-space:nowrap}
+
+
+/* ============================================================
+   20. Polimento (10/11): hierarquia, ritmo e toque
+   ============================================================ */
+:root{--sec:clamp(3.5rem,7vw,6.5rem)}
+/* menu numa linha só */
+.menu a{white-space:nowrap;font-size:.95rem}
+@media (max-width:900px){.menu a{font-size:1.9rem}}
+/* títulos de seção: sem sobretítulo, o título carrega a seção */
+.cab{margin-bottom:clamp(1.75rem,3.5vw,2.75rem)}
+.cab h2+.lead{margin-top:1rem}
+.duvidas h2+.lead{margin-top:1rem}
+/* próximas saídas: 4 por linha no computador, foto deitada no celular */
+.saidas__lista,.bilhetes{grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:clamp(2.25rem,4vw,3.25rem) clamp(1.25rem,2.5vw,2rem)}
+.saida__info--empilhada{display:block;padding:1rem .3rem 0}
+.saida__info--empilhada h3{font-size:1.35rem;line-height:1.12}
+.saida__meta{display:flex;justify-content:space-between;align-items:flex-end;gap:.75rem;margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--linha)}
+.saida__meta>small{font-size:.9rem;color:var(--tinta-2);padding-bottom:.1rem}
+.saida__tag{font-size:.78rem}
+.saida__preco span{font-size:.82rem}
+.parc{font-size:.8rem}
+@media (max-width:560px){.saida:not(.saida--destaque) .foto{--ar:4/3 !important}.saida .carimbo{bottom:auto;top:-10px;right:-8px}}
+/* abas-índice só em telas largas, onde não encostam no conteúdo */
+@media (max-width:1279px){.abas{display:none}}
+/* página da viagem */
+.lp__tipo{margin-top:.6rem;font:650 .85rem/1.2 var(--fonte);letter-spacing:.05em;text-transform:uppercase;color:var(--fita-tinta)}
+.lp__tipo+.lp__desc{margin-top:.7rem}
+.lp__fim p{margin-top:.6rem;color:#c9d7ee;max-width:40ch}
+/* toque: tudo que é clicável responde ao apertar */
+.btn:active{transform:translateY(0) scale(.97);transition-duration:.08s}
+a.saida:active .foto,a.destaque:active .foto,#album-fotos a.foto:active{translate:0 -2px;transition-duration:.08s}
+.faq summary:active::after{scale:.9}
+/* foco visível também nos cartões de foto */
+a.saida:focus-visible,a.destaque:focus-visible{outline:none}
+a.saida:focus-visible .foto,a.destaque:focus-visible .foto{outline:3px solid var(--fita);outline-offset:6px}
+/* barras de rolagem e seleção na cor da marca */
+html{scrollbar-color:var(--capa) var(--papel-2)}

@@ -5,7 +5,7 @@
    O que tem aqui:
    1. rolagem suave (Lenis)                 6. faixa de destinos que acelera com a rolagem
    2. abertura: a capa do álbum se abre     7. "por que": palavras que acendem
-   3. cursor e botões magnéticos            8. como funciona: avião pela rota dos 4 passos
+   3. botões magnéticos                     8. como funciona: avião pela rota dos 4 passos
    4. topo: fotos reagem ao mouse e à rolagem   9. rodapé: nome gigante que se estica
    5. fotos que "pousam" na página ao rolar 10. página da viagem: foto com profundidade */
 (() => {
@@ -65,21 +65,8 @@
     if (album) gsap.from(".album__txt > *", { y: 24, opacity: 0, duration: .9, stagger: .09, ease: "power3.out", clearProps: "all", delay: .15 });
   }
 
-  /* ---------- 3) cursor e botões magnéticos (só com mouse) ---------- */
+  /* ---------- 3) botões magnéticos (só com mouse) ---------- */
   if (fino) {
-    const c = document.createElement("div"); c.className = "cursor"; c.setAttribute("aria-hidden", "true");
-    const rot = document.createElement("span"); c.append(rot); document.body.append(c);
-    const vx = gsap.quickTo(c, "x", { duration: .45, ease: "power3" }), vy = gsap.quickTo(c, "y", { duration: .45, ease: "power3" });
-    addEventListener("pointermove", e => { vx(e.clientX); vy(e.clientY); c.classList.add("on"); }, { passive: true });
-    document.addEventListener("pointerleave", () => c.classList.remove("on"));
-    document.addEventListener("pointerover", e => {
-      const alvo = e.target.closest?.("a.saida, a.destaque, .album__pag .foto");
-      const clicavel = !alvo && e.target.closest?.("a,button,summary,label,input,textarea");
-      c.classList.toggle("grande", !!alvo);
-      c.classList.toggle("mira", !!clicavel);
-      rot.textContent = alvo ? (alvo.matches("a") ? "ver" : "foto") : "";
-    });
-
     let ima = null;
     document.addEventListener("pointermove", e => {
       const b = e.target.closest?.(".btn, .burger");
