@@ -6,6 +6,7 @@ import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12
 import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig } from "./conexao.js";
 import { precoDe, parcelasDe } from "./preco.js";
+import { selosEl } from "./selos.js";
 
 const QUANTAS = 8;
 const sec = document.getElementById("saidas"), lista = document.getElementById("saidas-lista"), vazio = document.getElementById("saidas-vazio");
@@ -24,6 +25,7 @@ function cartao(p, i) {
   const pr = precoDe(p);
   a.setAttribute("aria-label", `${p.lugar}, saída em ${+d} de ${MESES[+m - 1]}, ${pr.rotulo} ${pr.valor}`);
   a.append(foto({ src: (p.fotos || []).find(fotoOk), ar: "4/5", data: p.dataSaida, lazy: i > 3 }));
+  const selos = selosEl(p); if (selos) a.querySelector(".foto").append(selos);
   /* título em linha cheia; embaixo, duração à esquerda e preço à direita */
   const info = el("div", "saida__info saida__info--empilhada"), txt = el("div");
   txt.append(el("span", "saida__tag", p.etiqueta || TIPO[p.categoria] || TIPO.promocao), el("h3", "", p.lugar || "Viagem"));

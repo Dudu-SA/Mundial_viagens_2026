@@ -5,6 +5,7 @@ import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12
 import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig } from "./conexao.js";
 import { precoDe, parcelasDe } from "./preco.js";
+import { selosEl } from "./selos.js";
 
 const box = document.getElementById("lista-promos");
 const abas = document.querySelector(".vtabs"), desc = document.getElementById("abas-desc");
@@ -27,6 +28,7 @@ function cartao(p, cat, i) {
   a.append(foto({ src: (p.fotos || []).find(fotoOk), ar: p.destaque ? "3/2" : "4/5", data: p.dataSaida, fita: p.destaque ? "topo" : "", lazy: i > 3 }));
   const info = el("div", "saida__info"), txt = el("div");
   txt.append(el("span", "saida__tag", p.etiqueta || cat.um), el("h3", "", p.lugar || "Viagem"));
+  const selos = selosEl(p); if (selos) a.querySelector(".foto").append(selos);
   const nt = noites(p);
   if (p.destaque && p.descricao) txt.append(el("p", "saida__desc", p.descricao));
   else if (nt > 0) txt.append(el("small", "", nt + (nt > 1 ? " noites" : " noite")));
@@ -78,7 +80,7 @@ try {
     e.preventDefault(); const nb = botoes[(k + d + botoes.length) % botoes.length]; nb.focus(); nb.click();
   });
 
-  function mostrar(id, clicou) {
+  var mostrar = function (id, clicou) {
     const cat = CATS.find(c => c.id === id);
     botoes.forEach(b => { const on = b.dataset.id === id; b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1; });
     box.setAttribute("aria-labelledby", "aba-" + id);
@@ -89,10 +91,36 @@ try {
       : [vazio(`No momento não temos ${cat.nome.toLowerCase()} à venda. Conte para onde quer ir e montamos o seu roteiro.`)]));
     if (clicou) history.replaceState(null, "", "#" + cat.hash);
     document.dispatchEvent(new CustomEvent("mv:conteudo", { detail: box }));
+  };
+
+  /* busca: procura em todas as seções pelo lugar, etiqueta e detalhes (sem acento, sem maiúscula) */
+  const campo = document.getElementById("busca"), limpar = document.querySelector(".busca__limpar");
+  const sem = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  let abaAtual = null;
+  function buscar(q) {
+    const t = sem(q).trim(); limpar.hidden = !t;
+    if (!t) { mostrar(abaAtual || (CATS.find(c => por(c.id).length) || CATS[0]).id, false); return; }
+    const achou = lista.filter(p => sem([p.lugar, p.etiqueta, p.descricao, p.sobre, (CATS.find(c => c.id === (p.categoria || "promocao")) || {}).nome].join(" ")).includes(t));
+    botoes.forEach(b => { b.setAttribute("aria-selected", "false"); b.tabIndex = 0; });
+    desc.textContent = achou.length ? `${achou.length} viagem(ns) para "${q.trim()}"` : "";
+    box.replaceChildren(...(achou.length
+      ? achou.map((p, i) => cartao({ ...p, destaque: false }, CATS.find(c => c.id === (p.categoria || "promocao")) || CATS[0], i))
+      : [vazio(`Ainda não temos "${q.trim()}" à venda. Fale com a gente: montamos o roteiro para esse destino.`)]));
+    document.dispatchEvent(new CustomEvent("mv:conteudo", { detail: box }));
   }
+  let espera = 0;
+  campo.addEventListener("input", () => { clearTimeout(espera); espera = setTimeout(() => buscar(campo.value), 160); });
+  campo.addEventListener("keydown", e => { if (e.key === "Escape") { campo.value = ""; buscar(""); } });
+  limpar.onclick = () => { campo.value = ""; buscar(""); campo.focus(); };
+  const _mostrar = mostrar;
+  mostrar = (id, clicou) => { abaAtual = id; if (clicou && campo.value) { campo.value = ""; limpar.hidden = true; } _mostrar(id, clicou); };
+  botoes.forEach(b => b.onclick = () => mostrar(b.dataset.id, true));
 
   const doHash = CATS.find(c => "#" + c.hash === location.hash)?.id;
   mostrar(doHash || (CATS.find(c => por(c.id).length) || CATS[0]).id, false);
+  const pedido = new URLSearchParams(location.search);
+  if (pedido.has("q")) { campo.value = pedido.get("q"); buscar(campo.value); }
+  if (pedido.has("busca") || pedido.has("q")) campo.focus({ preventScroll: true });
 } catch (e) {
   if (e.message !== "vazio") console.warn("[vendas]", e);
   abas.hidden = true;
