@@ -4,32 +4,47 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<meta name="theme-color" content="#1b468f">
+<meta name="theme-color" content="#0b1f4b">
 <title>Painel do site · Mundial Viagens</title>
 <link rel="icon" type="image/png" href="imgs/logo-azul.png">
 <link rel="apple-touch-icon" href="imgs/logo-azul.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<!-- mesmo visual do MVO: folha de estilo e fontes do próprio MVO, servidas pelo site -->
+<link rel="preload" href="fonts/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/plus-jakarta-sans-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/mvo.css">
 <link rel="stylesheet" href="css/admin.css">
+<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
 </head>
 <body>
 
 <!-- LOGIN -->
-<div class="login-caixa" id="login" hidden>
-  <div class="cartao">
-    <div class="logo"><img src="imgs/logo-azul.png" alt="">Painel do site</div>
-    <label for="em">E-mail</label><input id="em" type="email" autocomplete="username">
-    <label for="pw">Senha</label><input id="pw" type="password" autocomplete="current-password">
-    <button class="btn primario" id="entrar" style="width:100%">Entrar</button>
-    <p class="msg err" id="loginErr"></p>
+<div class="login" id="login" hidden>
+  <div class="login-caixa">
+    <img class="logo" src="imgs/logo-claro.png" alt="Mundial Viagens" width="260" height="86">
+    <div class="cartao">
+      <h1>Bem-vindo de volta</h1>
+      <p class="sub">Painel do site da Mundial Viagens: viagens à venda, destaques da página inicial e cadastro por foto.</p>
+      <div class="campos-login">
+        <div><label for="em">E-mail</label><input id="em" type="email" autocomplete="username"></div>
+        <div><label for="pw">Senha</label><input id="pw" type="password" autocomplete="current-password"></div>
+        <button class="btn primario" id="entrar" style="padding:.7rem">Entrar</button>
+      </div>
+      <p class="msg err" id="loginErr"></p>
+    </div>
   </div>
 </div>
 
 <!-- PAINEL -->
 <div class="app" id="painel" hidden>
   <aside class="lateral">
-    <a class="marca" href="index.html" target="_blank" rel="noopener"><img src="imgs/logo-branco.png" alt=""><span>Mundial Viagens<small>Painel do site</small></span></a>
-    <nav class="menu">
+    <a class="marca" href="index.html" target="_blank" rel="noopener" title="Abrir o site"><img src="imgs/logo-claro.png" alt="Mundial Viagens" width="200" height="66"><small>Painel do site</small></a>
+    <button type="button" class="abrir-menu" aria-expanded="false" aria-controls="menu-principal" data-abrir-menu>
+      <svg class="icone" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 4h12M2 8h12M2 12h12"/></svg> Menu</button>
+    <nav class="modulos" aria-label="Trocar de sistema">
+      <a class="ativo" aria-current="page">Site</a>
+      <a href="https://mvo.mundialviagens.com" target="_blank" rel="noopener">MVO ↗</a>
+    </nav>
+    <nav class="menu" id="menu-principal">
       <a data-pagina="inicio">Início</a>
       <span class="secao">Viagens</span>
       <a data-pagina="viagens">Viagens cadastradas <span class="contador" id="nMenu"></span></a>
@@ -41,16 +56,15 @@
       <a data-pagina="config">Leitura de fotos</a>
     </nav>
     <div class="rodape-menu">
-      <span><span class="papel">Admin</span></span>
-      <a href="index.html" target="_blank" rel="noopener">Ver o site ↗</a>
-      <a href="#" id="sair">Sair</a>
+      <div id="quem">Administrador</div>
+      <div class="linha"><span class="papel">admin</span> · <a href="index.html" target="_blank" rel="noopener">Ver o site ↗</a> · <a href="#" id="sair">Sair</a></div>
     </div>
   </aside>
 
   <main class="conteudo">
 
     <section class="pagina" data-pagina="inicio">
-      <div class="topo"><div><h1>Início</h1><p class="sub">O que está no ar agora.</p></div><div class="acoes" style="margin:0"><a class="btn" href="#" data-foto-rapida>📷 Por foto</a><a class="btn primario" data-ir="nova">+ Nova viagem</a></div></div>
+      <div class="topo"><div><h1>Início</h1><p class="sub">O que está no ar agora.</p></div><div class="acoes" style="margin:0"><a class="btn" href="#" data-foto-rapida><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h1.3l1-1.5h4.4l1 1.5h1.3A1.5 1.5 0 0 1 14 5.5v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5z"/><circle cx="8" cy="8.3" r="2.4"/></svg> Por foto</a><a class="btn primario" data-ir="nova">+ Nova viagem</a></div></div>
       <div class="numeros">
         <a class="numero destaque" data-ir="viagens"><b id="nAtivas">…</b><span>viagens no site</span></a>
         <a class="numero" data-ir="viagens"><b id="nDestaque">…</b><span>em destaque nas vendas</span></a>
@@ -60,7 +74,7 @@
       <div class="cartao">
         <h2>Atalhos</h2>
         <div class="acoes" style="margin-top:0">
-          <a class="btn primario" href="#" data-foto-rapida>📷 Nova promoção por foto</a>
+          <a class="btn primario" href="#" data-foto-rapida><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h1.3l1-1.5h4.4l1 1.5h1.3A1.5 1.5 0 0 1 14 5.5v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5z"/><circle cx="8" cy="8.3" r="2.4"/></svg> Nova promoção por foto</a>
           <a class="btn" data-ir="importar">Várias por planilha</a>
           <a class="btn" data-ir="nova">Cadastrar uma viagem</a>
           <a class="btn" data-ir="destaques">Mudar o bloco "Em destaque"</a>
@@ -69,7 +83,7 @@
     </section>
 
     <section class="pagina" data-pagina="viagens" hidden>
-      <div class="topo"><div><h1>Viagens cadastradas</h1><p class="sub">Promoções, grupos, pacotes e peregrinações. As expiradas somem do site sozinhas.</p></div><div class="acoes" style="margin:0"><a class="btn" href="#" data-foto-rapida>📷 Por foto</a><a class="btn primario" data-ir="nova">+ Nova viagem</a></div></div>
+      <div class="topo"><div><h1>Viagens cadastradas</h1><p class="sub">Promoções, grupos, pacotes e peregrinações. As expiradas somem do site sozinhas.</p></div><div class="acoes" style="margin:0"><a class="btn" href="#" data-foto-rapida><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h1.3l1-1.5h4.4l1 1.5h1.3A1.5 1.5 0 0 1 14 5.5v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5z"/><circle cx="8" cy="8.3" r="2.4"/></svg> Por foto</a><a class="btn primario" data-ir="nova">+ Nova viagem</a></div></div>
       <div id="lista" class="cartao muted">Carregando…</div>
     </section>
 
@@ -112,7 +126,7 @@
       <div class="topo"><div><h1>Cadastrar por foto ou planilha</h1><p class="sub">Envie a arte da promoção: o painel lê lugar, datas, valor e o que está incluso, usa a própria arte como foto e mostra um resumo. É só clicar em Confirmar.</p></div></div>
       <div class="cartao" id="importar">
         <div class="zona" id="impZona">
-          <strong>📷 Envie a arte da promoção</strong>
+          <strong>Envie a arte da promoção</strong>
           <p>Foto, print do Instagram ou do WhatsApp (pode mandar várias de uma vez). Também dá para arrastar aqui ou colar com Ctrl+V.<br>Várias viagens numa planilha? xlsx ou csv (<a href="#" id="impModelo">baixar o modelo</a>).</p>
           <label class="btn primario" for="impArquivo">Escolher fotos</label>
           <input id="impArquivo" type="file" accept=".xlsx,.xls,.xlsm,.csv,.ods,image/*" multiple>
@@ -184,7 +198,11 @@ function irPara(n) {
   try { sessionStorage.setItem("mv-pagina", n); } catch {}
   if (n !== "nova" && !document.querySelector(".pagina[data-pagina=nova]").contains(document.activeElement)) scrollTo({ top: 0 });
 }
-document.querySelectorAll(".menu a[data-pagina], [data-ir]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); irPara(a.dataset.pagina || a.dataset.ir); }));
+document.querySelectorAll(".menu a[data-pagina], [data-ir]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); irPara(a.dataset.pagina || a.dataset.ir); fecharMenu(); }));
+/* celular: o menu abre e fecha pelo botão "Menu", como no MVO */
+const botaoMenu = document.querySelector("[data-abrir-menu]");
+function fecharMenu() { botaoMenu?.closest(".lateral").classList.remove("aberto"); botaoMenu?.setAttribute("aria-expanded", "false"); }
+botaoMenu?.addEventListener("click", () => { const aberto = botaoMenu.closest(".lateral").classList.toggle("aberto"); botaoMenu.setAttribute("aria-expanded", aberto ? "true" : "false"); });
 let pag = "inicio"; try { pag = sessionStorage.getItem("mv-pagina") || "inicio"; } catch {}
 irPara(pag);
 /* botão mostra que está esperando o servidor (como no MVO) */
@@ -201,6 +219,7 @@ onAuthStateChanged(auth, u => {
   document.body.classList.toggle("logado", !!ok);
   if (u && !ok) { signOut(auth); $("loginErr").textContent = "Esta conta não tem permissão."; }
   $("login").hidden = !!ok; $("painel").hidden = !ok;
+  if (ok) $("quem").textContent = u.email;
   if (ok) carregar();
 });
 $("entrar").onclick = async () => {
