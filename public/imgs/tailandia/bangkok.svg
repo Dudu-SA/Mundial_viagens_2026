@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Ilustração: templo de Bangkok ao pôr do sol, à beira do rio">
+<defs>
+<linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b468f"/><stop offset=".45" stop-color="#e86f5a"/><stop offset=".72" stop-color="#ffb36b"/></linearGradient>
+<linearGradient id="r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a5c"/><stop offset="1" stop-color="#12326a"/></linearGradient>
+<radialGradient id="s" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff3c4"/><stop offset=".6" stop-color="#ffd07a"/><stop offset="1" stop-color="#ffd07a" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="600" fill="url(#c)"/>
+<circle cx="560" cy="330" r="130" fill="url(#s)"/>
+<circle cx="560" cy="330" r="46" fill="#fff1cf"/>
+<rect y="430" width="800" height="170" fill="url(#r)"/>
+<g fill="#fff" opacity=".35"><rect x="470" y="452" width="180" height="3" rx="1.5"/><rect x="500" y="474" width="120" height="3" rx="1.5"/><rect x="525" y="498" width="70" height="3" rx="1.5"/></g>
+<g fill="#13234a">
+ <path d="M300 432 C296 380 292 330 288 270 C286 230 286 196 300 120 C314 196 314 230 312 270 C308 330 304 380 300 432Z"/>
+ <rect x="298" y="86" width="4" height="40"/>
+ <path d="M262 432 L268 330 L332 330 L338 432Z"/><rect x="258" y="322" width="84" height="12"/><rect x="266" y="278" width="68" height="10"/><rect x="274" y="236" width="52" height="8"/>
+ <path d="M178 432 C176 400 174 372 172 340 C171 318 172 300 180 262 C188 300 189 318 188 340 C186 372 184 400 182 432Z"/><rect x="164" y="372" width="32" height="8"/>
+ <path d="M420 432 C418 400 416 372 414 340 C413 318 414 300 422 262 C430 300 431 318 430 340 C428 372 426 400 424 432Z"/><rect x="406" y="372" width="32" height="8"/>
+ <rect x="80" y="404" width="420" height="28"/><rect x="0" y="420" width="800" height="12"/>
+ <path d="M0 420 L0 396 L40 396 L60 380 L80 396 L80 420Z"/>
+ <path d="M620 432 Q640 418 700 420 L760 412 L800 416 L800 432Z"/>
+</g>
+<g fill="#13234a"><path d="M120 470 L210 470 L200 482 L130 482Z"/><rect x="160" y="452" width="3" height="18"/></g>
+</svg>

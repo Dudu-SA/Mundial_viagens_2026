@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Ilustração: lanternas acesas subindo no céu da noite, sobre as montanhas do norte">
+<defs>
+<linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1f4b"/><stop offset=".7" stop-color="#1b468f"/><stop offset="1" stop-color="#4a6fb8"/></linearGradient>
+<radialGradient id="l" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd27a"/><stop offset=".45" stop-color="#ff914d" stop-opacity=".55"/><stop offset="1" stop-color="#ff914d" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="800" fill="url(#c)"/>
+<g fill="#fff" opacity=".7"><circle cx="90" cy="80" r="1.6"/><circle cx="210" cy="140" r="1.2"/><circle cx="340" cy="60" r="1.4"/><circle cx="520" cy="110" r="1.2"/><circle cx="700" cy="70" r="1.6"/><circle cx="640" cy="190" r="1.1"/><circle cx="140" cy="240" r="1.1"/></g>
+<g id="lt">
+ <circle r="34" fill="url(#l)"/><path d="M-9 -12 Q0 -16 9 -12 L7 10 Q0 13 -7 10Z" fill="#ffcf7a"/><path d="M-7 10 Q0 13 7 10" stroke="#b8501a" stroke-width="1.5" fill="none"/>
+</g>
+<g>
+ <use href="#lt" transform="translate(150 380) scale(1.1)"/><use href="#lt" transform="translate(260 290) scale(.8)"/><use href="#lt" transform="translate(380 420) scale(1.3)"/>
+ <use href="#lt" transform="translate(470 250) scale(.7)"/><use href="#lt" transform="translate(560 360) scale(1)"/><use href="#lt" transform="translate(660 230) scale(.6)"/>
+ <use href="#lt" transform="translate(320 170) scale(.55)"/><use href="#lt" transform="translate(600 480) scale(1.2)"/><use href="#lt" transform="translate(110 200) scale(.5)"/>
+ <use href="#lt" transform="translate(720 400) scale(.75)"/><use href="#lt" transform="translate(220 500) scale(.9)"/><use href="#lt" transform="translate(500 140) scale(.45)"/>
+</g>
+<path fill="#13234a" opacity=".75" d="M0 640 Q120 560 230 600 Q340 520 470 590 Q590 530 700 580 Q760 560 800 590 L800 800 L0 800Z"/>
+<path fill="#0b1f4b" d="M0 700 Q160 640 300 680 Q440 630 600 676 Q700 650 800 672 L800 800 L0 800Z"/>
+<g fill="#0b1f4b"><path d="M600 676 L600 610 L612 586 L624 610 L624 676Z"/><path d="M612 560 l6 26 h-12Z"/><rect x="590" y="640" width="44" height="40"/></g>
+</svg>
