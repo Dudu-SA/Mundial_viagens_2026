@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Ilustração: barco de cauda longa no mar azul entre rochedos, nas ilhas do sul">
+<defs>
+<linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fb3ff"/><stop offset="1" stop-color="#e6f1ff"/></linearGradient>
+<linearGradient id="m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fc4c0"/><stop offset=".55" stop-color="#1a8fb0"/><stop offset="1" stop-color="#1b468f"/></linearGradient>
+<linearGradient id="p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f6b4f"/><stop offset="1" stop-color="#1c3f33"/></linearGradient>
+</defs>
+<rect width="800" height="600" fill="url(#c)"/>
+<g fill="#fff" opacity=".8"><ellipse cx="170" cy="110" rx="70" ry="18"/><ellipse cx="220" cy="98" rx="46" ry="16"/><ellipse cx="610" cy="76" rx="80" ry="16"/></g>
+<path fill="#5f9e86" opacity=".55" d="M330 360 C340 300 352 250 372 230 C392 212 410 240 418 280 C426 250 440 236 456 246 C472 258 478 300 482 360Z"/>
+<path fill="url(#p)" d="M-20 380 C-10 280 10 160 60 110 C96 74 130 120 140 190 C150 160 168 150 186 168 C210 194 222 290 226 380Z"/>
+<path fill="url(#p)" d="M560 380 C566 300 580 200 616 150 C640 118 664 124 680 170 C690 140 712 128 736 146 C770 174 800 260 820 380Z"/>
+<g fill="#3e8a63" opacity=".7"><path d="M40 160 q20 -18 40 0 q-20 -6 -40 0Z"/><path d="M600 190 q24 -18 48 0 q-24 -6 -48 0Z"/><path d="M690 170 q18 -14 36 0 q-18 -5 -36 0Z"/></g>
+<rect y="360" width="800" height="240" fill="url(#m)"/>
+<path fill="#f3e2c0" d="M0 372 Q200 356 360 372 Q520 388 800 366 L800 382 Q520 400 360 386 Q200 372 0 388Z"/>
+<g fill="#fff" opacity=".45"><rect x="90" y="430" width="140" height="3" rx="1.5"/><rect x="520" y="470" width="190" height="3" rx="1.5"/><rect x="260" y="530" width="120" height="3" rx="1.5"/></g>
+<g>
+ <path fill="#8a4b22" d="M280 492 Q330 512 470 506 Q520 504 548 474 L556 470 Q546 520 470 528 Q350 534 290 508Z"/>
+ <path fill="#b8501a" d="M286 496 Q360 516 470 510 Q520 508 548 474 Q520 498 470 500 Q370 506 290 488Z"/>
+ <path fill="none" stroke="#ff914d" stroke-width="5" stroke-linecap="round" d="M548 474 Q560 452 552 440"/>
+ <g fill="#ff914d"><circle cx="552" cy="438" r="6"/><path d="M540 446 l18 -6 l-4 12Z"/></g>
+ <rect x="330" y="470" width="120" height="24" rx="3" fill="#12326a"/><path fill="#1b468f" d="M326 470 L454 470 L446 460 L334 460Z"/>
+ <path fill="none" stroke="#13234a" stroke-width="3" d="M300 500 L250 520"/>
+</g>
+</svg>

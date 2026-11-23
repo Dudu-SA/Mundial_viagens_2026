@@ -135,7 +135,7 @@
     scrollTrigger: { trigger: ".porque", start: "top 70%", end: "top 20%", scrub: true } });
 
   /* ---------- 8) como funciona: o avião voa pela rota e acende cada passo ---------- */
-  const passos = $("#como-funciona");
+  const passos = $("#como-funciona") || $("[data-rota]");   // a rota também desenha o roteiro das páginas de destino
   if (passos && $(".voo__linha", passos)) mm.add(COMPUTADOR, () => {
     const linha = $(".voo__linha", passos), aviao = $(".voo__aviao", passos);
     const lis = $$(".passos__lista li", passos), pontos = $$(".voo__ponto", passos);
