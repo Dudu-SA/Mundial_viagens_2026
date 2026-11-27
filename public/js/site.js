@@ -100,19 +100,16 @@
   const revelar = (raiz = document) => {
     $$("[data-palavras]", raiz).forEach(palavras);
     $$("[data-letras]", raiz).forEach(letras);
-    const itens = $$("[data-surge]:not(.visto), [data-letras]:not(.visto), [data-conta]:not(.visto)", raiz)
-      .filter(x => !(x.closest(".album") && H.classList.contains("mv-abre")));   // o topo espera a capa abrir
+    const itens = $$("[data-surge]:not(.visto), [data-letras]:not(.visto), [data-conta]:not(.visto)", raiz);
     if (reduz || !("IntersectionObserver" in window)) { itens.forEach(marcar); return; }
     io ||= new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { marcar(e.target); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px", threshold: .1 });
     itens.forEach(x => io.observe(x));
   };
   revelar();
-  document.addEventListener("mv:abriu", () => revelar(document));
-  if (H.classList.contains("mv-abre")) setTimeout(() => revelar(document), 3600);
   // os módulos avisam quando o conteúdo do Firebase chegou
   document.addEventListener("mv:conteudo", e => revelar(e.detail || document));
   // nada fica escondido se algo falhar
-  setTimeout(() => $$("[data-surge]:not(.visto), [data-letras]:not(.visto)").forEach(x => { if (x.getBoundingClientRect().top < innerHeight && !H.classList.contains("mv-abre")) marcar(x); }), 2500);
+  setTimeout(() => $$("[data-surge]:not(.visto), [data-letras]:not(.visto)").forEach(x => { if (x.getBoundingClientRect().top < innerHeight) marcar(x); }), 2500);
 
   /* ---------- 5) botão flutuante do WhatsApp ---------- */
   if (!$(".zap")) {
