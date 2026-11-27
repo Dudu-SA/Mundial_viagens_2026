@@ -406,20 +406,6 @@ strong,b{font-weight:650}
 .letras.entra .ch{transform:none}
 .album h1 .ch{transition-duration:1.3s}
 
-/* abertura: a capa do álbum, que se abre uma vez por visita */
-.mv-abre .album__pag .foto,.mv-abre .album__pag .fita{animation-play-state:paused}
-.mv-abre .album__txt>*{opacity:0}
-.abertura{position:fixed;inset:0;z-index:210;perspective:1600px;pointer-events:none}
-.abertura__capa{position:absolute;inset:0;display:grid;place-items:center;background:var(--capa);color:#fff;transform-origin:left center;backface-visibility:hidden;
-  box-shadow:inset 0 0 0 clamp(8px,1.4vw,18px) #1a3f80,inset 0 0 120px rgba(0,0,0,.25)}
-.abertura__capa::after{content:"";position:absolute;left:0;top:0;bottom:0;width:clamp(14px,2vw,26px);background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,0))}
-.abertura__in{display:grid;justify-items:center;gap:1.2rem;text-align:center}
-.abertura img{width:90px;height:auto}
-.abertura__titulo{font:800 clamp(1.6rem,4vw,2.8rem)/1 var(--fonte);font-stretch:112%;letter-spacing:-.03em}
-.abertura__mao{font:500 clamp(1.3rem,2.6vw,1.8rem)/1 var(--mao);color:#ffd2b5}
-.abertura__num{font:800 clamp(3rem,9vw,6rem)/.9 var(--fonte);font-stretch:125%;letter-spacing:-.05em;font-variant-numeric:tabular-nums;color:#fff}
-.abertura__barra{position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--fita);transform-origin:left;transform:scaleX(0)}
-.abertura__pagina{position:absolute;inset:0;background:var(--papel);opacity:0}
 
 
 /* faixa de destinos: corre sozinha; o motion.js a acelera com a rolagem */
@@ -459,7 +445,6 @@ strong,b{font-weight:650}
 @media (prefers-reduced-motion:reduce){
   .letras .ch{transform:none}
   .js [data-letras]{opacity:1}
-  .mv-abre .album__txt>*{opacity:1}
 }
 
 /* parcelas ao lado do valor ("em até 10x"), em letra pequena */

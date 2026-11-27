@@ -4,7 +4,7 @@
 
    O que tem aqui:
    1. rolagem suave (Lenis)                 6. faixa de destinos que acelera com a rolagem
-   2. abertura: a capa do álbum se abre     7. "por que": palavras que acendem
+   2. entrada suave do texto do topo       7. "por que": palavras que acendem
    3. botões magnéticos                     8. como funciona: avião pela rota dos 4 passos
    4. topo: fotos reagem ao mouse e à rolagem   9. rodapé: nome gigante que se estica
    5. fotos que "pousam" na página ao rolar 10. página da viagem: foto com profundidade */
@@ -16,12 +16,7 @@
   const fino = matchMedia("(hover: hover) and (pointer: fine)").matches;
   const gsap = window.gsap, ST = window.ScrollTrigger;
 
-  const liberar = () => {
-    H.classList.remove("mv-abre");
-    try { sessionStorage.setItem("mv-abriu", "1"); } catch (e) {}
-    document.dispatchEvent(new Event("mv:abriu"));
-  };
-  if (!gsap || !ST || reduz) { liberar(); return; }
+  if (!gsap || !ST || reduz) return;
 
   gsap.registerPlugin(ST);
   H.classList.add("mv-anim");
@@ -42,28 +37,10 @@
   let refreshT = 0;
   const refresh = () => { clearTimeout(refreshT); refreshT = setTimeout(() => ST.refresh(), 120); };
 
-  /* ---------- 2) abertura: a capa azul do álbum, com contador, que se abre como um livro ---------- */
+  /* ---------- 2) entrada: sem tela de carregamento; o texto do topo sobe de leve ---------- */
   const album = $(".album");
-  if (H.classList.contains("mv-abre") && album) {
-    const ab = document.createElement("div");
-    ab.className = "abertura"; ab.setAttribute("aria-hidden", "true");
-    ab.innerHTML = '<div class="abertura__pagina"></div><div class="abertura__capa"><div class="abertura__in"><img src="imgs/logo-branco.png" alt=""><div class="abertura__titulo">Mundial Viagens</div><div class="abertura__mao">seu sonho a poucos cliques</div><div class="abertura__num">0</div></div><i class="abertura__barra"></i></div>';
-    document.body.append(ab);
-    H.classList.remove("mv-abre");
-    lenis?.stop();
-    const num = $(".abertura__num", ab), cont = { v: 0 };
-    gsap.timeline({ defaults: { ease: "power3.out" } })
-      .from(".abertura__in > *", { y: 30, opacity: 0, duration: .8, stagger: .08 })
-      .to(cont, { v: 100, duration: 1.4, ease: "power2.inOut", onUpdate: () => num.textContent = Math.round(cont.v) }, 0)
-      .to(".abertura__barra", { scaleX: 1, duration: 1.4, ease: "power2.inOut" }, 0)
-      .to(".abertura__capa", { rotateY: -105, duration: 1.3, ease: "power3.inOut" }, "+=.1")   // a capa vira
-      .add(() => { lenis?.start(); liberar(); }, "-=1.1")                                       // as fotos caem enquanto a capa abre
-      .from(".album__txt > *", { y: 24, opacity: 0, duration: .9, stagger: .09, clearProps: "all" }, "-=.9")
-      .add(() => ab.remove());
-  } else {
-    liberar();
-    if (album) gsap.from(".album__txt > *", { y: 24, opacity: 0, duration: .9, stagger: .09, ease: "power3.out", clearProps: "all", delay: .15 });
-  }
+  if (album) gsap.from(".album__txt > *", { y: 24, opacity: 0, duration: .9, stagger: .09, ease: "power3.out", clearProps: "all", delay: .15 });
+
 
   /* ---------- 3) botões magnéticos (só com mouse) ---------- */
   if (fino) {
