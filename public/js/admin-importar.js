@@ -21,22 +21,26 @@ const CATS = { promocao: "Promoção", grupo: "Grupo", pacote: "Pacote", peregri
    Por isso o painel tenta o apelido "mais recente" e, se não houver, escolhe o Flash mais novo
    da lista da própria conta; o que funcionar fica guardado neste navegador. */
 const MODELOS_BASE = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-3-flash", "gemini-3-flash-preview"];
+/* reserva: os "lite" leem bem as artes e são os que o MVO usa hoje; ficam por último */
+const MODELOS_RESERVA = ["gemini-3.1-flash-lite", "gemini-flash-lite-latest"];
 const API_IA = "https://generativelanguage.googleapis.com/v1beta";
 async function modelosIA(chave) {
   let guardado = ""; try { guardado = localStorage.getItem("mv-modelo-ia") || ""; } catch {}
-  let daConta = [];
+  let daConta = [], liteConta = [];
   try {
     const r = await fetch(`${API_IA}/models?pageSize=200&key=${encodeURIComponent(chave)}`);
     if (r.ok) {
       const ver = n => (n.match(/gemini-(\d+(?:\.\d+)?)/) || [, "0"])[1] * 1;
-      daConta = ((await r.json()).models || [])
+      const ordem = (a, b) => ver(b) - ver(a) || /preview/.test(a) - /preview/.test(b) || a.length - b.length;
+      const flash = ((await r.json()).models || [])
         .filter(m => (m.supportedGenerationMethods || []).includes("generateContent"))
         .map(m => m.name.replace(/^models\//, ""))
-        .filter(n => /^gemini-.*flash/.test(n) && !/lite|image|tts|audio|live|embed|thinking|exp/.test(n) && ver(n) >= 3)
-        .sort((a, b) => ver(b) - ver(a) || /preview/.test(a) - /preview/.test(b) || a.length - b.length);
+        .filter(n => /^gemini-.*flash/.test(n) && !/image|tts|audio|live|embed|thinking|exp/.test(n) && ver(n) >= 3);
+      daConta = flash.filter(n => !/lite/.test(n)).sort(ordem);
+      liteConta = flash.filter(n => /lite/.test(n)).sort(ordem);
     }
   } catch {}
-  return [...new Set([guardado, ...MODELOS_BASE, ...daConta].filter(Boolean))];
+  return [...new Set([guardado, ...MODELOS_BASE, ...daConta, ...MODELOS_RESERVA, ...liteConta].filter(Boolean))];
 }
 
 /* ---------- utilidades de texto ---------- */
@@ -239,13 +243,16 @@ async function lerFoto(file, chave, aoEsperar) {
   });
   /* 404 = modelo desligado; 429/500/503 = Google lotado: espera e tenta de novo,
      depois passa para o próximo modelo da lista */
-  let r;
+  let r, tentados = [];
   const espera = ms => new Promise(ok => setTimeout(ok, ms));
   modelos: for (const modelo of await modelosIA(chave)) {
     for (let tentativa = 0; tentativa < 3; tentativa++) {
       r = await fetch(`${API_IA}/models/${modelo}:generateContent?key=${encodeURIComponent(chave)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: corpo });
       if (r.ok) { try { localStorage.setItem("mv-modelo-ia", modelo); } catch {} break modelos; }
-      if (r.status === 404) continue modelos;
+      if (tentativa === 0) tentados.push(modelo + " " + r.status);
+      if (r.status === 404) { try { if (localStorage.getItem("mv-modelo-ia") === modelo) localStorage.removeItem("mv-modelo-ia"); } catch {} continue modelos; }
+      /* alguns modelos fechados respondem 400 "not found / not supported" em vez de 404 */
+      if (r.status === 400) { const t = await r.clone().text(); if (/not (found|supported)/i.test(t) && !/API key/i.test(t)) continue modelos; }
       if (![429, 500, 503].includes(r.status)) break modelos;
       aoEsperar?.(tentativa + 1);
       await espera([2500, 6000, 0][tentativa]);
@@ -253,11 +260,11 @@ async function lerFoto(file, chave, aoEsperar) {
   }
   if (!r.ok) {
     if (r.status === 503 || r.status === 500) throw new Error("O Google AI está sobrecarregado agora. Tente de novo em alguns minutos.");
-    if (r.status === 404) throw new Error("Nenhum modelo de leitura do Google AI respondeu para esta chave. Avise o suporte do site.");
     const t = await r.text();
     if (r.status === 400 && /API key/i.test(t)) throw new Error("A chave do Google AI não foi aceita. Confira em Configurações da importação.");
     if (r.status === 429) throw new Error("O Google AI está ocupado (limite gratuito atingido). Espere um minuto e tente de novo.");
-    throw new Error("O Google AI respondeu com erro " + r.status + ".");
+    if (r.status === 404 || r.status === 400 && tentados.length > 1) throw new Error("Nenhum modelo de leitura do Google AI respondeu para esta chave (tentei: " + tentados.join(", ") + ").");
+    throw new Error("O Google AI recusou a leitura (erro " + r.status + ", " + tentados.join(", ") + "): " + t.slice(0, 160));
   }
   const j = await r.json();
   const texto = (j.candidates?.[0]?.content?.parts || []).filter(p => !p.thought).map(p => p.text || "").join("")
